@@ -9,11 +9,21 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    chattinglogwidget.cpp \
+    client.cpp \
+    customerwidget.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    orderwidget.cpp \
+    productwidget.cpp
 
 HEADERS += \
-    mainwindow.h
+    chattinglogwidget.h \
+    client.h \
+    customerwidget.h \
+    mainwindow.h \
+    orderwidget.h \
+    productwidget.h
 
 FORMS += \
     mainwindow.ui
