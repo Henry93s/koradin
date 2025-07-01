@@ -3,12 +3,6 @@
 ProductInfo::ProductInfo(){}
 ProductInfo::~ProductInfo(){}
 
-QStringView ProductInfo::getProductName(){
-    return this->productName;
-}
-void ProductInfo::setProductName(QString& productName){
-    this->productName = productName;
-}
 int ProductInfo::getPrice(){
     return this->price;
 }

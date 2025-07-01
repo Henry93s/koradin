@@ -9,13 +9,31 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    artist.cpp \
+    blueray.cpp \
+    book.cpp \
+    client.cpp \
+    info.cpp \
+    join.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    productInfo.cpp
 
 HEADERS += \
-    mainwindow.h
+    artist.h \
+    blueray.h \
+    book.h \
+    client.h \
+    commuInfo.h \
+    info.h \
+    join.h \
+    mainwindow.h \
+    music.h \
+    productinfo.h
 
 FORMS += \
+    client.ui \
+    join.ui \
     mainwindow.ui
 
 TRANSLATIONS += \
@@ -27,3 +45,6 @@ CONFIG += embed_translations
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    .gitmessage.txt
