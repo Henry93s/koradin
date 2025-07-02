@@ -4,9 +4,9 @@ Info::Info(){}
 Info::~Info(){}
 
 
-QStringView Info::getName(){
+QString Info::getName(){
     return this->name;
 }
-void Info::setName(QString& productName){
+void Info::setName(const QString& productName){
     this->name = productName;
 }

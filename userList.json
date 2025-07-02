@@ -1,0 +1,16 @@
+[
+    {
+        "ID": "manager",
+        "name": "관리자",
+        "password": "manager",
+        "email": "koradin@koradin.com",
+        "isAdmin": "true"
+    },
+    {
+        "ID": "geonwoo",
+        "name": "건우",
+        "password": "geonwoo",
+        "email": "geonwoo@naver.com",
+        "isAdmin": "false"
+    }
+]

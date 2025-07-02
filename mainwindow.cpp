@@ -8,10 +8,14 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    this->usermanager = this->usermanager->getInstance();
 }
 
 MainWindow::~MainWindow()
 {
+    // main 프로그램 종료 시 usermanager 소멸자를 통해 현재 userlist 를 userlist.json 에 저장
+    delete this->usermanager;
     delete ui;
 }
 
@@ -31,6 +35,8 @@ void MainWindow::on_join_button_clicked()
     // 회원 가입 버튼 클릭 시 열리는 회원 가입 화면
     Join* joinWindow = new Join();
     joinWindow->show();
-    this->close();
+
+    // 창을 완전히 닫지는 않지만 hide() 로 숨김 처리 -> 회원 가입 취소 또는 완료 후 다시 로그인 화면으로 돌아옴
+    this->hide();
 }
 

@@ -8,8 +8,8 @@ public:
     Info();
     ~Info();
 
-    QStringView getName();
-    void setName(QString& name);
+    QString getName();
+    void setName(const QString& name);
 
 private:
     QString name;
