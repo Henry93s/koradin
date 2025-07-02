@@ -16,8 +16,10 @@ SOURCES += \
     info.cpp \
     join.cpp \
     main.cpp \
+    mainController.cpp \
     mainwindow.cpp \
-    productInfo.cpp
+    productInfo.cpp \
+    userInfo.cpp
 
 HEADERS += \
     artist.h \
@@ -27,9 +29,12 @@ HEADERS += \
     commuInfo.h \
     info.h \
     join.h \
+    mainController.h \
     mainwindow.h \
     music.h \
-    productinfo.h
+    productinfo.h \
+    userInfo.h \
+    userManager.h
 
 FORMS += \
     client.ui \
