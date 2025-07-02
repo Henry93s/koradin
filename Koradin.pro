@@ -10,7 +10,6 @@ CONFIG += c++17
 
 SOURCES += \
     adminwidget.cpp \
-    artist.cpp \
     blueray.cpp \
     book.cpp \
     chattinglogwidget.cpp \
@@ -28,7 +27,9 @@ SOURCES += \
     productInfo.cpp \
     productwidget.cpp \
     server.cpp \
-    userInfo.cpp
+    userInfo.cpp \
+    orderInfo.cpp \
+    userManager.cpp
 
 HEADERS += \
     adminwidget.h \
@@ -38,22 +39,22 @@ HEADERS += \
     editalbumwidget.h \
     editbookwidget.h \
     editproductwidget.h \
-    artist.h \
     blueray.h \
     book.h \
     commuInfo.h \
+    customerwidget.h \
     info.h \
     join.h \
     mainController.h \
     mainwindow.h \
-    music.h \
     orderwidget.h \
     productinfo.h \
     productwidget.h \
     userInfo.h \
     userManager.h \
-    customerwidget.h \
-    server.h
+    server.h \
+    orderInfo.h \
+    music.h
 
 FORMS += \
     adminwidget.ui \
@@ -77,26 +78,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     .gitmessage.txt
 
-# HEADERS += \
-#     adminwidget.h \
-#     artist.h \
-#     blueray.h \
-#     book.h \
-#     chattinglogwidget.h \
-#     client.h \
-#     commuInfo.h \
-#     customerswidget.h \
-#     editalbumwidget.h \
-#     editbookwidget.h \
-#     editproductwidget.h \
-#     info.h \
-#     join.h \
-#     mainController.h \
-#     mainwindow.h \
-#     music.h \
-#     orderwidget.h \
-#     productInfo.h \
-#     productwidget.h \
-#     server.h \
-#     userInfo.h \
 #     userManager.h

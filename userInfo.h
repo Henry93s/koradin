@@ -8,21 +8,23 @@ class UserInfo : public Info{
 
 public:
     UserInfo();
+    UserInfo(const QString& ID, const QString& name, const QString& password
+             , const QString& email, const QString& isAdmin);
     ~UserInfo();
-    QStringView getID();
-    void setID(QString& ID);
-    QStringView getPassword();
-    void setPassword(QString& password);
-    QStringView getEmail();
-    void setEmail(QString& email);
-    bool getIsAdmin();
-    void setIsAdmin(bool isAdmin);
+    QString getID(); // primary Key
+    void setID(const QString& ID);
+    QString getPassword();
+    void setPassword(const QString& password);
+    QString getEmail();
+    void setEmail(const QString& email);
+    QString getIsAdmin();
+    void setIsAdmin(const QString& isAdmin);
 
 private:
     QString ID;
     QString password;
     QString email;
-    bool isAdmin;
+    QString isAdmin;
 };
 
 #endif // USERINFO_H

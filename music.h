@@ -7,8 +7,8 @@ class Music : public ProductInfo{
 public:
     Music();
     ~Music();
-    QStringView getArtist();
-    void setArtist(QString& Artist);
+    QString getArtist();
+    void setArtist(const QString& Artist);
 
 private:
     QString artist;

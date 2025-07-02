@@ -7,14 +7,11 @@ class Book : public ProductInfo {
 public:
     Book();
     ~Book();
-    QStringView getWriter();
-    void setWriter(QString& writer);
-    QStringView getIndex();
-    void setIndex(QString& index);
+    QString getWriter();
+    void setWriter(const QString& writer);
 
 private:
     QString writer;
-    QString index;
 };
 
 #endif // BOOK_H

@@ -9,15 +9,20 @@ public:
     ProductInfo();
     ~ProductInfo();
 
+    QString getTitle();
+    void setTitle(const QString& title);
+    QString getCompany();
+    void setCompany(const QString& company);
     int getPrice();
     void setPrice(int price);
-    QStringView getContext();
-    void setContext(QString& context);
+    QString getContext();
+    void setContext(const QString& context);
     int getAmount();
     void setAmount(int amount);
 
 private:
-
+    QString title;
+    QString company;
     int price;
     QString context;
     int amount;

@@ -3,15 +3,9 @@
 Book::Book(){}
 Book::~Book(){}
 
-QStringView Book::getWriter(){
+QString Book::getWriter(){
     return this->writer;
 }
-void Book::setWriter(QString& writer){
+void Book::setWriter(const QString& writer){
     this->writer = writer;
-}
-QStringView Book::getIndex(){
-    return this->index;
-}
-void Book::setIndex(QString& index){
-    this->index = index;
 }
