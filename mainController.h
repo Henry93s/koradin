@@ -6,8 +6,10 @@ public:
     MainController();
     ~MainController();
 
-
-
+public:
+    MainController* getInstance();
+private:
+    MainController* instance = nullptr;
 };
 
 #endif // MAINCONTROLLER_H

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>684</width>
+    <height>549</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,14 +18,17 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>401</width>
-     <height>301</height>
+     <width>681</width>
+     <height>541</height>
     </rect>
    </property>
    <property name="currentIndex">
     <number>0</number>
    </property>
    <widget class="AdminWidget" name="tab">
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
     <attribute name="title">
      <string>Admin</string>
     </attribute>
@@ -39,8 +42,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>401</width>
-       <height>271</height>
+       <width>681</width>
+       <height>511</height>
       </rect>
      </property>
     </widget>
