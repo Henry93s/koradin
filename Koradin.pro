@@ -9,24 +9,36 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    adminwidget.cpp \
     chattinglogwidget.cpp \
     client.cpp \
-    customerwidget.cpp \
+    customerswidget.cpp \
+    editalbumwidget.cpp \
+    editbookwidget.cpp \
+    editproductwidget.cpp \
     main.cpp \
-    mainwindow.cpp \
     orderwidget.cpp \
-    productwidget.cpp
+    productwidget.cpp \
+    server.cpp
 
 HEADERS += \
+    adminwidget.h \
     chattinglogwidget.h \
     client.h \
-    customerwidget.h \
-    mainwindow.h \
+    customerswidget.h \
+    editalbumwidget.h \
+    editbookwidget.h \
+    editproductwidget.h \
     orderwidget.h \
-    productwidget.h
+    productwidget.h \
+    server.h
 
 FORMS += \
-    mainwindow.ui
+    adminwidget.ui \
+    customerswidget.ui \
+    editalbumwidget.ui \
+    editbookwidget.ui \
+    server.ui
 
 TRANSLATIONS += \
     Koradin_ko_KR.ts
