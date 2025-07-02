@@ -2,22 +2,16 @@
 #define BLUERAY_H
 
 #include "productinfo.h"
-#include "artist.h"
-#include <QVector>
 
 class Blueray : public ProductInfo {
 public:
     Blueray();
     ~Blueray();
-    QVector<Artist> getArtistList();
-    void addArtist(QString& artist);
-    QStringView minArtist(QString& artist);
-    QStringView getPlot();
-    void setPlot(QString& plot);
+    QString getArtist();
+    void setArtist(const QString& artist);
 
 private:
-    QVector<Artist> artistList;
-    QString plot;
+    QString artist;
 };
 
 #endif // BLUERAY_H

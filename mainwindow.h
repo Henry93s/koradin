@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "userManager.h"
 
 class QTabWidget;
 
@@ -26,5 +27,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QTabWidget* tabWidget;
+    UserManager* usermanager;
 };
 #endif // MAINWINDOW_H

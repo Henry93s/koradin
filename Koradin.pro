@@ -9,7 +9,6 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    artist.cpp \
     blueray.cpp \
     book.cpp \
     chattinglogwidget.cpp \
@@ -23,41 +22,29 @@ SOURCES += \
     orderwidget.cpp \
     productInfo.cpp \
     productwidget.cpp \
-    userInfo.cpp
-    artist.cpp \
-    blueray.cpp \
-    book.cpp \
-    client.cpp \
-    info.cpp \
-    join.cpp \
-    main.cpp \
-    mainController.cpp \
-    mainwindow.cpp \
-    productInfo.cpp \
-    userInfo.cpp
+    userInfo.cpp \
+    #artist.cpp \
+    orderInfo.cpp \
+    userManager.cpp
 
 HEADERS += \
-    artist.h \
     blueray.h \
     book.h \
     chattinglogwidget.h \
     client.h \
-    commuInfo.h \
     customerwidget.h \
     info.h \
     join.h \
     mainController.h \
     mainwindow.h \
-    music.h \
     orderwidget.h \
     productinfo.h \
     productwidget.h \
     userInfo.h \
-    userManager.h
-    chattinglogwidget.h \
-    customerwidget.h \
-    orderwidget.h \
-    productwidget.h
+    orderInfo.h \
+    userManager.h \
+    commuInfo.h \
+    music.h
 
 FORMS += \
     client.ui \
