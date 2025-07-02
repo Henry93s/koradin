@@ -9,19 +9,23 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // usermanager getInstance 호출(로그인 검증 로직 과 회원 가입 처리 로직 시 필요함)
     this->usermanager = this->usermanager->getInstance();
 }
 
 MainWindow::~MainWindow()
 {
-    // main 프로그램 종료 시 usermanager 소멸자를 통해 현재 userlist 를 userlist.json 에 저장
+    // main 프로그램 종료 시 현재 userlist 를 userlist.json 에 저장 하도록 하는 함수 호출됨
     delete this->usermanager;
     delete ui;
 }
 
 void MainWindow::on_login_button_clicked()
 {
-    // server 가 open 됨을 확인하고, 로그인 검증이 통과될 경우 현재 mainwindow를 닫고 client.ui 를 연다.
+    // server 가 open 됨을 확인
+
+    // 로그인 검증
+
     // client.ui 가 열렸을 때, server connect 를 통한 새 클라이언트 연결 추가.
     Client* clientWindow = new Client();
     clientWindow->show();

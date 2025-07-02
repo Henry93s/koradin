@@ -1,16 +1,23 @@
 [
     {
-        "ID": "manager",
-        "name": "관리자",
-        "password": "manager",
-        "email": "koradin@koradin.com",
-        "isAdmin": "true"
+        "ID": "geonwoo",
+        "email": "geonwoo@naver.com",
+        "isAdmin": "false",
+        "name": "건우",
+        "password": "geonwoo"
     },
     {
-        "ID": "geonwoo",
-        "name": "건우",
-        "password": "geonwoo",
-        "email": "geonwoo@naver.com",
-        "isAdmin": "false"
+        "ID": "manager",
+        "email": "koradin@koradin.com",
+        "isAdmin": "true",
+        "name": "관리자",
+        "password": "manager"
+    },
+    {
+        "ID": "testidt",
+        "email": "email",
+        "isAdmin": "true",
+        "name": "이름",
+        "password": "password"
     }
 ]
