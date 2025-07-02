@@ -9,21 +9,23 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    artist.cpp \
-    blueray.cpp \
-    book.cpp \
+<<<<<<< HEAD
     chattinglogwidget.cpp \
     client.cpp \
     customerwidget.cpp \
-    info.cpp \
-    join.cpp \
     main.cpp \
-    mainController.cpp \
     mainwindow.cpp \
     orderwidget.cpp \
-    productInfo.cpp \
-    productwidget.cpp \
-    userInfo.cpp
+    productwidget.cpp
+
+HEADERS += \
+    chattinglogwidget.h \
+    client.h \
+    customerwidget.h \
+    mainwindow.h \
+    orderwidget.h \
+    productwidget.h
+=======
     artist.cpp \
     blueray.cpp \
     book.cpp \
@@ -31,33 +33,21 @@ SOURCES += \
     info.cpp \
     join.cpp \
     main.cpp \
-    mainController.cpp \
     mainwindow.cpp \
-    productInfo.cpp \
-    userInfo.cpp
+    productInfo.cpp
 
 HEADERS += \
     artist.h \
     blueray.h \
     book.h \
-    chattinglogwidget.h \
     client.h \
     commuInfo.h \
-    customerwidget.h \
     info.h \
     join.h \
-    mainController.h \
     mainwindow.h \
     music.h \
-    orderwidget.h \
-    productinfo.h \
-    productwidget.h \
-    userInfo.h \
-    userManager.h
-    chattinglogwidget.h \
-    customerwidget.h \
-    orderwidget.h \
-    productwidget.h
+    productinfo.h
+>>>>>>> 1977ef8ba06df5f1906c5d06ef932b3216099763
 
 FORMS += \
     client.ui \
