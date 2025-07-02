@@ -17,6 +17,7 @@ SOURCES += \
     main.cpp \
     mainController.cpp \
     mainwindow.cpp \
+    orderInfo.cpp \
     productInfo.cpp \
     userInfo.cpp \
     userManager.cpp
@@ -31,6 +32,7 @@ HEADERS += \
     mainController.h \
     mainwindow.h \
     music.h \
+    orderInfo.h \
     productinfo.h \
     userInfo.h \
     userManager.h
