@@ -34,7 +34,7 @@ void MainWindow::on_login_button_clicked()
         // password 검증
         if(ui->pw_lineEdit->text().compare(temp->getPassword()) == 0){
             // client.ui 가 열렸을 때, server connect 를 통한 새 클라이언트 연결 추가.
-            // commuInfo -> client session 관리 리스트에 세션 추가
+            // server 가 열렸을 때, commuInfo -> client session 관리 리스트에 세션 추가
 
             // client ui open
             Client* clientWindow = new Client();
@@ -57,5 +57,14 @@ void MainWindow::on_join_button_clicked()
 
     // 회원 가입 취소 또는 완료 후 다시 로그인 화면으로 돌아옴
     this->close();
+}
+
+
+void MainWindow::on_admin_button_clicked()
+{
+    // 관리자 코드 입력하고 확인 버튼 클릭 시 서버 진입
+
+
+
 }
 
