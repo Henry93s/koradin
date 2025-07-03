@@ -79,7 +79,8 @@ FORMS += \
     join.ui \
     mainwindow.ui
 TRANSLATIONS += \
-    Koradin_ko_KR.ts
+    Koradin_ko_KR.ts \
+    Koradin_en_US.ts
 CONFIG += lrelease
 CONFIG += embed_translations
 

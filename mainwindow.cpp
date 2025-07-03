@@ -47,7 +47,7 @@ void MainWindow::on_login_button_clicked()
     if(temp == nullptr){
         // id 불일치
         qDebug() << "입력한 id 가 유저 리스트에 없습니다.";
-        Popup* popup = new Popup(this, "존재하지 않는 아이디 입니다.");
+        Popup* popup = new Popup(this, tr("존재하지 않는 아이디 입니다."));
         popup->show();
     } else{
         // password 검증
@@ -63,7 +63,7 @@ void MainWindow::on_login_button_clicked()
         } else {
             // password 불일치
             qDebug() << "계정의 password 가 일치하지 않습니다.";
-            Popup* popup = new Popup(this, "계정의 password 가 일치하지 않습니다.");
+            Popup* popup = new Popup(this, tr("계정의 password 가 일치하지 않습니다."));
             popup->show();
         }
     }
@@ -112,7 +112,7 @@ void MainWindow::on_admin_button_clicked()
 {
     if(ui->admin_lineEdit->text().compare(managerKeyJsonLoad()) != 0){
         qDebug() << "관리자 코드가 일치하지 않습니다.";
-        Popup* popup = new Popup(this, "관리자 코드가 일치하지 않습니다.");
+        Popup* popup = new Popup(this, tr("관리자 코드가 일치하지 않습니다."));
         popup->show();
     } else {
         qDebug() << "관리자 코드 일치 확인";
@@ -121,6 +121,38 @@ void MainWindow::on_admin_button_clicked()
         Server* server = new Server();
         server->show();
         this->close();
+    }
+}
+
+
+void MainWindow::on_language_comboBox_activated(int index)
+{
+    QString langCode;
+
+    // 현재 적용된 translator 를 제거하고 콤보박스로 적용된 translator 를 적용함
+    if (translator) {
+        qApp->removeTranslator(translator);
+        delete translator;
+        translator = nullptr;
+    }
+
+    translator = new QTranslator();
+
+    if (index == 0) {
+        // Korean 한국어 - default
+        langCode = "ko_KR";
+    } else if (index == 1) {
+        // English
+        langCode = "en_US";
+    }
+
+    QString filename = "./../../Koradin_" + langCode + ".qm";
+    if (translator->load(filename)) {
+        qApp->installTranslator(translator);
+        // 새 언어에 맞게 UI 갱신
+        ui->retranslateUi(this);
+    } else {
+        qDebug() << "Failed to load translation file:" << filename;
     }
 }
 

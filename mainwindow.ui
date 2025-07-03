@@ -119,6 +119,29 @@
      </item>
     </layout>
    </widget>
+   <widget class="QComboBox" name="language_comboBox">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>20</y>
+      <width>131</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <item>
+     <property name="text">
+      <string notr="true">한국어(Korean)</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string notr="true">영어(English)</string>
+     </property>
+    </item>
+   </widget>
   </widget>
  </widget>
  <resources/>

@@ -41,15 +41,15 @@ void Server::transferLabels(bool checked)
 
     if(ui->RadioBook->isChecked()){
         //ui->nameLabel->setText("")
-        ui->authorLabel->setText("저자");
-        ui->companyLabel->setText("출판사");
+        ui->authorLabel->setText(tr("저자"));
+        ui->companyLabel->setText(tr("출판사"));
     }
     else if(ui->RadioBluray->isChecked()){
-        ui->authorLabel->setText("감독/배우");
-        ui->companyLabel->setText("제작사");
+        ui->authorLabel->setText(tr("감독/배우"));
+        ui->companyLabel->setText(tr("제작사"));
     }
     else if(ui->RadioRecord->isChecked()){
-        ui->authorLabel->setText("아티스트");
-        ui->companyLabel->setText("음반사");
+        ui->authorLabel->setText(tr("아티스트"));
+        ui->companyLabel->setText(tr("음반사"));
     }
 }

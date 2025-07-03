@@ -6,6 +6,7 @@
 #include "musicManager.h"
 #include "bluerayManager.h"
 #include "bookManager.h"
+#include <QTranslator>
 
 class QTabWidget;
 
@@ -30,6 +31,8 @@ private slots:
 
     void on_admin_button_clicked();
 
+    void on_language_comboBox_activated(int index);
+
 private:
     Ui::MainWindow *ui;
     QTabWidget* tabWidget;
@@ -37,5 +40,9 @@ private:
     MusicManager* musicmanager;
     BluerayManager* bluerayManager;
     BookManager* bookManager;
+
+    // MainWindow 클래스 내부 멤버로 QTranslator 포인터 선언
+    QTranslator* translator = nullptr;
+
 };
 #endif // MAINWINDOW_H

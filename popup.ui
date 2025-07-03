@@ -16,16 +16,16 @@
   <widget class="QLabel" name="text_label">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>10</x>
      <y>30</y>
-     <width>400</width>
-     <height>41</height>
+     <width>381</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="maximumSize">
     <size>
      <width>400</width>
-     <height>41</height>
+     <height>80</height>
     </size>
    </property>
    <property name="text">
