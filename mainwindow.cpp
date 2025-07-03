@@ -14,6 +14,8 @@
 using namespace std;
 using json = nlohmann::json;
 
+int now_translation_index = 0; // default : 0 (한국어)
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow), tabWidget(new QTabWidget(this))
@@ -25,6 +27,9 @@ MainWindow::MainWindow(QWidget *parent)
     this->musicmanager = this->musicmanager->getInstance();
     this->bluerayManager = this->bluerayManager->getInstance();
     this->bookManager = this->bookManager->getInstance();
+
+    // 셋팅된 언어 변환 콤보박스의 인덱스 적용
+    ui->language_comboBox->setCurrentIndex(now_translation_index);
 }
 
 MainWindow::~MainWindow()
@@ -139,9 +144,15 @@ void MainWindow::on_language_comboBox_activated(int index)
     translator = new QTranslator();
 
     if (index == 0) {
+        now_translation_index = index;
+    } else if (index == 1) {
+        now_translation_index = index;
+    }
+
+    if(now_translation_index == 0){
         // Korean 한국어 - default
         langCode = "ko_KR";
-    } else if (index == 1) {
+    } else if(now_translation_index == 1){
         // English
         langCode = "en_US";
     }
