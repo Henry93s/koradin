@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,6 +25,7 @@ SOURCES += \
     mainwindow.cpp \
     orderwidget.cpp \
     perproduct.cpp \
+    popup.cpp \
     productInfo.cpp \
     productwidget.cpp \
     server.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
     mainwindow.h \
     orderwidget.h \
     perproduct.h \
+    popup.h \
     productinfo.h \
     productwidget.h \
     userInfo.h \
@@ -64,6 +66,7 @@ FORMS += \
     editalbumwidget.ui \
     editbookwidget.ui \
     perproduct.ui \
+    popup.ui \
     server.ui \
     client.ui \
     join.ui \

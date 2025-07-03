@@ -2,6 +2,7 @@
 #include "ui_join.h"
 #include "userInfo.h"
 #include "mainwindow.h"
+#include "popup.h"
 
 Join::Join(QMainWindow *parent)
     : QWidget(parent)
@@ -22,6 +23,8 @@ Join::~Join()
 QString Join::duplicateCheck(){
     if(ui->id_lineEdit->text() == nullptr || ui->name_lineEdit->text() == nullptr ||
         ui->pw_lineEdit->text() == nullptr || ui->email_lineEdit->text() == nullptr){
+        Popup* popup = new Popup(this, "입력되지 않은 값이 있습니다.");
+        popup->show();
         return "입력되지 않은 값이 있음";
     }
 
@@ -30,6 +33,8 @@ QString Join::duplicateCheck(){
     if(!findUser){
         return "OK";
     } else {
+        Popup* popup = new Popup(this, "중복된 아이디가 있습니다.");
+        popup->show();
         return "duplicate_ID";
     }
 }
@@ -40,6 +45,8 @@ void Join::on_join_button_clicked()
     // 패스워드, 패스워드 확인 일치 여부 확인
     if(ui->pw_lineEdit->text().compare(ui->pwchk_lineEdit->text()) != 0){
         qDebug() << "패스워드 확인이 일치하지 않습니다.\n";
+        Popup* popup = new Popup(this, "패스워드 확인이 일치하지 않습니다.");
+        popup->show();
         return;
     }
 

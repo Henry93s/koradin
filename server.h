@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <productInfo.h>
 #include <userInfo.h>
+#include <QTcpServer>
 
 class QTabWidget;
 
@@ -28,6 +29,11 @@ private:
     std::vector<std::shared_ptr<ProductInfo>> products;
     std::vector<std::shared_ptr<UserInfo>> users;
     //std::vector<std::shared_ptr<OrderInfo>> orders;
+
+    void clientConnect();
+    void echoData();
+
+    QTcpServer* tcpServer;
 private slots:
     void transferLabels(bool checked);
 };

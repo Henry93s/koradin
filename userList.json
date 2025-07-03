@@ -21,6 +21,13 @@
         "password": "manager"
     },
     {
+        "ID": "sadfasdf",
+        "email": "asdf",
+        "isAdmin": "false",
+        "name": "asdf",
+        "password": "asdfa"
+    },
+    {
         "ID": "testasdfasdf",
         "email": "sadfsadg",
         "isAdmin": "false",

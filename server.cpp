@@ -3,6 +3,20 @@
 
 #include <QTabWidget>
 #include <QTabBar>
+#include <QtNetwork>
+
+#define PORT    5085
+#define PENDING_CONN    5
+#define MAX_CLIENTS 20
+#define MAX_ROOMS   5
+
+typedef struct {
+    char name[50]; // 접속한 클라이언트 이름
+    int room_idx; // 같은 room_idx 끼리 채팅 대화 진행됨 기본 0
+} ClientData;
+
+int CLIENT_INDEX = 0;
+QTcpSocket* clients[MAX_CLIENTS]; // 접속 클라이언트 소켓
 
 Server::Server(QWidget *parent)
     : QMainWindow(parent)

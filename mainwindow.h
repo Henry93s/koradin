@@ -19,10 +19,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    QString managerKeyJsonLoad();
 
 private slots:
     void on_login_button_clicked();
     void on_join_button_clicked();
+
+    void on_admin_button_clicked();
 
 private:
     Ui::MainWindow *ui;
