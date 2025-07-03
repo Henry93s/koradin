@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="AdminWidget" name="tab">
     <property name="autoFillBackground">
@@ -37,15 +37,82 @@
     <attribute name="title">
      <string>Customers</string>
     </attribute>
-    <widget class="QListWidget" name="listWidget">
+    <widget class="QSplitter" name="splitter">
      <property name="geometry">
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>681</width>
-       <height>511</height>
+       <width>671</width>
+       <height>501</height>
       </rect>
      </property>
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <widget class="QListWidget" name="listWidget"/>
+     <widget class="QWidget" name="EnrollWidget_3" native="true">
+      <widget class="QWidget" name="EditWidget_3" native="true">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>150</y>
+         <width>231</width>
+         <height>301</height>
+        </rect>
+       </property>
+       <widget class="QWidget" name="formLayoutWidget_3">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>181</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <layout class="QFormLayout" name="formLayout_3">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::FieldGrowthPolicy::FieldsStayAtSizeHint</enum>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="nameLabel_3">
+           <property name="text">
+            <string>이름</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QTextEdit" name="textEdit_9"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>130</y>
+          <width>93</width>
+          <height>29</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>검색</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>71</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>주문 검색</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
    </widget>
   </widget>

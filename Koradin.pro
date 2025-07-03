@@ -24,6 +24,7 @@ SOURCES += \
     mainController.cpp \
     mainwindow.cpp \
     orderwidget.cpp \
+    perproduct.cpp \
     productInfo.cpp \
     productwidget.cpp \
     server.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     mainController.h \
     mainwindow.h \
     orderwidget.h \
+    perproduct.h \
     productinfo.h \
     productwidget.h \
     userInfo.h \
@@ -61,6 +63,7 @@ FORMS += \
     customerswidget.ui \
     editalbumwidget.ui \
     editbookwidget.ui \
+    perproduct.ui \
     server.ui \
     client.ui \
     join.ui \
