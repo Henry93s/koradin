@@ -44,7 +44,7 @@ void Join::on_join_button_clicked()
 {
     // 패스워드, 패스워드 확인 일치 여부 확인
     if(ui->pw_lineEdit->text().compare(ui->pwchk_lineEdit->text()) != 0){
-        qDebug() << "패스워드 확인이 일치하지 않습니다.\n";
+        qDebug() << "패스워드 확인이 일치하지 않습니다.";
         Popup* popup = new Popup(this, "패스워드 확인이 일치하지 않습니다.");
         popup->show();
         return;

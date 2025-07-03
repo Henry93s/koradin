@@ -6,9 +6,11 @@
 class Music : public ProductInfo{
 public:
     Music();
+    Music(const QString& name, const QString& artist, const QString& company
+            , const int& price, const QString& context, const int& amount);
     ~Music();
     QString getArtist();
-    void setArtist(const QString& Artist);
+    void setArtist(const QString& artist);
 
 private:
     QString artist;

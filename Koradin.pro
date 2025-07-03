@@ -23,6 +23,8 @@ SOURCES += \
     main.cpp \
     mainController.cpp \
     mainwindow.cpp \
+    music.cpp \
+    musicManager.cpp \
     orderwidget.cpp \
     perproduct.cpp \
     popup.cpp \
@@ -49,6 +51,7 @@ HEADERS += \
     join.h \
     mainController.h \
     mainwindow.h \
+    musicManager.h \
     orderwidget.h \
     perproduct.h \
     popup.h \

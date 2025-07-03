@@ -20,14 +20,16 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // usermanager getInstance 호출(로그인 검증 로직 과 회원 가입 처리 로직 시 필요함)
+    // 프로그램 처음 켜질 때 user, music manager getInstance 호출
     this->usermanager = this->usermanager->getInstance();
+    this->musicmanager = this->musicmanager->getInstance();
 }
 
 MainWindow::~MainWindow()
 {
-    // main 프로그램 종료 시 현재 userlist 를 userlist.json 에 저장 하도록 하는 함수 호출됨
+    // main 프로그램 종료 시 user,music STL 컨테이너 데이터를 ~list.json 에 저장 하도록 함
     delete this->usermanager;
+    delete this->musicmanager;
     delete ui;
 }
 
@@ -40,7 +42,7 @@ void MainWindow::on_login_button_clicked()
     UserInfo* temp = usermanager->userSearchById(ui->id_lineEdit->text());
     if(temp == nullptr){
         // id 불일치
-        qDebug() << "입력한 id 가 유저 리스트에 없습니다.\n";
+        qDebug() << "입력한 id 가 유저 리스트에 없습니다.";
         Popup* popup = new Popup(this, "존재하지 않는 아이디 입니다.");
         popup->show();
     } else{
@@ -56,7 +58,7 @@ void MainWindow::on_login_button_clicked()
             this->close();
         } else {
             // password 불일치
-            qDebug() << "계정의 password 가 일치하지 않습니다.\n";
+            qDebug() << "계정의 password 가 일치하지 않습니다.";
             Popup* popup = new Popup(this, "계정의 password 가 일치하지 않습니다.");
             popup->show();
         }
@@ -95,7 +97,7 @@ QString MainWindow::managerKeyJsonLoad(){
     QString key;
     for(auto data : j){
         key = QString::fromStdString(data["key"]);
-        qDebug() << "Loaded key : " << key << "\n";
+        qDebug() << "Loaded key : " << key;
     }
 
     file.close();
@@ -105,11 +107,11 @@ QString MainWindow::managerKeyJsonLoad(){
 void MainWindow::on_admin_button_clicked()
 {
     if(ui->admin_lineEdit->text().compare(managerKeyJsonLoad()) != 0){
-        qDebug() << "관리자 코드가 일치하지 않습니다.\n";
+        qDebug() << "관리자 코드가 일치하지 않습니다.";
         Popup* popup = new Popup(this, "관리자 코드가 일치하지 않습니다.");
         popup->show();
     } else {
-        qDebug() << "관리자 코드 일치 확인\n";
+        qDebug() << "관리자 코드 일치 확인";
 
         // 서버 진입
         Server* server = new Server();

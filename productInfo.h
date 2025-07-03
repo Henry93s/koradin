@@ -9,8 +9,6 @@ public:
     ProductInfo();
     ~ProductInfo();
 
-    QString getTitle();
-    void setTitle(const QString& title);
     QString getCompany();
     void setCompany(const QString& company);
     int getPrice();
@@ -21,7 +19,6 @@ public:
     void setAmount(int amount);
 
 private:
-    QString title;
     QString company;
     int price;
     QString context;

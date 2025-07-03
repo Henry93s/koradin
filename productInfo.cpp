@@ -3,13 +3,12 @@
 ProductInfo::ProductInfo(){}
 ProductInfo::~ProductInfo(){}
 
-QString ProductInfo::getTitle(){
-    return this->title;
+QString ProductInfo::getCompany(){
+    return this->company;
 }
-void ProductInfo::setTitle(const QString& title){
-    this->title = title;
+void ProductInfo::setCompany(const QString& company){
+    this->company = company;
 }
-
 int ProductInfo::getPrice(){
     return this->price;
 }
@@ -21,4 +20,11 @@ QString ProductInfo::getContext(){
 }
 void ProductInfo::setContext(const QString& context){
     this->context = context;
+}
+
+int ProductInfo::getAmount(){
+    return this->amount;
+}
+void ProductInfo::setAmount(int amount){
+    this->amount = amount;
 }

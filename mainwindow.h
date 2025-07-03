@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "userManager.h"
+#include "musicManager.h"
 
 class QTabWidget;
 
@@ -31,5 +32,6 @@ private:
     Ui::MainWindow *ui;
     QTabWidget* tabWidget;
     UserManager* usermanager;
+    MusicManager* musicmanager;
 };
 #endif // MAINWINDOW_H

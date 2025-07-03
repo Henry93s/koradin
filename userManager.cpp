@@ -53,7 +53,7 @@ void UserManager::userListJsonLoad(){
         // userList stl Map 컨테이너에 저장
         userList.insert(ID, newUser);
 
-        qDebug() << "Loaded Member ID, name : " << ID << " (" << name << ")\n";
+        qDebug() << "Loaded Member ID, name : " << ID << " (" << name << ")";
     }
 
     file.close();
@@ -150,5 +150,6 @@ UserManager::UserManager()
 
 UserManager::~UserManager()
 {
+    qDebug() << "프로그램 종료 발생";
     userListJsonSave();
 }
