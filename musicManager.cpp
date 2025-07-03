@@ -148,6 +148,21 @@ QMap<QString, Music*> MusicManager::musicListRead(){
     return this->musicList;
 }
 
+// read some musics
+QMap<QString, Music*> MusicManager::musicSearchAllByNameAndArtist(const QString& name, const QString& artist){
+    QMap<QString, Music*> returnMusics;
+
+    for(auto it = musicList.begin(); it != musicList.end(); ++it){
+        if(!it.value()) continue;
+        if(name.compare(it.value()->getName()) == 0
+            && artist.compare(it.value()->getArtist()) == 0){
+            returnMusics.insert(it.value()->getName(), it.value());
+        }
+    }
+
+    return returnMusics;
+}
+
 MusicManager::MusicManager()
 {
     musicListJsonLoad();

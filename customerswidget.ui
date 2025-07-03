@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="AdminWidget" name="tab">
     <property name="autoFillBackground">
@@ -66,7 +66,7 @@
           <x>10</x>
           <y>30</y>
           <width>181</width>
-          <height>41</height>
+          <height>53</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_3">

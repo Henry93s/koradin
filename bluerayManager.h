@@ -23,6 +23,8 @@ public:
     Blueray* blueraySearchByNameAndArtist(const QString& name, const QString& artist);
     // read bluerayList
     QMap<QString, Blueray*> bluerayListRead();
+    // read some bluerays (검색 데이터 포함 조회)
+    QMap<QString, Blueray*> blueraySearchAllByNameAndArtist(const QString& name, const QString& artist);
 
     // bluerayList.json 파일 -> bluerayList 로 load
     void bluerayListJsonLoad();

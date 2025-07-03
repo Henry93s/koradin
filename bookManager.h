@@ -23,6 +23,8 @@ public:
     Book* bookSearchByNameAndWriter(const QString& name, const QString& writer);
     // read bookList
     QMap<QString, Book*> bookListRead();
+    // read some books (검색 데이터 포함 조회)
+    QMap<QString, Book*> bookSearchAllByNameAndWriter(const QString& name, const QString& writer);
 
     // bookList.json 파일 -> bookList 로 load
     void bookListJsonLoad();
