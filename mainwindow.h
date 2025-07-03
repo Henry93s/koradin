@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "userManager.h"
 #include "musicManager.h"
+#include "bluerayManager.h"
+#include "bookManager.h"
 
 class QTabWidget;
 
@@ -33,5 +35,7 @@ private:
     QTabWidget* tabWidget;
     UserManager* usermanager;
     MusicManager* musicmanager;
+    BluerayManager* bluerayManager;
+    BookManager* bookManager;
 };
 #endif // MAINWINDOW_H

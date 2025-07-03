@@ -30,10 +30,18 @@
      <widget class="QLineEdit" name="name_lineEdit"/>
     </item>
     <item>
-     <widget class="QLineEdit" name="pw_lineEdit"/>
+     <widget class="QLineEdit" name="pw_lineEdit">
+      <property name="echoMode">
+       <enum>QLineEdit::EchoMode::Password</enum>
+      </property>
+     </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="pwchk_lineEdit"/>
+     <widget class="QLineEdit" name="pwchk_lineEdit">
+      <property name="echoMode">
+       <enum>QLineEdit::EchoMode::Password</enum>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QLineEdit" name="email_lineEdit"/>

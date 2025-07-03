@@ -1,0 +1,10 @@
+[
+    {
+        "amount": 100,
+        "company": "company3",
+        "context": "하이",
+        "name": "book_name",
+        "price": 10000,
+        "writer": "writer3"
+    }
+]

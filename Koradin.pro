@@ -11,7 +11,9 @@ CONFIG += c++17
 SOURCES += \
     adminwidget.cpp \
     blueray.cpp \
+    bluerayManager.cpp \
     book.cpp \
+    bookManager.cpp \
     chattinglogwidget.cpp \
     client.cpp \
     customerswidget.cpp \
@@ -37,6 +39,8 @@ SOURCES += \
 
 HEADERS += \
     adminwidget.h \
+    bluerayManager.h \
+    bookManager.h \
     chattinglogwidget.h \
     client.h \
     customerswidget.h \

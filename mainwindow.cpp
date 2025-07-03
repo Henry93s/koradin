@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
     // 프로그램 처음 켜질 때 user, music manager getInstance 호출
     this->usermanager = this->usermanager->getInstance();
     this->musicmanager = this->musicmanager->getInstance();
+    this->bluerayManager = this->bluerayManager->getInstance();
+    this->bookManager = this->bookManager->getInstance();
 }
 
 MainWindow::~MainWindow()
@@ -30,6 +32,8 @@ MainWindow::~MainWindow()
     // main 프로그램 종료 시 user,music STL 컨테이너 데이터를 ~list.json 에 저장 하도록 함
     delete this->usermanager;
     delete this->musicmanager;
+    delete this->bluerayManager;
+    delete this->bookManager;
     delete ui;
 }
 

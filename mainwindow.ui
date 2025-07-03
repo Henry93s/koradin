@@ -42,7 +42,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="pw_lineEdit"/>
+      <widget class="QLineEdit" name="pw_lineEdit">
+       <property name="echoMode">
+        <enum>QLineEdit::EchoMode::Password</enum>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="verticalSpacer">
