@@ -23,6 +23,10 @@ public:
     UserInfo* userSearchById(const QString& ID);
     // read userList
     QMap<QString, UserInfo*> userListRead();
+    // read some users search by ID
+    QMap<QString, UserInfo*> userSearchAllById(const QString& ID);
+    // read some users search by name
+    QMap<QString, UserInfo*> userSearchAllByName(const QString& name);
 
     // userList.json 파일 -> userList 로 load
     void userListJsonLoad();

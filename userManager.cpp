@@ -143,6 +143,29 @@ QMap<QString, UserInfo*> UserManager::userListRead(){
     return this->userList;
 }
 
+// read some users search by ID
+QMap<QString, UserInfo*> UserManager::userSearchAllById(const QString& ID){
+    QMap<QString, UserInfo*> returnUsers;
+    for (auto it = userList.begin(); it != userList.end(); ++it) {
+        if (!it.value()) continue;
+        if(it.value()->getID().contains(ID) == true){
+            returnUsers.insert(it.value()->getName(), it.value());
+        }
+    }
+    return returnUsers;
+}
+// read some users search by name
+QMap<QString, UserInfo*> UserManager::userSearchAllByName(const QString& name){
+    QMap<QString, UserInfo*> returnUsers;
+    for (auto it = userList.begin(); it != userList.end(); ++it) {
+        if (!it.value()) continue;
+        if(it.value()->getName().contains(name) == true){
+            returnUsers.insert(it.value()->getName(), it.value());
+        }
+    }
+    return returnUsers;
+}
+
 UserManager::UserManager()
 {
     userListJsonLoad();
