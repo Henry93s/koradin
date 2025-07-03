@@ -43,6 +43,5 @@ private:
 
     // MainWindow 클래스 내부 멤버로 QTranslator 포인터 선언
     QTranslator* translator = nullptr;
-
 };
 #endif // MAINWINDOW_H

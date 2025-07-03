@@ -98,6 +98,11 @@
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>아이디(ID)</string>
       </property>
@@ -105,6 +110,11 @@
     </item>
     <item>
      <widget class="QLabel" name="label_5">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>이름</string>
       </property>
@@ -112,6 +122,11 @@
     </item>
     <item>
      <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>비밀번호</string>
       </property>
@@ -119,6 +134,11 @@
     </item>
     <item>
      <widget class="QLabel" name="label_3">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>비밀번호 확인</string>
       </property>
@@ -126,6 +146,11 @@
     </item>
     <item>
      <widget class="QLabel" name="label_4">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>이메일(Email)</string>
       </property>

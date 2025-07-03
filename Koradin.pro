@@ -14,6 +14,7 @@ SOURCES += \
     bluerayManager.cpp \
     book.cpp \
     bookManager.cpp \
+    bookitem.cpp \
     chattinglogwidget.cpp \
     client.cpp \
     customerswidget.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     adminwidget.h \
     bluerayManager.h \
     bookManager.h \
+    bookitem.h \
     chattinglogwidget.h \
     client.h \
     customerswidget.h \
@@ -69,6 +71,7 @@ HEADERS += \
 
 FORMS += \
     adminwidget.ui \
+    bookitem.ui \
     customerswidget.ui \
     editalbumwidget.ui \
     editbookwidget.ui \

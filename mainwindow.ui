@@ -26,6 +26,11 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QLabel" name="id_label">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>아이디(ID)</string>
        </property>
@@ -36,6 +41,11 @@
      </item>
      <item>
       <widget class="QLabel" name="pw_label">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>비밀번호</string>
        </property>
@@ -68,6 +78,9 @@
       <widget class="QPushButton" name="login_button">
        <property name="text">
         <string>로그인</string>
+       </property>
+       <property name="shortcut">
+        <string>Return</string>
        </property>
       </widget>
      </item>
@@ -102,6 +115,11 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>관리자 코드</string>
        </property>
@@ -122,11 +140,17 @@
    <widget class="QComboBox" name="language_comboBox">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>20</y>
-      <width>131</width>
-      <height>31</height>
+      <x>0</x>
+      <y>0</y>
+      <width>201</width>
+      <height>51</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="currentIndex">
      <number>0</number>

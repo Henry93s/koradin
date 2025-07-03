@@ -28,3 +28,33 @@ int ProductInfo::getAmount(){
 void ProductInfo::setAmount(int amount){
     this->amount = amount;
 }
+
+// QString -- base64 인코딩 --> QImage
+QImage ProductInfo::getQImagefromQString(const QString& imageString) {
+    // Base64 디코딩 후 압축 해제
+    QByteArray compressed = QByteArray::fromBase64(imageString.toLatin1());
+    QByteArray decompressed = qUncompress(compressed);
+
+    // 이미지로 복원
+    QImage image;
+    image.loadFromData(decompressed, "PNG");
+    return image;
+}
+// image -- base64 디코딩 --> QString -> set
+void ProductInfo::setQImageToQString(const QImage& image) {
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    image.save(&buffer, "PNG");
+
+    // 압축된 PNG 데이터를 qCompress로 추가 압축
+    QByteArray compressed = qCompress(byteArray);
+    this->image = QString::fromLatin1(compressed.toBase64());
+}
+// return pure QString QImage(base64)
+QString ProductInfo::getQImagePureQString(){
+    return this->image;
+}
+
+void ProductInfo::setQImagePureQString(const QString& image){
+    this->image = image;
+}

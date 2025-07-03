@@ -7,7 +7,7 @@ class Book : public ProductInfo {
 public:
     Book();
     Book(const QString& name, const QString& writer, const QString& company
-          , const int& price, const QString& context, const int& amount);
+          , const int& price, const QString& context, const int& amount, const QString& image);
     ~Book();
     QString getWriter();
     void setWriter(const QString& writer);

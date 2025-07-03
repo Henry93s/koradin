@@ -49,8 +49,9 @@ void BookManager::bookListJsonLoad(){
         int price = book["price"];
         QString context = QString::fromStdString(book["context"]);
         int amount = book["amount"];
+        QString image = QString::fromStdString(book["image"]);
 
-        Book* newBook = new Book(name, writer, company, price, context, amount);
+        Book* newBook = new Book(name, writer, company, price, context, amount, image);
         // bookList stl Map 컨테이너에 저장
         bookList.insert(name, newBook);
 
@@ -80,7 +81,8 @@ void BookManager::bookListJsonSave(){
             { "company",  it.value()->getCompany().toStdString() },
             { "price",     it.value()->getPrice() },
             { "context",   it.value()->getContext().toStdString() },
-            { "amount",    it.value()->getAmount() }
+            { "amount",    it.value()->getAmount() },
+            { "image",     it.value()->getQImagePureQString().toStdString()}
         };
         // json 각 요소들을 j_array 에 push
         j_array.push_back(userObj);
@@ -178,6 +180,24 @@ QMap<QString, Book*> BookManager::bookListRead(){
 
 BookManager::BookManager()
 {
+    // test start
+    QImage img("./k102039149_1.PNG");
+
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    img.save(&buffer, "PNG");
+
+    // 압축된 PNG 데이터를 qCompress로 추가 압축
+    QByteArray compressed = qCompress(byteArray);
+    QString img_string = QString::fromLatin1(compressed.toBase64());
+
+    qDebug() << img_string;
+
+    // test
+    Book* book = new Book("잔소리탈출연구소1", "윤선아", "어크로스주니어", 13000, "아이와 부모 모두에게 필요한 책", 100, img_string);
+    this->bookInsert(book);
+    // test end
+
     bookListJsonLoad();
 }
 

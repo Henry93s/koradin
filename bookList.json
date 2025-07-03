@@ -1,10 +1,11 @@
 [
     {
         "amount": 100,
-        "company": "company3",
-        "context": "하이",
-        "name": "book_name",
-        "price": 10000,
-        "writer": "writer3"
+        "company": "어크로스주니어",
+        "context": "아이와 부모 모두에게 필요한 책",
+        "image": "AAAAAA==",
+        "name": "잔소리탈출연구소1",
+        "price": 13000,
+        "writer": "윤선아"
     }
 ]
