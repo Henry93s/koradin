@@ -148,14 +148,27 @@ QMap<QString, Music*> MusicManager::musicListRead(){
     return this->musicList;
 }
 
-// read some musics
-QMap<QString, Music*> MusicManager::musicSearchAllByNameAndArtist(const QString& name, const QString& artist){
+// read some musics Search by name
+QMap<QString, Music*> MusicManager::musicSearchAllByName(const QString& name){
     QMap<QString, Music*> returnMusics;
 
     for(auto it = musicList.begin(); it != musicList.end(); ++it){
         if(!it.value()) continue;
-        if(name.compare(it.value()->getName()) == 0
-            && artist.compare(it.value()->getArtist()) == 0){
+        if(it.value()->getName().contains(name) == true){
+            returnMusics.insert(it.value()->getName(), it.value());
+        }
+    }
+
+    return returnMusics;
+}
+
+// read some musics search by artist
+QMap<QString, Music*> MusicManager::musicSearchAllByArtist(const QString& artist){
+    QMap<QString, Music*> returnMusics;
+
+    for(auto it = musicList.begin(); it != musicList.end(); ++it){
+        if(!it.value()) continue;
+        if(it.value()->getArtist().contains(artist) == true){
             returnMusics.insert(it.value()->getName(), it.value());
         }
     }

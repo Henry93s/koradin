@@ -23,8 +23,10 @@ public:
     Music* musicSearchByNameAndArtist(const QString& name, const QString& artist);
     // read musicListSt
     QMap<QString, Music*> musicListRead();
-    // read some musics (검색 데이터 포함 조회)
-    QMap<QString, Music*> musicSearchAllByNameAndArtist(const QString& name, const QString& artist);
+    // read some musics search by name (검색 데이터 포함 조회)
+    QMap<QString, Music*> musicSearchAllByName(const QString& name);
+    // read some musics search by artist(검색 데이터 포함 조회)
+    QMap<QString, Music*> musicSearchAllByArtist(const QString& artist);
 
     // musicList.json 파일 -> musicList 로 load
     void musicListJsonLoad();

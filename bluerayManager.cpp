@@ -143,14 +143,27 @@ Blueray* BluerayManager::blueraySearchByNameAndArtist(const QString& name, const
     return nullptr;
 }
 
-// read some bluerays
-QMap<QString, Blueray*> BluerayManager::blueraySearchAllByNameAndArtist(const QString& name, const QString& artist){
+// read some bluerays search by name
+QMap<QString, Blueray*> BluerayManager::blueraySearchAllByName(const QString& name){
     QMap<QString, Blueray*> returnBluerays;
 
     for(auto it = bluerayList.begin(); it != bluerayList.end(); ++it){
         if(!it.value()) continue;
-        if(name.compare(it.value()->getName()) == 0
-            && artist.compare(it.value()->getArtist()) == 0){
+        if(it.value()->getName().contains(name) == true){
+            returnBluerays.insert(it.value()->getName(), it.value());
+        }
+    }
+
+    return returnBluerays;
+}
+
+// read some bluerays search by artist
+QMap<QString, Blueray*> BluerayManager::blueraySearchAllByArtist(const QString& artist){
+    QMap<QString, Blueray*> returnBluerays;
+
+    for(auto it = bluerayList.begin(); it != bluerayList.end(); ++it){
+        if(!it.value()) continue;
+        if(it.value()->getArtist().contains(artist) == true){
             returnBluerays.insert(it.value()->getName(), it.value());
         }
     }

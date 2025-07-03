@@ -143,14 +143,27 @@ Book* BookManager::bookSearchByNameAndWriter(const QString& name, const QString&
     return nullptr;
 }
 
-// read some books
-QMap<QString, Book*> BookManager::bookSearchAllByNameAndWriter(const QString& name, const QString& writer){
+// read some books search by name
+QMap<QString, Book*> BookManager::bookSearchAllByName(const QString& name){
     QMap<QString, Book*> returnBooks;
 
     for(auto it = bookList.begin(); it != bookList.end(); ++it){
         if(!it.value()) continue;
-        if(name.compare(it.value()->getName()) == 0
-            && writer.compare(it.value()->getWriter()) == 0){
+        if(it.value()->getName().contains(name) == true){
+            returnBooks.insert(it.value()->getName(), it.value());
+        }
+    }
+
+    return returnBooks;
+}
+
+// read some books search by writer
+QMap<QString, Book*> BookManager::bookSearchAllByWriter(const QString& writer){
+    QMap<QString, Book*> returnBooks;
+
+    for(auto it = bookList.begin(); it != bookList.end(); ++it){
+        if(!it.value()) continue;
+        if(it.value()->getWriter().contains(writer) == true){
             returnBooks.insert(it.value()->getName(), it.value());
         }
     }
