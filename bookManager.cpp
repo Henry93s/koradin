@@ -202,4 +202,5 @@ BookManager::~BookManager()
 {
     qDebug() << "프로그램 종료 발생";
     bookListJsonSave();
+    // 7/5 ~ : memory management -> STL list 들 사용 안하거나 종료할 때 모든 요소 delete 처리
 }

@@ -24,6 +24,8 @@ public:
 private slots:
     void on_book_search_pushButton_clicked();
 
+    void on_book_order_pushButton_clicked();
+
 private:
     Ui::Client *ui;
     BookManager* bookmanager;

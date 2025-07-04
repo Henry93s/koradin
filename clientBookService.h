@@ -13,6 +13,8 @@ public:
     ~ClientBookService();
     // 다중 검색 로직
     QVector<Book*> bookSearch(Client* bookTab);
+    // 주문하기 클릭 시 발생 로직
+    void bookOrdering(Client* bookTab);
 
 private:
     BookManager* bookmanager;

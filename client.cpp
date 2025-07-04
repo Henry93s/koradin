@@ -71,3 +71,9 @@ void Client::on_book_search_pushButton_clicked()
     clientBookService.bookSearch(this);
 }
 
+
+void Client::on_book_order_pushButton_clicked()
+{
+    clientBookService.bookOrdering(this);
+}
+

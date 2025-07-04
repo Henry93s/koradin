@@ -2,6 +2,8 @@
 #include "popup.h"
 #include "ui_client.h"
 #include "client.h"
+#include "bookitem.h"
+#include "popup.h"
 
 ClientBookService::ClientBookService(){
     // bookmanager singleton 인스턴스 get
@@ -67,4 +69,22 @@ QVector<Book*> ClientBookService::bookSearch(Client* bookTab){
     }
 
     return searchResult;
+}
+
+void ClientBookService::bookOrdering(Client* bookTab){
+    if(bookTab->getUi()->book_listWidget->selectedItems().isEmpty()){
+        Popup* popup = new Popup(bookTab, QObject::tr("선택한 항목이 없습니다!"));
+        popup->show();
+    } else {
+        // book 탭에서 선택된(selected) bookItem 을 감싸고 있는 틀인 QListWidgetItem 을 먼저 가져옴.
+        // 틀 안에는 item 이 단일로 들어가 있으므로 first()) item 을 가져옴.
+        QListWidgetItem* firstItem = bookTab->getUi()->book_listWidget->selectedItems().first();
+        // qwidget 을 BookItem* 으로 강제 캐스팅
+        BookItem* castedItem = (BookItem*)firstItem;
+        QMap<QString, QString> selectedData = castedItem->getData();
+        // 선택된 데이터를 orderManager 에 전달
+        qDebug() << selectedData;
+        Popup* popup = new Popup(bookTab, QObject::tr("주문이 완료되었습니다."));
+        popup->show();
+    }
 }

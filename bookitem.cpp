@@ -64,3 +64,19 @@ QString BookItem::makeImageToolTip(QString base64FromPng){
     returnQString = QString("<img src='data:image/png;base64,%1'>").arg(base64FromPng);
     return returnQString;
 }
+
+// QListWidget 에서 선택된 QListWidgetItem -> bookItem 에서
+//  주문에 필요한 데이터(책 이름, 작가 & 출판사, 가격) 만 가져옴
+QMap<QString, QString> BookItem::getData(){
+    QMap<QString, QString> returnData;
+    returnData.insert("name", this->ui->book_title_label->text());
+    qDebug() << this->ui->book_title_label->text();
+    QStringList parts = this->ui->book_info_label->text().split(" | ");
+    QString writer = parts.at(0);
+    QString company = parts.at(1);
+    returnData.insert("writer", writer);
+    returnData.insert("company", company);
+    returnData.insert("price", this->ui->book_price_label->text());
+
+    return returnData;
+}
