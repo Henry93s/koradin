@@ -10,6 +10,8 @@ Client::Client(QWidget *parent)
     , ui(new Ui::Client)
 {
     ui->setupUi(this);
+
+
     this->bookmanager = this->bookmanager->getInstance();
 
     // 첫 클라이언트로 접근하고, 도서 탭 리스트 뷰 구성
