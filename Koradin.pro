@@ -1,5 +1,4 @@
-QT       += core gui
-QT       += network
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,12 +11,17 @@ CONFIG += c++17
 SOURCES += \
     adminwidget.cpp \
     blueray.cpp \
+    bluerayManager.cpp \
     book.cpp \
+    bookManager.cpp \
+    bookitem.cpp \
     chattinglogwidget.cpp \
     chattingroom.cpp \
     client.cpp \
     commuInfo.cpp \
     createnewroom.cpp \
+    clientBookService.cpp \
+    clientService.cpp \
     customerswidget.cpp \
     editalbumwidget.cpp \
     editbookwidget.cpp \
@@ -27,9 +31,12 @@ SOURCES += \
     main.cpp \
     mainController.cpp \
     mainwindow.cpp \
+    music.cpp \
+    musicManager.cpp \
     orderwidget.cpp \
     perchatting.cpp \
     perproduct.cpp \
+    popup.cpp \
     productInfo.cpp \
     productwidget.cpp \
     server.cpp \
@@ -39,10 +46,15 @@ SOURCES += \
 
 HEADERS += \
     adminwidget.h \
+    bluerayManager.h \
+    bookManager.h \
+    bookitem.h \
     chattinglogwidget.h \
     chattingroom.h \
     client.h \
     createnewroom.h \
+    clientBookService.h \
+    clientService.h \
     customerswidget.h \
     editalbumwidget.h \
     editbookwidget.h \
@@ -55,9 +67,11 @@ HEADERS += \
     join.h \
     mainController.h \
     mainwindow.h \
+    musicManager.h \
     orderwidget.h \
     perchatting.h \
     perproduct.h \
+    popup.h \
     productinfo.h \
     productwidget.h \
     tcpcommudefines.h \
@@ -71,17 +85,20 @@ FORMS += \
     adminwidget.ui \
     chattingroom.ui \
     createnewroom.ui \
+    bookitem.ui \
     customerswidget.ui \
     editalbumwidget.ui \
     editbookwidget.ui \
     perchatting.ui \
     perproduct.ui \
+    popup.ui \
     server.ui \
     client.ui \
     join.ui \
     mainwindow.ui
 TRANSLATIONS += \
-    Koradin_ko_KR.ts
+    Koradin_ko_KR.ts \
+    Koradin_en_US.ts
 CONFIG += lrelease
 CONFIG += embed_translations
 

@@ -7,7 +7,6 @@
 #include <productInfo.h>
 #include <userInfo.h>
 #include <commuInfo.h>
-#include <queue>
 
 class QTabWidget;
 
@@ -50,5 +49,7 @@ private:
 
     std::vector<std::shared_ptr<ProductInfo>> products;
     std::vector<std::shared_ptr<UserInfo>> users;
+
+    //void echoData();
 };
 #endif // SERVER_H

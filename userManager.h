@@ -16,13 +16,17 @@ public:
     UserManager* getInstance();
 
     // create user
-    void userListInsert(UserInfo* user);
+    QString userInsert(UserInfo* user);
     // delete user
-    void userListErase(const QString& ID);
+    QString userErase(const QString& ID);
     // read one user
-    UserInfo* userListRead(const QString& ID);
+    UserInfo* userSearchById(const QString& ID);
     // read userList
-    QMap<QString, QVector<UserInfo*>> userListRead();
+    QMap<QString, UserInfo*> userListRead();
+    // read some users search by ID
+    QMap<QString, UserInfo*> userSearchAllById(const QString& ID);
+    // read some users search by name
+    QMap<QString, UserInfo*> userSearchAllByName(const QString& name);
 
     // userList.json 파일 -> userList 로 load
     void userListJsonLoad();
@@ -33,7 +37,7 @@ private:
     static UserManager* instance;
     // userList.json 파일을 읽어서 프로그램에서는 userList STL 컨테이너로 user 데이터 관리
     // 소멸하거나 필요 시 json 파일에 다시 저장함
-    QMap<QString, QVector<UserInfo*>> userList;
+    QMap<QString, UserInfo*> userList;
 
 };
 

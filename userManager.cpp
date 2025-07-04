@@ -18,10 +18,10 @@ UserManager* UserManager::instance = nullptr;
 
 // STL file 을 관리하기 때문에, 서버에서 한 번 인스턴스 생성을 위한 싱글턴 패턴 적용
 UserManager* UserManager::getInstance(){
-    if(!(this->instance)){
-        this->instance = new UserManager();
+    if(!instance){
+        instance = new UserManager();
     }
-    return this->instance;
+    return instance;
 }
 
 void UserManager::userListJsonLoad(){
@@ -51,15 +51,15 @@ void UserManager::userListJsonLoad(){
 
         UserInfo* newUser = new UserInfo(ID, name, password, email, isAdmin);
         // userList stl Map 컨테이너에 저장
-        userList.insert(ID, QVector<UserInfo*>{newUser});
+        userList.insert(ID, newUser);
 
-        qDebug() << "Loaded Member ID, name : " << ID << " (" << name << ")\n";
+        qDebug() << "Loaded Member ID, name : " << ID << " (" << name << ")";
     }
 
     file.close();
 }
 void UserManager::userListJsonSave(){
-    QFile file("./userList.json");
+    QFile file("./../../userList.json");
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qDebug() << "userList 파일 저장 실패";
         return;
@@ -72,19 +72,16 @@ void UserManager::userListJsonSave(){
     json j_array = json::array();  // 최상위 배열 구조
 
     for (auto it = userList.begin(); it != userList.end(); ++it) {
-        const QVector<UserInfo*>& users = it.value();
-        for (UserInfo* user : users) {
-            if (!user) continue;
-            json userObj = {
-                { "ID",        user->getID().toStdString() },
-                { "name",      user->getName().toStdString() },
-                { "password",  user->getPassword().toStdString() },
-                { "email",     user->getEmail().toStdString() },
-                { "idAdmin",   user->getIsAdmin().toStdString() }
-            };
-            // json 각 요소들을 j_array 에 push
-            j_array.push_back(userObj);
-        }
+        if (!it.value()) continue;
+        json userObj = {
+            { "ID",        it.value()->getID().toStdString() },
+            { "name",      it.value()->getName().toStdString() },
+            { "password",  it.value()->getPassword().toStdString() },
+            { "email",     it.value()->getEmail().toStdString() },
+            { "isAdmin",   it.value()->getIsAdmin().toStdString() }
+        };
+        // json 각 요소들을 j_array 에 push
+        j_array.push_back(userObj);
     }
 
     // JSON 텍스트 생성
@@ -95,6 +92,80 @@ void UserManager::userListJsonSave(){
     qDebug() << "userList 저장 완료";
 }
 
+// create user
+QString UserManager::userInsert(UserInfo* user){
+    for (auto it = userList.begin(); it != userList.end(); it++) {
+        if (!it.value()) continue;
+        if(user->getID().compare(it.value()->getID()) == 0){
+            // 중복 아이디 처리
+            return "Duplicate_ID";
+        }
+    }
+
+    // 아이디 중복되지 않음
+    userList.insert(user->getID(), user);
+
+    return "OK";
+}
+
+// delete user
+QString UserManager::userErase(const QString& ID){
+    for (auto it = userList.begin(); it != userList.end();) {
+        if (!it.value()) continue;
+        if(ID.compare(it.value()->getID()) == 0){
+            userList.erase(it);
+            return "OK";
+        } else {
+            it++;
+        }
+    }
+
+    return "NotFound";
+}
+
+// read one user
+UserInfo* UserManager::userSearchById(const QString& ID){
+    UserInfo* returnUser;
+
+    for (auto it = userList.begin(); it != userList.end(); ++it) {
+        if (!it.value()) continue;
+        if(ID.compare(it.value()->getID()) == 0){
+            returnUser = it.value();
+            return returnUser;
+        }
+    }
+
+    return nullptr;
+}
+
+// read userList
+QMap<QString, UserInfo*> UserManager::userListRead(){
+    return this->userList;
+}
+
+// read some users search by ID
+QMap<QString, UserInfo*> UserManager::userSearchAllById(const QString& ID){
+    QMap<QString, UserInfo*> returnUsers;
+    for (auto it = userList.begin(); it != userList.end(); ++it) {
+        if (!it.value()) continue;
+        if(it.value()->getID().contains(ID) == true){
+            returnUsers.insert(it.value()->getName(), it.value());
+        }
+    }
+    return returnUsers;
+}
+// read some users search by name
+QMap<QString, UserInfo*> UserManager::userSearchAllByName(const QString& name){
+    QMap<QString, UserInfo*> returnUsers;
+    for (auto it = userList.begin(); it != userList.end(); ++it) {
+        if (!it.value()) continue;
+        if(it.value()->getName().contains(name) == true){
+            returnUsers.insert(it.value()->getName(), it.value());
+        }
+    }
+    return returnUsers;
+}
+
 UserManager::UserManager()
 {
     userListJsonLoad();
@@ -102,5 +173,6 @@ UserManager::UserManager()
 
 UserManager::~UserManager()
 {
+    qDebug() << "프로그램 종료 발생";
     userListJsonSave();
 }

@@ -4,8 +4,12 @@
 #include "info.h"
 
 class OrderInfo : public Info{
+public:
     OrderInfo();
     ~OrderInfo();
+
+
+private:
 
 
 };

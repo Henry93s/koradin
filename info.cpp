@@ -7,6 +7,6 @@ Info::~Info(){}
 QString Info::getName(){
     return this->name;
 }
-void Info::setName(const QString& productName){
-    this->name = productName;
+void Info::setName(const QString& name){
+    this->name = name;
 }
