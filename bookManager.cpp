@@ -180,24 +180,21 @@ QMap<QString, Book*> BookManager::bookListRead(){
 
 BookManager::BookManager()
 {
-    // test start
-    QImage img("./k102039149_1.PNG");
+    // test data insert
+/*
+    QImage img("./../../book_images/여름이 긴 것은 수박을 많이 먹으라는 뜻이다.PNG");
 
     QByteArray byteArray;
     QBuffer buffer(&byteArray);
     img.save(&buffer, "PNG");
 
-    // 압축된 PNG 데이터를 qCompress로 추가 압축
-    QByteArray compressed = qCompress(byteArray);
-    QString img_string = QString::fromLatin1(compressed.toBase64());
-
-    qDebug() << img_string;
+    QString img_string = QString::fromLatin1(byteArray.toBase64());
 
     // test
-    Book* book = new Book("잔소리탈출연구소1", "윤선아", "어크로스주니어", 13000, "아이와 부모 모두에게 필요한 책", 100, img_string);
+    Book* book = new Book("여름이 긴 것은 수박을 많이 먹으라는 뜻이다", "쩡찌", "세미콜론", 10000, "‘내가 좋아하는 것을 함께 좋아하고 싶은 마음’이라는 캐치프레이즈 아래 계속되어온 띵 시리즈의 스물여덟 번째 주제는 ‘과일’이다. 우리 마음의 결을 섬세하게 어루만지며 수많은 독자의 사랑을 받아온 만화 에세이 『땅콩일기』의 쩡찌 작가. 『여름이 긴 것은 수박을 많이 먹으라는 뜻이다』는 그가 펴내는 첫 산문집이라는 점에서도 의미가 크다. 현재 3권까지 출간된 『땅콩일기』는 분명 만화의 형태를 띠고 있지만, 한 편의 시 같기도 한 아름다운 문장과 깊고 넓은 사유는 이미 숱한 독자의 마음을 울리며 문학적 입지를 증명했다.", 100, img_string);
     this->bookInsert(book);
     // test end
-
+*/
     bookListJsonLoad();
 }
 

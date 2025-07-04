@@ -14,6 +14,13 @@
         "password": "geonwoo"
     },
     {
+        "ID": "geonwoo2",
+        "email": "asdfasdf",
+        "isAdmin": "false",
+        "name": "geonwoo",
+        "password": "asdf"
+    },
+    {
         "ID": "manager",
         "email": "koradin@koradin.com",
         "isAdmin": "true",

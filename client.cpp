@@ -1,6 +1,9 @@
 #include "client.h"
 #include "ui_client.h"
 #include "bookitem.h"
+#include "book.h"
+#include <QMap>
+#include <QVector>
 
 Client::Client(QWidget *parent)
     : QWidget(parent)
@@ -19,8 +22,20 @@ Client::~Client()
 }
 
 void Client::printBookList(){
-    for(auto i = bookmanager->bookListRead().begin(); i != bookmanager->bookListRead().end(); i++){
+    QMap<QString, Book*> list = bookmanager->bookListRead();
+
+    for(auto i = list.begin(); i != list.end(); i++){
         BookItem* bookitem = new BookItem(this);
         bookitem->setData(i.value());
+        // QListWidget 에 bookitem 을 각각 채워넣음
+        // 한 bookitem 의 자리를 마련
+        QListWidgetItem* item = new QListWidgetItem(ui->book_listWidget);
+        // 틀의 크기를 커스텀 위젯의 크기를 반영하여 set
+        // qDebug() << bookitem->sizeHint(); // bookitem QSize 확인
+        item->setSizeHint(bookitem->sizeHint());
+        // 리스트 위젯에 아이템 추가
+        ui->book_listWidget->addItem(item);
+        // 생성된 틀에 커스텀 위젯을 설정
+        ui->book_listWidget->setItemWidget(item, bookitem);
     }
 }
