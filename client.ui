@@ -243,6 +243,9 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="cursor">
+           <cursorShape>ArrowCursor</cursorShape>
+          </property>
           <property name="inputMask">
            <string>9999999</string>
           </property>
