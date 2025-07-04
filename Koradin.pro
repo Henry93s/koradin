@@ -1,4 +1,5 @@
 QT       += core gui
+QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,7 +14,10 @@ SOURCES += \
     blueray.cpp \
     book.cpp \
     chattinglogwidget.cpp \
+    chattingroom.cpp \
     client.cpp \
+    commuInfo.cpp \
+    createnewroom.cpp \
     customerswidget.cpp \
     editalbumwidget.cpp \
     editbookwidget.cpp \
@@ -24,6 +28,7 @@ SOURCES += \
     mainController.cpp \
     mainwindow.cpp \
     orderwidget.cpp \
+    perchatting.cpp \
     perproduct.cpp \
     productInfo.cpp \
     productwidget.cpp \
@@ -35,7 +40,9 @@ SOURCES += \
 HEADERS += \
     adminwidget.h \
     chattinglogwidget.h \
+    chattingroom.h \
     client.h \
+    createnewroom.h \
     customerswidget.h \
     editalbumwidget.h \
     editbookwidget.h \
@@ -49,9 +56,11 @@ HEADERS += \
     mainController.h \
     mainwindow.h \
     orderwidget.h \
+    perchatting.h \
     perproduct.h \
     productinfo.h \
     productwidget.h \
+    tcpcommudefines.h \
     userInfo.h \
     userManager.h \
     server.h \
@@ -60,9 +69,12 @@ HEADERS += \
 
 FORMS += \
     adminwidget.ui \
+    chattingroom.ui \
+    createnewroom.ui \
     customerswidget.ui \
     editalbumwidget.ui \
     editbookwidget.ui \
+    perchatting.ui \
     perproduct.ui \
     server.ui \
     client.ui \

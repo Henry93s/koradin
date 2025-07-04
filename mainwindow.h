@@ -23,7 +23,7 @@ public:
 private slots:
     void on_login_button_clicked();
     void on_join_button_clicked();
-
+    void on_code_Typed();
 private:
     Ui::MainWindow *ui;
     QTabWidget* tabWidget;

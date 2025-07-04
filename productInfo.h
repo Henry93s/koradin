@@ -4,6 +4,12 @@
 #include "info.h"
 
 class ProductInfo : public Info {
+public:
+    enum ProductType{
+        BOOK,
+        BLUERAY,
+        MUSIC
+    };
 
 public:
     ProductInfo();

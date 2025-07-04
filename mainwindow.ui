@@ -14,13 +14,13 @@
    <string>Login</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>170</x>
       <y>30</y>
       <width>441</width>
-      <height>311</height>
+      <height>347</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -122,7 +122,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>17</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

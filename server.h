@@ -1,9 +1,13 @@
 #ifndef SERVER_H
 #define SERVER_H
 
+#include <QTcpServer>
+
 #include <QMainWindow>
 #include <productInfo.h>
 #include <userInfo.h>
+#include <commuInfo.h>
+#include <queue>
 
 class QTabWidget;
 
@@ -21,14 +25,30 @@ public:
     Server(QWidget *parent = nullptr);
     ~Server();
 
+public:
+    void CreateNew_Room(const RoomData& newData);
+    int GetRoomNum() const { return rooms.size(); }
+private slots:
+    void clientConnect();
+    void clientDisconnected();
+    void respond();
+
+    void transferLabels(bool checked);
+
+signals:
+    void InfosFetchRespond(const CommuInfo& commuInfo);
+    void ChattingRespond(const CommuInfo& commuInfo);
+    void InfosFixRespond(const CommuInfo& commuInfo);
+
 private:
     Ui::Server *ui;
     QTabWidget* tabWidget;
 
+    QTcpServer* tcpServer;
+    QVector<ClientData> clients;
+    QVector<RoomData> rooms;
+
     std::vector<std::shared_ptr<ProductInfo>> products;
     std::vector<std::shared_ptr<UserInfo>> users;
-    //std::vector<std::shared_ptr<OrderInfo>> orders;
-private slots:
-    void transferLabels(bool checked);
 };
 #endif // SERVER_H
