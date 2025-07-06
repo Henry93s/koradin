@@ -77,14 +77,19 @@ void ClientBookService::bookOrdering(Client* bookTab){
         popup->show();
     } else {
         // book 탭에서 선택된(selected) bookItem 을 감싸고 있는 틀인 QListWidgetItem 을 먼저 가져옴.
-        // 틀 안에는 item 이 단일로 들어가 있으므로 first()) item 을 가져옴.
         QListWidgetItem* firstItem = bookTab->getUi()->book_listWidget->selectedItems().first();
-        // qwidget 을 BookItem* 으로 강제 캐스팅
-        BookItem* castedItem = (BookItem*)firstItem;
-        QMap<QString, QString> selectedData = castedItem->getData();
-        // 선택된 데이터를 orderManager 에 전달
-        qDebug() << selectedData;
-        Popup* popup = new Popup(bookTab, QObject::tr("주문이 완료되었습니다."));
-        popup->show();
+        // QListWidgetItem 에 있는 QWidget 아이템 포인터 가져옴
+        QWidget* widget = bookTab->getUi()->book_listWidget->itemWidget(firstItem);
+        // qwidget 을 BookItem* 으로 캐스팅(qobject_cast 방식으로 반환 체크를 먼저 진행하기 때문에 widget 이 BookItem* 이 아닐 경우 nullptr 을 반환)
+        BookItem* castedItem = qobject_cast<BookItem*>(widget);
+        if(castedItem){
+            QMap<QString, QString> selectedData = castedItem->getData();
+            // 선택된 데이터를 orderManager 에 전달해야 함
+            qDebug() << selectedData;
+            Popup* popup = new Popup(bookTab, QObject::tr("주문이 완료되었습니다."));
+            popup->show();
+        } else {
+            qDebug() << "선택한 ListwidgetItem 에 qwidget 아이템이 없거나, qwidget 캐스팅 오류가 발생하였습니다.";
+        }
     }
 }
