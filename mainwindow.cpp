@@ -11,6 +11,9 @@
 // json 파싱 라이브러리(json.hpp - by https://github.com/nlohmann/json/releases/tag/v3.12.0) 적용
 #include "json.hpp"
 #include "popup.h"
+#include <QApplication>
+#include <QDir>
+
 using namespace std;
 using json = nlohmann::json;
 
@@ -49,6 +52,7 @@ void MainWindow::on_login_button_clicked()
     // 로그인 검증
     // ID 검증
     UserInfo* temp = usermanager->userSearchById(ui->id_lineEdit->text());
+
     if(temp == nullptr){
         // id 불일치
         qDebug() << "입력한 id 가 유저 리스트에 없습니다.";
@@ -86,8 +90,17 @@ void MainWindow::on_join_button_clicked()
 }
 
 QString MainWindow::managerKeyJsonLoad(){
-    // Qt creator 에서는 기본적으로 파일을 열 때 프로젝트명~debug or 프로젝트명~release 디렉토리에서 실행되므로 현재 파일 위치로 변경
-    QFile file("./../../managerKey.json");
+    QString runFilePath = QCoreApplication::applicationDirPath();
+    QString jsonPath;
+#ifdef Q_OS_WIN
+    jsonPath = QDir(runFilePath).filePath("../../managerKey.json");
+#elif defined(Q_OS_MAC)
+    jsonPath = QDir(runFilePath).filePath("../../../../../managerKey.json");
+#endif
+
+    // win : Qt creator 에서는 기본적으로 파일을 열 때 프로젝트명~debug or 프로젝트명~release 디렉토리에서 실행되므로 현재 파일 위치로 변경
+    // mac : ......debug > app > contents > MacOS 안에 실행 파일이 있음
+    QFile file(jsonPath);
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
         qDebug() << "managerKey 파일 오픈 실패";
         return "managerKey 파일 오픈 실패";
@@ -157,7 +170,14 @@ void MainWindow::on_language_comboBox_activated(int index)
         langCode = "en_US";
     }
 
-    QString filename = "./../../Koradin_" + langCode + ".qm";
+    QString runFilePath = QCoreApplication::applicationDirPath();
+    QString filename;
+#ifdef Q_OS_WIN
+    filename = QDir(runFilePath).filePath("../../Koradin_" + langCode + ".qm");
+#elif defined(Q_OS_MAC)
+    filename = QDir(runFilePath).filePath("../../../.qm/Koradin_" + langCode + ".qm");
+#endif
+
     if (translator->load(filename)) {
         qApp->installTranslator(translator);
         // 새 언어에 맞게 UI 갱신

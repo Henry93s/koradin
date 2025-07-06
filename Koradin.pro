@@ -65,7 +65,7 @@ HEADERS += \
     orderwidget.h \
     perproduct.h \
     popup.h \
-    productinfo.h \
+    productInfo.h \
     productwidget.h \
     userInfo.h \
     userManager.h \
