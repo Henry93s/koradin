@@ -30,7 +30,7 @@ void BookManager::bookListJsonLoad(){
     QString runFilePath = QCoreApplication::applicationDirPath();
     QString jsonPath;
 #ifdef Q_OS_WIN
-    jsonPath = QDir(runFilePath).filePath("../../bookList.json");
+    jsonPath = QDir(runFilePath).filePath("../../../bookList.json");
 #elif defined(Q_OS_MAC)
     jsonPath = QDir(runFilePath).filePath("../../../../../bookList.json");
 #endif
@@ -75,7 +75,7 @@ void BookManager::bookListJsonSave(){
     QString runFilePath = QCoreApplication::applicationDirPath();
     QString jsonPath;
 #ifdef Q_OS_WIN
-    jsonPath = QDir(runFilePath).filePath("../../bookList.json");
+    jsonPath = QDir(runFilePath).filePath("../../../bookList.json");
 #elif defined(Q_OS_MAC)
     jsonPath = QDir(runFilePath).filePath("../../../../../bookList.json");
 #endif

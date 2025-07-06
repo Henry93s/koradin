@@ -93,7 +93,7 @@ QString MainWindow::managerKeyJsonLoad(){
     QString runFilePath = QCoreApplication::applicationDirPath();
     QString jsonPath;
 #ifdef Q_OS_WIN
-    jsonPath = QDir(runFilePath).filePath("../../managerKey.json");
+    jsonPath = QDir(runFilePath).filePath("../../../managerKey.json");
 #elif defined(Q_OS_MAC)
     jsonPath = QDir(runFilePath).filePath("../../../../../managerKey.json");
 #endif
@@ -173,7 +173,7 @@ void MainWindow::on_language_comboBox_activated(int index)
     QString runFilePath = QCoreApplication::applicationDirPath();
     QString filename;
 #ifdef Q_OS_WIN
-    filename = QDir(runFilePath).filePath("../../Koradin_" + langCode + ".qm");
+    filename = QDir(runFilePath).filePath("./Koradin_" + langCode + ".qm");
 #elif defined(Q_OS_MAC)
     filename = QDir(runFilePath).filePath("../../../.qm/Koradin_" + langCode + ".qm");
 #endif

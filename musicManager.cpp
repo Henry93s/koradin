@@ -30,7 +30,7 @@ void MusicManager::musicListJsonLoad(){
     QString runFilePath = QCoreApplication::applicationDirPath();
     QString jsonPath;
 #ifdef Q_OS_WIN
-    jsonPath = QDir(runFilePath).filePath("../../musicList.json");
+    jsonPath = QDir(runFilePath).filePath("../../../musicList.json");
 #elif defined(Q_OS_MAC)
     jsonPath = QDir(runFilePath).filePath("../../../../../musicList.json");
 #endif
@@ -74,7 +74,7 @@ void MusicManager::musicListJsonSave(){
     QString runFilePath = QCoreApplication::applicationDirPath();
     QString jsonPath;
 #ifdef Q_OS_WIN
-    jsonPath = QDir(runFilePath).filePath("../../musicList.json");
+    jsonPath = QDir(runFilePath).filePath("../../../musicList.json");
 #elif defined(Q_OS_MAC)
     jsonPath = QDir(runFilePath).filePath("../../../../../musicList.json");
 #endif

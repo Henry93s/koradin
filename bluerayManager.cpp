@@ -30,7 +30,7 @@ void BluerayManager::bluerayListJsonLoad(){
     QString runFilePath = QCoreApplication::applicationDirPath();
     QString jsonPath;
 #ifdef Q_OS_WIN
-    jsonPath = QDir(runFilePath).filePath("../../bluerayList.json");
+    jsonPath = QDir(runFilePath).filePath("../../../bluerayList.json");
 #elif defined(Q_OS_MAC)
     jsonPath = QDir(runFilePath).filePath("../../../../../bluerayList.json");
 #endif
@@ -74,7 +74,7 @@ void BluerayManager::bluerayListJsonSave(){
     QString runFilePath = QCoreApplication::applicationDirPath();
     QString jsonPath;
 #ifdef Q_OS_WIN
-    jsonPath = QDir(runFilePath).filePath("../../bluerayList.json");
+    jsonPath = QDir(runFilePath).filePath("../../../bluerayList.json");
 #elif defined(Q_OS_MAC)
     jsonPath = QDir(runFilePath).filePath("../../../../../bluerayList.json");
 #endif

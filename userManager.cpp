@@ -31,7 +31,7 @@ void UserManager::userListJsonLoad(){
     QString runFilePath = QCoreApplication::applicationDirPath();
     QString jsonPath;
 #ifdef Q_OS_WIN
-    jsonPath = QDir(runFilePath).filePath("../../userList.json");
+    jsonPath = QDir(runFilePath).filePath("../../../userList.json");
 #elif defined(Q_OS_MAC)
     jsonPath = QDir(runFilePath).filePath("../../../../../userList.json");
 #endif
@@ -74,7 +74,7 @@ void UserManager::userListJsonSave(){
     QString runFilePath = QCoreApplication::applicationDirPath();
     QString jsonPath;
 #ifdef Q_OS_WIN
-    jsonPath = QDir(runFilePath).filePath("../../userList.json");
+    jsonPath = QDir(runFilePath).filePath("../../../userList.json");
 #elif defined(Q_OS_MAC)
     jsonPath = QDir(runFilePath).filePath("../../../../../userList.json");
 #endif
