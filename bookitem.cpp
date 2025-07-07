@@ -1,11 +1,7 @@
 #include "bookitem.h"
 #include "ui_bookitem.h"
 #include <QPixmap>
-
-// BookItem 의 context 각 라인 제한
-int ContextLineLimit = 20;
-// BookItem 의 context 라인 제한
-int ContextMaxLine = 3;
+#include "commonVariable.h"
 
 BookItem::BookItem(QWidget *parent)
     : QWidget(parent)

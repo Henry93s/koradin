@@ -12,6 +12,7 @@ SOURCES += \
     adminwidget.cpp \
     blueray.cpp \
     bluerayManager.cpp \
+    bluerayitem.cpp \
     book.cpp \
     bookManager.cpp \
     bookitem.cpp \
@@ -30,6 +31,7 @@ SOURCES += \
     mainwindow.cpp \
     music.cpp \
     musicManager.cpp \
+    musicitem.cpp \
     orderwidget.cpp \
     perproduct.cpp \
     popup.cpp \
@@ -43,12 +45,14 @@ SOURCES += \
 HEADERS += \
     adminwidget.h \
     bluerayManager.h \
+    bluerayitem.h \
     bookManager.h \
     bookitem.h \
     chattinglogwidget.h \
     client.h \
     clientBookService.h \
     clientService.h \
+    commonVariable.h \
     customerswidget.h \
     editalbumwidget.h \
     editbookwidget.h \
@@ -62,6 +66,7 @@ HEADERS += \
     mainController.h \
     mainwindow.h \
     musicManager.h \
+    musicitem.h \
     orderwidget.h \
     perproduct.h \
     popup.h \
@@ -75,10 +80,12 @@ HEADERS += \
 
 FORMS += \
     adminwidget.ui \
+    bluerayitem.ui \
     bookitem.ui \
     customerswidget.ui \
     editalbumwidget.ui \
     editbookwidget.ui \
+    musicitem.ui \
     perproduct.ui \
     popup.ui \
     server.ui \

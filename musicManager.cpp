@@ -60,8 +60,9 @@ void MusicManager::musicListJsonLoad(){
         int price = music["price"];
         QString context = QString::fromStdString(music["context"]);
         int amount = music["amount"];
+        QString image = QString::fromStdString(music["image"]);
 
-        Music* newMusic = new Music(name, artist, company, price, context, amount);
+        Music* newMusic = new Music(name, artist, company, price, context, amount, image);
         // musicList stl Map 컨테이너에 저장
         musicList.insert(name, newMusic);
 
@@ -101,7 +102,8 @@ void MusicManager::musicListJsonSave(){
             { "company",  it.value()->getCompany().toStdString() },
             { "price",     it.value()->getPrice() },
             { "context",   it.value()->getContext().toStdString() },
-            { "amount",    it.value()->getAmount() }
+            { "amount",    it.value()->getAmount() },
+            { "image",     it.value()->getQImagePureQString().toStdString()}
         };
         // json 각 요소들을 j_array 에 push
         j_array.push_back(userObj);
@@ -199,6 +201,23 @@ QMap<QString, Music*> MusicManager::musicSearchAllByArtist(const QString& artist
 
 MusicManager::MusicManager()
 {
+// test data insert
+/*
+    QImage img("./../../music_images/Dirty Work.PNG");
+
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    img.save(&buffer, "PNG");
+
+    QString img_string = QString::fromLatin1(byteArray.toBase64());
+
+    // test
+    Music* music = new Music("Dirty Work", "에스파(aespa)", "SM Entertainment", 29000, " \
+'더티 쇠 맛’으로 선사할 새로운 바이브! 에스파(aespa, 에스엠엔터테인먼트 소속)가 또 한 번의 메가 히트곡을 선보인다.  \
+6월 27일 발매되는 에스파의 싱글 ‘Dirty Work’는 동명의 타이틀 곡을 비롯해 Instrumental 버전까지 수록된 총 2트랙을 만날 수 있어 에스파의 색다른 매력을 만나기에 충분하다.", 100, img_string);
+    this->musicInsert(music);
+    // test end
+*/
     musicListJsonLoad();
 }
 

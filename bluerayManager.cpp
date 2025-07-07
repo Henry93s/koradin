@@ -60,8 +60,9 @@ void BluerayManager::bluerayListJsonLoad(){
         int price = blueray["price"];
         QString context = QString::fromStdString(blueray["context"]);
         int amount = blueray["amount"];
+        QString image = QString::fromStdString(blueray["image"]);
 
-        Blueray* newBlueray = new Blueray(name, artist, company, price, context, amount);
+        Blueray* newBlueray = new Blueray(name, artist, company, price, context, amount, image);
         // bluerayList stl Map 컨테이너에 저장
         bluerayList.insert(name, newBlueray);
 
@@ -101,7 +102,8 @@ void BluerayManager::bluerayListJsonSave(){
             { "company",  it.value()->getCompany().toStdString() },
             { "price",     it.value()->getPrice() },
             { "context",   it.value()->getContext().toStdString() },
-            { "amount",    it.value()->getAmount() }
+            { "amount",    it.value()->getAmount() },
+            { "image",     it.value()->getQImagePureQString().toStdString()}
         };
         // json 각 요소들을 j_array 에 push
         j_array.push_back(userObj);
@@ -122,7 +124,7 @@ QString BluerayManager::bluerayInsert(Blueray* blueray){
         if(blueray->getName().compare(it.value()->getName()) == 0
             && blueray->getArtist().compare(it.value()->getArtist()) == 0){
             // 중복 blueray 처리
-            return "Duplicate_MUSIC";
+            return "Duplicate_Blueray";
         }
     }
 
@@ -199,6 +201,23 @@ QMap<QString, Blueray*> BluerayManager::bluerayListRead(){
 
 BluerayManager::BluerayManager()
 {
+// test data insert
+/*
+    QImage img("./../../blueray_images/Michael Jackson - Off The Wall.PNG");
+
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    img.save(&buffer, "PNG");
+
+    QString img_string = QString::fromLatin1(byteArray.toBase64());
+
+    // test
+    Blueray* blueray = new Blueray("Michael Jackson - Off The Wall", "스파이크 리", "Epic", 27000, " \
+스파이크 리 감독의 다큐멘터리 'Michael Jackson's Journey from Motown to Off the Wall' 수록 특별반! \
+***마이클 잭슨이 10살부터 23세까지 출연한 다양한 TV프로그램 및 잭슨 5와의 라이브 투어에서의 귀중한 영상 및 인터뷰 수록***", 100, img_string);
+    this->bluerayInsert(blueray);
+    // test end
+*/
     bluerayListJsonLoad();
 }
 
