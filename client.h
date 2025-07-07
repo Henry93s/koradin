@@ -8,6 +8,7 @@
 #include "clientBookService.h"
 #include "clientMusicService.h"
 #include "clientBluerayService.h"
+#include "clientHomeService.h"
 
 namespace Ui {
 class Client;
@@ -31,14 +32,21 @@ public:
     void printSearchBluerayList(const QVector<Blueray*>& list);
 
 private slots:
+    // book tab button event
     void on_book_search_pushButton_clicked();
     void on_book_order_pushButton_clicked();
 
+    // music tab button event
     void on_music_search_pushButton_clicked();
     void on_music_order_pushButton_clicked();
 
+    // 블루레이 tab button event
     void on_blueray_search_pushButton_clicked();
     void on_blueray_order_pushButton_clicked();
+
+    // 홈 tab button event
+    void on_home_search_pushButton_clicked();
+    void on_home_orderSearch_pushButton_clicked();
 
 private:
     Ui::Client *ui;
@@ -48,6 +56,7 @@ private:
     ClientBookService clientBookService;
     ClientBluerayService clientBluerayService;
     ClientMusicService clientMusicService;
+    ClientHomeService clientHomeService;
 };
 
 #endif // CLIENT_H

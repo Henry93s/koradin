@@ -92,3 +92,19 @@ void ClientMusicService::musicOrdering(Client* musicTab){
     }
 }
 
+// 홈에서의 통합 음반 검색 로직
+QVector<Music*> ClientMusicService::musicHomeSearch(const QString& searchData){
+    QVector<Music*> searchResult; // search 결과 vector
+    QMap<QString, Music*> list = this->musicmanager->musicListRead();
+
+    for(auto i = list.begin(); i != list.end(); ++i){
+        qDebug() << "home call -> 음반 이름 / 제작사 / 아티스트로 검색 진행";
+        if(i.value()->getName().contains(searchData) == true || i.value()->getCompany().contains(searchData) == true
+            || i.value()->getArtist().contains(searchData) == true){
+            qDebug() << i.value()->getName();
+            searchResult.append(i.value());
+        }
+    }
+
+    return searchResult;
+}

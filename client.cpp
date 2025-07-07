@@ -8,6 +8,7 @@
 #include "musicitem.h"
 #include <QMap>
 #include <QVector>
+#include <QDir>
 
 
 Client::Client(QWidget *parent)
@@ -16,14 +17,29 @@ Client::Client(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // 클라이언트로 접근하고, 도서 탭 리스트 뷰 구성
     this->bookmanager = this->bookmanager->getInstance();
     this->blueraymanager = this->blueraymanager->getInstance();
-    this->musicmanager = this->musicmanager->getInstance();
-
-    // 클라이언트로 접근하고, 도서 탭 리스트 뷰 구성
+    this->musicmanager = this->musicmanager->getInstance();    
     this->printBookList();
     this->printBluerayList();
     this->printMusicList();
+
+    // logo 이미지 삽입
+    // 이미지 라벨 사이즈 고정
+    ui->home_image_label->setFixedSize(120, 120);
+    QString runFilePath = QCoreApplication::applicationDirPath();
+    QString logoPath;
+#ifdef Q_OS_WIN
+    logoPath = QDir(runFilePath).filePath("../../../logo_image/logo.PNG");
+#elif defined(Q_OS_MAC)
+    logoPath = QDir(runFilePath).filePath("../../../../../logo_image/logo.PNG");
+#endif
+    qDebug() << "logo path : " << logoPath;
+    QPixmap qimage(logoPath);
+    ui->home_image_label->setPixmap(qimage);
+
+
 }
 
 Client::~Client()
@@ -175,5 +191,16 @@ void Client::on_blueray_search_pushButton_clicked()
 void Client::on_blueray_order_pushButton_clicked()
 {
     clientBluerayService.bluerayOrdering(this);
+}
+
+
+void Client::on_home_search_pushButton_clicked()
+{
+    clientHomeService.allSearch(this);
+}
+
+void Client::on_home_orderSearch_pushButton_clicked()
+{
+    clientHomeService.orderChecking(this);
 }
 

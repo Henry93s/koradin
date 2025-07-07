@@ -92,3 +92,20 @@ void ClientBookService::bookOrdering(Client* bookTab){
         }
     }
 }
+
+// 홈에서의 통합 책 검색 로직
+QVector<Book*> ClientBookService::bookHomeSearch(const QString& searchData){
+    QVector<Book*> searchResult; // search 결과 vector
+    QMap<QString, Book*> list = this->bookmanager->bookListRead();
+
+    for(auto i = list.begin(); i != list.end(); ++i){
+        qDebug() << "home call -> 책 이름 / 출판사 / 작가 로 검색 진행";
+        if(i.value()->getName().contains(searchData) == true || i.value()->getCompany().contains(searchData) == true
+            || i.value()->getWriter().contains(searchData) == true){
+            qDebug() << i.value()->getName();
+            searchResult.append(i.value());
+        }
+    }
+
+    return searchResult;
+}

@@ -20,6 +20,7 @@ SOURCES += \
     client.cpp \
     clientBluerayService.cpp \
     clientBookService.cpp \
+    clientHomeService.cpp \
     clientMusicService.cpp \
     clientService.cpp \
     customerswidget.cpp \
@@ -34,6 +35,7 @@ SOURCES += \
     music.cpp \
     musicManager.cpp \
     musicitem.cpp \
+    orderitem.cpp \
     orderwidget.cpp \
     perproduct.cpp \
     popup.cpp \
@@ -54,6 +56,7 @@ HEADERS += \
     client.h \
     clientBluerayService.h \
     clientBookService.h \
+    clientHomeService.h \
     clientMusicService.h \
     clientService.h \
     commonVariable.h \
@@ -71,6 +74,7 @@ HEADERS += \
     mainwindow.h \
     musicManager.h \
     musicitem.h \
+    orderitem.h \
     orderwidget.h \
     perproduct.h \
     popup.h \
@@ -90,6 +94,7 @@ FORMS += \
     editalbumwidget.ui \
     editbookwidget.ui \
     musicitem.ui \
+    orderitem.ui \
     perproduct.ui \
     popup.ui \
     server.ui \

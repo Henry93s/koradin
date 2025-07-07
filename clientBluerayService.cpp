@@ -92,3 +92,21 @@ void ClientBluerayService::bluerayOrdering(Client* bluerayTab){
         }
     }
 }
+
+// 홈에서의 통합 블루레이 검색 로직
+QVector<Blueray*> ClientBluerayService::bluerayHomeSearch(const QString& searchData){
+    QVector<Blueray*> searchResult; // search 결과 vector
+    QMap<QString, Blueray*> list = this->blueraymanager->bluerayListRead();
+
+    for(auto i = list.begin(); i != list.end(); ++i){
+        qDebug() << "home call -> 블루레이 이름 / 제작사 / 아티스트로 검색 진행";
+        if(i.value()->getName().contains(searchData) == true || i.value()->getCompany().contains(searchData) == true
+            || i.value()->getArtist().contains(searchData) == true){
+            qDebug() << i.value()->getName();
+            searchResult.append(i.value());
+        }
+    }
+
+    return searchResult;
+}
+
