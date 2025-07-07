@@ -35,7 +35,7 @@
     <attribute name="title">
      <string>HOME</string>
     </attribute>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -369,13 +369,13 @@
               </property>
               <property name="minimumSize">
                <size>
-                <width>70</width>
+                <width>90</width>
                 <height>25</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>70</width>
+                <width>90</width>
                 <height>25</height>
                </size>
               </property>
