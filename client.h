@@ -21,7 +21,7 @@ class Client : public QWidget
 public:
     explicit Client(QWidget *parent = nullptr);
     ~Client();
-    void Initialize(QTcpSocket* sock, QStringView name = tr("None"));
+    void Initialize(QTcpSocket* sock, const QString& name = tr("None"));
     void printBookList();
     // ClientService, clientBookService 등 각 탭의 Service 클래스에서 Ui 에 입력된 값을 요구할 수 있기 때문에 필요
     Ui::Client* getUi();

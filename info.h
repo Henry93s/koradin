@@ -4,6 +4,13 @@
 #include <QString>
 
 class Info {
+    enum InfoType{
+        User,
+        Product,
+        Music,
+        None
+    };
+
 public:
     Info();
     ~Info();
@@ -11,9 +18,11 @@ public:
     QString getName();
     void setName(const QString& name);
 
+    QString GetID();
+    void SetID(const QString& ID);
 private:
     QString name;
-
+    QString ID;
 };
 
 #endif // INFO_H

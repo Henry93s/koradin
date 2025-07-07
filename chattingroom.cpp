@@ -7,6 +7,7 @@
 #include <QJsonObject>
 #include <QListWidget>
 #include <QStackedWidget>
+#include <server.h>
 
 ChattingRoom::ChattingRoom(QWidget *parent)
     : QWidget(parent)
@@ -14,12 +15,12 @@ ChattingRoom::ChattingRoom(QWidget *parent)
 {
     ui->setupUi(this);
 
-    //쓰기
+    //쓰기, 모두에게 쓰기.
     std::function<void()> func = [=](){
-        for(auto clientData : roomData->clients){
+        for(auto *clientData : roomData->clients){
             QJsonObject root;
             QJsonObject usr;
-            usr["UsrName"] = clientData->name;
+            usr["UsrName"] = tr("관리자");
             usr["Message"] = ui->inputEdit->text();
             root["CommuType"] = tr("Chatting");
 
@@ -62,6 +63,14 @@ void ChattingRoom::DeleteClientData(const ClientData *data)
 {
     auto found = find_if(roomData->clients.begin(), roomData->clients.end(), [=](const ClientData* d){ return data == d; });
     roomData->clients.erase(found);
+}
+
+void ChattingRoom::Initialize(Server *server)
+{
+    connect(server, &Server::ChattingRespond, ui->chattingList, [=](const CommuInfo& commuInfo){
+        auto data = commuInfo.GetChat();
+        ui->chattingList->addItem(data.first + QString(" : ") + data.second);
+    });
 }
 
 QListWidget *ChattingRoom::GetChattingList()

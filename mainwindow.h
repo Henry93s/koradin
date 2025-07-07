@@ -9,6 +9,7 @@
 #include <QTranslator>
 
 class QTabWidget;
+class QTcpSocket;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,6 +27,7 @@ public:
     QString managerKeyJsonLoad();
 
 private slots:
+    void respond();
     void on_login_button_clicked();
     void on_join_button_clicked();
     void on_code_Typed();
@@ -44,5 +46,7 @@ private:
 
     // MainWindow 클래스 내부 멤버로 QTranslator 포인터 선언
     QTranslator* translator = nullptr;
+
+    QTcpSocket* socket = nullptr;
 };
 #endif // MAINWINDOW_H

@@ -7,6 +7,10 @@
 #include <productInfo.h>
 #include <userInfo.h>
 #include <commuInfo.h>
+#include <userManager.h>
+#include <musicManager.h>
+#include <bookManager.h>
+#include <bluerayManager.h>
 
 class QTabWidget;
 
@@ -27,6 +31,9 @@ public:
 public:
     void CreateNew_Room(const RoomData& newData);
     int GetRoomNum() const { return rooms.size(); }
+
+private:
+    void AUTHRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
 private slots:
     void clientConnect();
     void clientDisconnected();
@@ -34,11 +41,13 @@ private slots:
 
     void transferLabels(bool checked);
 
-signals:
-    void InfosFetchRespond(const CommuInfo& commuInfo);
-    void ChattingRespond(const CommuInfo& commuInfo);
-    void InfosFixRespond(const CommuInfo& commuInfo);
+    void enterRoom(RoomData& roomData);
 
+signals:
+    void InfosFetchRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
+    void ChattingRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
+    void InfosFixRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
+    //void AUTHRespond(const CommuInfo& commuInfo);
 private:
     Ui::Server *ui;
     QTabWidget* tabWidget;
@@ -49,6 +58,12 @@ private:
 
     std::vector<std::shared_ptr<ProductInfo>> products;
     std::vector<std::shared_ptr<UserInfo>> users;
+
+    // Managers;
+    UserManager userManager;
+    MusicManager musicmanager;
+    BluerayManager bluerayManager;
+    BookManager bookManager;
 
     //void echoData();
 };

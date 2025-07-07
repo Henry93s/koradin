@@ -7,6 +7,7 @@
 class QTcpSocket;
 class QListWidget;
 class QStackedWidget;
+class Server;
 
 namespace Ui {
 class ChattingRoom;
@@ -25,6 +26,8 @@ public:
     void DeleteClientData(const ClientData* data);
 
     void SetStacked(QStackedWidget* stacked) { this->stacked = stacked; }
+
+    void Initialize(Server* server);
 
     QListWidget* GetChattingList();
 private:

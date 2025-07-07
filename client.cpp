@@ -9,6 +9,7 @@
 #include "book.h"
 #include <QMap>
 #include <QVector>
+#include <QMessageBox>
 
 Client::Client(QWidget *parent)
     : QWidget(parent)
@@ -34,15 +35,14 @@ Client::~Client()
     clientData.socket->close();
 }
 
-void Client::Initialize(QTcpSocket *sock, QStringView Name)
+void Client::Initialize(QTcpSocket *sock, const QString& Name)
 {
-    qDebug("Client Initialize");
+    //qDebug("Client Initialize");
+    //sprintf(buf, "%p, %s", sock, Name.toString().data());
     clientData.socket = sock;
-    clientData.name = Name.toString();
+    clientData.name = Name;
 
     connect(clientData.socket, SIGNAL(readyRead()), SLOT(respond()));
-
-    ui->chattingTab->AddClientData(&clientData);
 }
 
 void Client::respond()
@@ -65,6 +65,9 @@ void Client::respond()
         break;
     case CommuType::InfoFix:
         emit InfosFixRespond(info);
+        break;
+    case CommuType::AUTH:
+
         break;
     default:
         break;

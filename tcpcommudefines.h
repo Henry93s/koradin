@@ -12,6 +12,8 @@ enum CommuType{
     Chatting,
     Infos,
     InfoFix,
+    InfoAdd,
+    AUTH,
     COMMUEND
 };
 

@@ -7,708 +7,758 @@
     <x>0</x>
     <y>0</y>
     <width>834</width>
-    <height>625</height>
+    <height>681</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTabWidget" name="tabWidget">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>0</y>
-      <width>801</width>
-      <height>591</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>801</width>
-      <height>591</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>801</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <property name="currentIndex">
-     <number>3</number>
-    </property>
-    <property name="documentMode">
-     <bool>false</bool>
-    </property>
-    <property name="tabsClosable">
-     <bool>false</bool>
-    </property>
-    <property name="movable">
-     <bool>false</bool>
-    </property>
-    <property name="tabBarAutoHide">
-     <bool>true</bool>
-    </property>
-    <widget class="QWidget" name="Customers">
-     <attribute name="title">
-      <string>Customers</string>
-     </attribute>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="CustomersWidget" name="customerWidget" native="true">
-        <widget class="AdminWidget" name="widget" native="true">
-         <property name="geometry">
-          <rect>
-           <x>300</x>
-           <y>160</y>
-           <width>120</width>
-           <height>80</height>
-          </rect>
-         </property>
-        </widget>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="Products">
-     <attribute name="title">
-      <string>Products</string>
-     </attribute>
-     <widget class="QSplitter" name="splitter_3">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>10</y>
-        <width>811</width>
-        <height>531</height>
-       </rect>
-      </property>
+   <layout class="QVBoxLayout" name="verticalLayout_5">
+    <item>
+     <widget class="QSplitter" name="splitter_2">
       <property name="orientation">
        <enum>Qt::Orientation::Horizontal</enum>
       </property>
-      <widget class="QWidget" name="EnrollWidget_2" native="true">
-       <widget class="QWidget" name="EditWidget_2" native="true">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>-90</y>
-          <width>151</width>
-          <height>591</height>
-         </rect>
-        </property>
-        <widget class="QLabel" name="label">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>71</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>제품 검색</string>
-         </property>
-        </widget>
-        <widget class="QRadioButton" name="RadioBluray_2">
-         <property name="geometry">
-          <rect>
-           <x>20</x>
-           <y>110</y>
-           <width>112</width>
-           <height>24</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>블루레이</string>
-         </property>
-        </widget>
-        <widget class="QRadioButton" name="RadioBook_2">
-         <property name="geometry">
-          <rect>
-           <x>20</x>
-           <y>50</y>
-           <width>112</width>
-           <height>24</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>책</string>
-         </property>
-        </widget>
-        <widget class="QRadioButton" name="RadioRecord_2">
-         <property name="geometry">
-          <rect>
-           <x>20</x>
-           <y>80</y>
-           <width>112</width>
-           <height>24</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>음반</string>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="geometry">
-         <rect>
-          <x>70</x>
-          <y>470</y>
-          <width>93</width>
-          <height>29</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>검색</string>
-        </property>
-       </widget>
-       <widget class="QWidget" name="formLayoutWidget_2">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>70</y>
-          <width>141</width>
-          <height>396</height>
-         </rect>
-        </property>
-        <layout class="QFormLayout" name="formLayout_2">
-         <property name="fieldGrowthPolicy">
-          <enum>QFormLayout::FieldGrowthPolicy::FieldsStayAtSizeHint</enum>
-         </property>
-         <item row="0" column="0">
-          <widget class="QLabel" name="nameLabel_2">
-           <property name="text">
-            <string>제목</string>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="minimumSize">
+       <size>
+        <width>801</width>
+        <height>591</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>801</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="currentIndex">
+       <number>3</number>
+      </property>
+      <property name="documentMode">
+       <bool>false</bool>
+      </property>
+      <property name="tabsClosable">
+       <bool>false</bool>
+      </property>
+      <property name="movable">
+       <bool>false</bool>
+      </property>
+      <property name="tabBarAutoHide">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="Customers">
+       <attribute name="title">
+        <string>Customers</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="CustomersWidget" name="customerWidget" native="true">
+          <widget class="AdminWidget" name="widget" native="true">
+           <property name="geometry">
+            <rect>
+             <x>300</x>
+             <y>160</y>
+             <width>120</width>
+             <height>80</height>
+            </rect>
            </property>
           </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QTextEdit" name="textEdit_5"/>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="authorLabel_2">
-           <property name="text">
-            <string>저자</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QTextEdit" name="textEdit_6"/>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="companyLabel_2">
-           <property name="text">
-            <string>출판사</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QTextEdit" name="textEdit_7"/>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="priceLabel_2">
-           <property name="text">
-            <string>가격</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QSpinBox" name="spinBox_3"/>
-         </item>
-        </layout>
-       </widget>
+         </widget>
+        </item>
+       </layout>
       </widget>
-      <widget class="QSplitter" name="splitter">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <widget class="QListWidget" name="listWidget"/>
-       <widget class="QWidget" name="EnrollWidget" native="true">
-        <widget class="QRadioButton" name="RadioBook">
-         <property name="geometry">
-          <rect>
-           <x>70</x>
-           <y>60</y>
-           <width>112</width>
-           <height>24</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>책</string>
-         </property>
-         <attribute name="buttonGroup">
-          <string notr="true">buttonGroup</string>
-         </attribute>
-        </widget>
-        <widget class="QRadioButton" name="RadioRecord">
-         <property name="geometry">
-          <rect>
-           <x>70</x>
-           <y>90</y>
-           <width>112</width>
-           <height>24</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>음반</string>
-         </property>
-         <attribute name="buttonGroup">
-          <string notr="true">buttonGroup</string>
-         </attribute>
-        </widget>
-        <widget class="QRadioButton" name="RadioBluray">
-         <property name="geometry">
-          <rect>
-           <x>70</x>
-           <y>120</y>
-           <width>112</width>
-           <height>24</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>블루레이</string>
-         </property>
-         <attribute name="buttonGroup">
-          <string notr="true">buttonGroup</string>
-         </attribute>
-        </widget>
-        <widget class="QWidget" name="EditWidget" native="true">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>150</y>
-           <width>231</width>
-           <height>301</height>
-          </rect>
-         </property>
-         <widget class="QWidget" name="formLayoutWidget">
+      <widget class="QWidget" name="Products">
+       <attribute name="title">
+        <string>Products</string>
+       </attribute>
+       <widget class="QSplitter" name="splitter_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>811</width>
+          <height>531</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <widget class="QWidget" name="EnrollWidget_2" native="true">
+         <widget class="QWidget" name="EditWidget_2" native="true">
           <property name="geometry">
            <rect>
-            <x>0</x>
-            <y>40</y>
-            <width>181</width>
+            <x>50</x>
+            <y>-90</y>
+            <width>151</width>
+            <height>591</height>
+           </rect>
+          </property>
+          <widget class="QLabel" name="label">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>71</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>제품 검색</string>
+           </property>
+          </widget>
+          <widget class="QRadioButton" name="RadioBluray_2">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>110</y>
+             <width>112</width>
+             <height>24</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>블루레이</string>
+           </property>
+          </widget>
+          <widget class="QRadioButton" name="RadioBook_2">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>50</y>
+             <width>112</width>
+             <height>24</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>책</string>
+           </property>
+          </widget>
+          <widget class="QRadioButton" name="RadioRecord_2">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>80</y>
+             <width>112</width>
+             <height>24</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>음반</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>470</y>
+            <width>93</width>
+            <height>29</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>검색</string>
+          </property>
+         </widget>
+         <widget class="QWidget" name="formLayoutWidget_2">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>70</y>
+            <width>141</width>
             <height>396</height>
            </rect>
           </property>
-          <layout class="QFormLayout" name="formLayout">
+          <layout class="QFormLayout" name="formLayout_2">
            <property name="fieldGrowthPolicy">
             <enum>QFormLayout::FieldGrowthPolicy::FieldsStayAtSizeHint</enum>
            </property>
            <item row="0" column="0">
-            <widget class="QLabel" name="nameLabel">
+            <widget class="QLabel" name="nameLabel_2">
              <property name="text">
               <string>제목</string>
              </property>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QTextEdit" name="textEdit"/>
+            <widget class="QTextEdit" name="textEdit_5"/>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="authorLabel">
+            <widget class="QLabel" name="authorLabel_2">
              <property name="text">
               <string>저자</string>
              </property>
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QTextEdit" name="textEdit_3"/>
+            <widget class="QTextEdit" name="textEdit_6"/>
            </item>
            <item row="2" column="0">
-            <widget class="QLabel" name="companyLabel">
+            <widget class="QLabel" name="companyLabel_2">
              <property name="text">
               <string>출판사</string>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QTextEdit" name="textEdit_2"/>
+            <widget class="QTextEdit" name="textEdit_7"/>
            </item>
            <item row="3" column="0">
-            <widget class="QLabel" name="priceLabel">
+            <widget class="QLabel" name="priceLabel_2">
              <property name="text">
               <string>가격</string>
              </property>
             </widget>
            </item>
            <item row="3" column="1">
-            <widget class="QSpinBox" name="spinBox"/>
-           </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="introLabel">
-             <property name="text">
-              <string>소개</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
-            <widget class="QTextEdit" name="textEdit_4"/>
-           </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="amountLabel">
-             <property name="text">
-              <string>수량</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="1">
-            <widget class="QSpinBox" name="spinBox_2"/>
+            <widget class="QSpinBox" name="spinBox_3"/>
            </item>
           </layout>
          </widget>
         </widget>
-        <widget class="QPushButton" name="pushButton">
-         <property name="geometry">
-          <rect>
-           <x>70</x>
-           <y>470</y>
-           <width>93</width>
-           <height>29</height>
-          </rect>
+        <widget class="QSplitter" name="splitter">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
          </property>
-         <property name="text">
-          <string>등록</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_2">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>20</y>
-           <width>71</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>제품 등록</string>
-         </property>
-        </widget>
-       </widget>
-      </widget>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="Orders">
-     <attribute name="title">
-      <string>Orders</string>
-     </attribute>
-     <widget class="OrderWidget" name="widget_4" native="true">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>801</width>
-        <height>551</height>
-       </rect>
-      </property>
-      <widget class="QListWidget" name="listWidget_2">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>571</width>
-         <height>521</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QWidget" name="EnrollWidget_3" native="true">
-       <property name="geometry">
-        <rect>
-         <x>570</x>
-         <y>-10</y>
-         <width>221</width>
-         <height>531</height>
-        </rect>
-       </property>
-       <widget class="QRadioButton" name="RadioBook_3">
-        <property name="geometry">
-         <rect>
-          <x>70</x>
-          <y>60</y>
-          <width>112</width>
-          <height>24</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>책</string>
-        </property>
-       </widget>
-       <widget class="QRadioButton" name="RadioRecord_3">
-        <property name="geometry">
-         <rect>
-          <x>70</x>
-          <y>90</y>
-          <width>112</width>
-          <height>24</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>음반</string>
-        </property>
-       </widget>
-       <widget class="QRadioButton" name="RadioBluray_3">
-        <property name="geometry">
-         <rect>
-          <x>70</x>
-          <y>120</y>
-          <width>112</width>
-          <height>24</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>블루레이</string>
-        </property>
-       </widget>
-       <widget class="QWidget" name="EditWidget_3" native="true">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>150</y>
-          <width>231</width>
-          <height>301</height>
-         </rect>
-        </property>
-        <widget class="QWidget" name="formLayoutWidget_3">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>30</y>
-           <width>181</width>
-           <height>159</height>
-          </rect>
-         </property>
-         <layout class="QFormLayout" name="formLayout_3">
-          <property name="fieldGrowthPolicy">
-           <enum>QFormLayout::FieldGrowthPolicy::FieldsStayAtSizeHint</enum>
-          </property>
-          <item row="0" column="0">
-           <widget class="QLabel" name="nameLabel_3">
-            <property name="text">
-             <string>사용자</string>
+         <widget class="QListWidget" name="listWidget"/>
+         <widget class="QWidget" name="EnrollWidget" native="true">
+          <widget class="QRadioButton" name="RadioBook">
+           <property name="geometry">
+            <rect>
+             <x>70</x>
+             <y>60</y>
+             <width>112</width>
+             <height>24</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>책</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">buttonGroup</string>
+           </attribute>
+          </widget>
+          <widget class="QRadioButton" name="RadioRecord">
+           <property name="geometry">
+            <rect>
+             <x>70</x>
+             <y>90</y>
+             <width>112</width>
+             <height>24</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>음반</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">buttonGroup</string>
+           </attribute>
+          </widget>
+          <widget class="QRadioButton" name="RadioBluray">
+           <property name="geometry">
+            <rect>
+             <x>70</x>
+             <y>120</y>
+             <width>112</width>
+             <height>24</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>블루레이</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">buttonGroup</string>
+           </attribute>
+          </widget>
+          <widget class="QWidget" name="EditWidget" native="true">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>150</y>
+             <width>231</width>
+             <height>301</height>
+            </rect>
+           </property>
+           <widget class="QWidget" name="formLayoutWidget">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>40</y>
+              <width>181</width>
+              <height>396</height>
+             </rect>
             </property>
+            <layout class="QFormLayout" name="formLayout">
+             <property name="fieldGrowthPolicy">
+              <enum>QFormLayout::FieldGrowthPolicy::FieldsStayAtSizeHint</enum>
+             </property>
+             <item row="0" column="0">
+              <widget class="QLabel" name="nameLabel">
+               <property name="text">
+                <string>제목</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QTextEdit" name="textEdit"/>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="authorLabel">
+               <property name="text">
+                <string>저자</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QTextEdit" name="textEdit_3"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="companyLabel">
+               <property name="text">
+                <string>출판사</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QTextEdit" name="textEdit_2"/>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="priceLabel">
+               <property name="text">
+                <string>가격</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QSpinBox" name="spinBox"/>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="introLabel">
+               <property name="text">
+                <string>소개</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QTextEdit" name="textEdit_4"/>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="amountLabel">
+               <property name="text">
+                <string>수량</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QSpinBox" name="spinBox_2"/>
+             </item>
+            </layout>
            </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QTextEdit" name="textEdit_9"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="authorLabel_3">
-            <property name="text">
-             <string>주문</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QTextEdit" name="textEdit_10"/>
-          </item>
-         </layout>
+          </widget>
+          <widget class="QPushButton" name="pushButton">
+           <property name="geometry">
+            <rect>
+             <x>70</x>
+             <y>470</y>
+             <width>93</width>
+             <height>29</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>등록</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_2">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>20</y>
+             <width>71</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>제품 등록</string>
+           </property>
+          </widget>
+         </widget>
         </widget>
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="geometry">
-          <rect>
-           <x>60</x>
-           <y>170</y>
-           <width>93</width>
-           <height>29</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>검색</string>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QLabel" name="label_3">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>20</y>
-          <width>71</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>주문 검색</string>
-        </property>
        </widget>
       </widget>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="ChattingLogs">
-     <attribute name="title">
-      <string>ChattingLogs</string>
-     </attribute>
-     <widget class="QStackedWidget" name="Chatting">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>791</width>
-        <height>541</height>
-       </rect>
-      </property>
-      <widget class="QWidget" name="ChattingPage1">
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <property name="leftMargin">
-         <number>11</number>
+      <widget class="QWidget" name="Orders">
+       <attribute name="title">
+        <string>Orders</string>
+       </attribute>
+       <widget class="OrderWidget" name="widget_4" native="true">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>801</width>
+          <height>551</height>
+         </rect>
         </property>
-        <property name="topMargin">
-         <number>11</number>
-        </property>
-        <item>
-         <widget class="QWidget" name="widget_3" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+        <widget class="QListWidget" name="listWidget_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>571</width>
+           <height>521</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QWidget" name="EnrollWidget_3" native="true">
+         <property name="geometry">
+          <rect>
+           <x>570</x>
+           <y>-10</y>
+           <width>221</width>
+           <height>531</height>
+          </rect>
+         </property>
+         <widget class="QRadioButton" name="RadioBook_3">
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>60</y>
+            <width>112</width>
+            <height>24</height>
+           </rect>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>140</width>
-            <height>200</height>
-           </size>
+          <property name="text">
+           <string>책</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item>
-            <widget class="QPushButton" name="enterRoomButton">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Enter Room</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="createRoomButton">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Create Room</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </widget>
-        </item>
-        <item>
-         <widget class="QWidget" name="widget_5" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+         <widget class="QRadioButton" name="RadioRecord_3">
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>90</y>
+            <width>112</width>
+            <height>24</height>
+           </rect>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>900</width>
-            <height>16777215</height>
-           </size>
+          <property name="text">
+           <string>음반</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <widget class="QListWidget" name="roomList">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>800</width>
-               <height>700</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QListWidget" name="generalChattingLog">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>120</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </widget>
-        </item>
+         <widget class="QRadioButton" name="RadioBluray_3">
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>120</y>
+            <width>112</width>
+            <height>24</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>블루레이</string>
+          </property>
+         </widget>
+         <widget class="QWidget" name="EditWidget_3" native="true">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>150</y>
+            <width>231</width>
+            <height>301</height>
+           </rect>
+          </property>
+          <widget class="QWidget" name="formLayoutWidget_3">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>30</y>
+             <width>181</width>
+             <height>159</height>
+            </rect>
+           </property>
+           <layout class="QFormLayout" name="formLayout_3">
+            <property name="fieldGrowthPolicy">
+             <enum>QFormLayout::FieldGrowthPolicy::FieldsStayAtSizeHint</enum>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="nameLabel_3">
+              <property name="text">
+               <string>사용자</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QTextEdit" name="textEdit_9"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="authorLabel_3">
+              <property name="text">
+               <string>주문</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QTextEdit" name="textEdit_10"/>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="geometry">
+            <rect>
+             <x>60</x>
+             <y>170</y>
+             <width>93</width>
+             <height>29</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>검색</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QLabel" name="label_3">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>71</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>주문 검색</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="ChattingLogs">
+       <attribute name="title">
+        <string>ChattingLogs</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QWidget" name="widget_2" native="true">
+         <widget class="QStackedWidget" name="Chatting">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="maximumSize">
            <size>
-            <width>170</width>
-            <height>300</height>
+            <width>16777215</width>
+            <height>480</height>
            </size>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <widget class="QLabel" name="label_4">
-             <property name="text">
-              <string>Users</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QListWidget" name="userList"/>
-           </item>
-          </layout>
+          <widget class="QWidget" name="ChattingPage1">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="leftMargin">
+             <number>11</number>
+            </property>
+            <property name="topMargin">
+             <number>11</number>
+            </property>
+            <item>
+             <widget class="QWidget" name="widget_3" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>120</width>
+                <height>200</height>
+               </size>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <item>
+                <widget class="QPushButton" name="enterRoomButton">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Enter Room</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="createRoomButton">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Create Room</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="widget_5" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>400</width>
+                <height>450</height>
+               </size>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <property name="topMargin">
+                <number>11</number>
+               </property>
+               <property name="bottomMargin">
+                <number>11</number>
+               </property>
+               <item>
+                <widget class="QListWidget" name="roomList">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>800</width>
+                   <height>700</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QListWidget" name="generalChattingLog">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>800</width>
+                   <height>120</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="widget_2" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>300</height>
+               </size>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_2">
+               <property name="spacing">
+                <number>7</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="label_4">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Users</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignmentFlag::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QListWidget" name="userList">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>200</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>400</width>
+                   <height>400</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
       </widget>
      </widget>
-    </widget>
-   </widget>
-   <widget class="QSplitter" name="splitter_2">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>0</width>
-      <height>0</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Orientation::Horizontal</enum>
-    </property>
-   </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -716,7 +766,7 @@
      <x>0</x>
      <y>0</y>
      <width>834</width>
-     <height>17</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

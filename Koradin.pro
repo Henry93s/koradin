@@ -63,6 +63,7 @@ HEADERS += \
     book.h \
     commuInfo.h \
     customerwidget.h \
+    idproduct.h \
     info.h \
     join.h \
     mainController.h \

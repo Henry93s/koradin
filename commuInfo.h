@@ -3,6 +3,8 @@
 
 #include "info.h"
 #include "tcpcommudefines.h"
+#include "userInfo.h"
+
 #include <QJsonDocument>
 
 class CommuInfo : public Info{
@@ -13,6 +15,12 @@ public:
     CommuType GetType() const;
 
     std::pair<QString, QString> GetChat() const;
+    std::vector<UserInfo> GetUsers() const;
+
+    std::pair<QString, QString> GetIDPwd() const;
+
+    void AddUsers(std::vector<UserInfo>);
+
 private:
     QByteArray byteArray;
 };
