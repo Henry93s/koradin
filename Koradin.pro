@@ -18,7 +18,9 @@ SOURCES += \
     bookitem.cpp \
     chattinglogwidget.cpp \
     client.cpp \
+    clientBluerayService.cpp \
     clientBookService.cpp \
+    clientMusicService.cpp \
     clientService.cpp \
     customerswidget.cpp \
     editalbumwidget.cpp \
@@ -50,7 +52,9 @@ HEADERS += \
     bookitem.h \
     chattinglogwidget.h \
     client.h \
+    clientBluerayService.h \
     clientBookService.h \
+    clientMusicService.h \
     clientService.h \
     commonVariable.h \
     customerswidget.h \

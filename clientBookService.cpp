@@ -3,7 +3,6 @@
 #include "ui_client.h"
 #include "client.h"
 #include "bookitem.h"
-#include "popup.h"
 
 ClientBookService::ClientBookService(){
     // bookmanager singleton 인스턴스 get

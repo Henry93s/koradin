@@ -203,7 +203,7 @@ BluerayManager::BluerayManager()
 {
 // test data insert
 /*
-    QImage img("./../../blueray_images/Michael Jackson - Off The Wall.PNG");
+    QImage img("./../../blueray_images/잭 리처 스틸북 한정판.PNG");
 
     QByteArray byteArray;
     QBuffer buffer(&byteArray);
@@ -212,9 +212,8 @@ BluerayManager::BluerayManager()
     QString img_string = QString::fromLatin1(byteArray.toBase64());
 
     // test
-    Blueray* blueray = new Blueray("Michael Jackson - Off The Wall", "스파이크 리", "Epic", 27000, " \
-스파이크 리 감독의 다큐멘터리 'Michael Jackson's Journey from Motown to Off the Wall' 수록 특별반! \
-***마이클 잭슨이 10살부터 23세까지 출연한 다양한 TV프로그램 및 잭슨 5와의 라이브 투어에서의 귀중한 영상 및 인터뷰 수록***", 100, img_string);
+    Blueray* blueray = new Blueray("잭 리처 - 스틸북 한정판", "크리스토퍼 맥쿼리", "파라마운트", 47000, " \
+도심 한복판, 6발의 총성과 함께 5명의 시민이 살해되는 사건이 벌어진다. 현장의 모든 증거들이 한 남자를 유일한 용의자로 지목하지만, 그는 자백을 거부한 채 '잭 리처를 데려오라'는 메모만을 남긴다. 전직 군 수사관 출신이지만 실제 정체를 아는 이는 누구도 없는 의문의 남자 '잭 리처'. 마침내 모습을 드러낸 그는 모든 정황이 완벽해 보이는 사건에 의문을 품고 홀로 진실을 추적하기 위해 나서는데…!", 100, img_string);
     this->bluerayInsert(blueray);
     // test end
 */

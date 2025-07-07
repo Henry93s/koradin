@@ -203,7 +203,7 @@ MusicManager::MusicManager()
 {
 // test data insert
 /*
-    QImage img("./../../music_images/Dirty Work.PNG");
+    QImage img("./../../music_images/From Our 20s.PNG");
 
     QByteArray byteArray;
     QBuffer buffer(&byteArray);
@@ -212,9 +212,7 @@ MusicManager::MusicManager()
     QString img_string = QString::fromLatin1(byteArray.toBase64());
 
     // test
-    Music* music = new Music("Dirty Work", "에스파(aespa)", "SM Entertainment", 29000, " \
-'더티 쇠 맛’으로 선사할 새로운 바이브! 에스파(aespa, 에스엠엔터테인먼트 소속)가 또 한 번의 메가 히트곡을 선보인다.  \
-6월 27일 발매되는 에스파의 싱글 ‘Dirty Work’는 동명의 타이틀 곡을 비롯해 Instrumental 버전까지 수록된 총 2트랙을 만날 수 있어 에스파의 색다른 매력을 만나기에 충분하다.", 100, img_string);
+    Music* music = new Music("미니 6집 From Our 20's", "프로미스나인", "드림어스컴퍼니", 23000, "프로미스나인(fromis_9)의 여섯 번째 미니앨범인 From Our 20's는 20대의 감정과 순간들을 담아낸 앨범입니다. 타이틀곡 LIKE YOU BETTER를 포함해 총 6곡이 수록되어 있으며, 멤버 5인 체제로 재편된 후 처음으로 발매하는 앨범입니다. ", 100, img_string);
     this->musicInsert(music);
     // test end
 */
