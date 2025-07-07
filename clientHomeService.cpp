@@ -33,8 +33,8 @@ void ClientHomeService::allSearch(Client* homeTab){
     if(it != searchType.end()){
         // finded "book" 찾음
         QVector<Book*> searchBookResult = clientBookService->bookHomeSearch(searchData);
-        homeTab->printSearchBookList(searchBookResult);
         if(!searchBookResult.isEmpty()){
+            homeTab->printSearchBookList(searchBookResult);
             homeTab->getUi()->tabWidget->setCurrentIndex(1);
         }
     }
@@ -43,8 +43,8 @@ void ClientHomeService::allSearch(Client* homeTab){
     if(it != searchType.end()){
         // finded "music" 찾음
         QVector<Music*> searchMusicResult = clientMusicService->musicHomeSearch(searchData);
-        homeTab->printSearchMusicList(searchMusicResult);
         if(!searchMusicResult.isEmpty()){
+            homeTab->printSearchMusicList(searchMusicResult);
             homeTab->getUi()->tabWidget->setCurrentIndex(2);
         }
     }
@@ -53,8 +53,8 @@ void ClientHomeService::allSearch(Client* homeTab){
     if(it != searchType.end()){
         // finded "blueray" 찾음
         QVector<Blueray*> searchBluerayResult = clientBluerayService->bluerayHomeSearch(searchData);
-        homeTab->printSearchBluerayList(searchBluerayResult);
         if(!searchBluerayResult.isEmpty()){
+            homeTab->printSearchBluerayList(searchBluerayResult);
             homeTab->getUi()->tabWidget->setCurrentIndex(3);
         }
     }
