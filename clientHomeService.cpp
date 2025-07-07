@@ -10,7 +10,11 @@ ClientHomeService::ClientHomeService(){
     clientBluerayService = new ClientBluerayService();
     clientMusicService = new ClientMusicService();
 }
-ClientHomeService::~ClientHomeService(){}
+ClientHomeService::~ClientHomeService(){
+    delete clientBookService;
+    delete clientBluerayService;
+    delete clientMusicService;
+}
 
 // 통합 검색 로직
 void ClientHomeService::allSearch(Client* homeTab){

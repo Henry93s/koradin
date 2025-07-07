@@ -42,7 +42,7 @@ QVector<Blueray*> ClientBluerayService::blueraySearch(Client* bluerayTab){
                 // 블루레이 이름으로 검색
                 qDebug() << "블루레이 이름으로 검색 진행";
                 if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getName().contains(searchData) == true){
+                    && i.value()->getName().contains(searchData, Qt::CaseInsensitive) == true){
                     qDebug() << i.value()->getName();
                     searchResult.append(i.value());
                 }
@@ -50,7 +50,7 @@ QVector<Blueray*> ClientBluerayService::blueraySearch(Client* bluerayTab){
                 // 제작사로 검색
                 qDebug() << "제작사로 검색 진행";
                 if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getCompany().contains(searchData) == true){
+                    && i.value()->getCompany().contains(searchData, Qt::CaseInsensitive) == true){
                     qDebug() << i.value()->getName();
                     searchResult.append(i.value());
                 }
@@ -58,7 +58,7 @@ QVector<Blueray*> ClientBluerayService::blueraySearch(Client* bluerayTab){
                 // 아티스트로 검색
                 qDebug() << "아티스트로 검색 진행";
                 if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getArtist().contains(searchData) == true){
+                    && i.value()->getArtist().contains(searchData, Qt::CaseInsensitive) == true){
                     qDebug() << i.value()->getName();
                     searchResult.append(i.value());
                 }
@@ -100,8 +100,8 @@ QVector<Blueray*> ClientBluerayService::bluerayHomeSearch(const QString& searchD
 
     for(auto i = list.begin(); i != list.end(); ++i){
         qDebug() << "home call -> 블루레이 이름 / 제작사 / 아티스트로 검색 진행";
-        if(i.value()->getName().contains(searchData) == true || i.value()->getCompany().contains(searchData) == true
-            || i.value()->getArtist().contains(searchData) == true){
+        if(i.value()->getName().contains(searchData, Qt::CaseInsensitive) == true || i.value()->getCompany().contains(searchData, Qt::CaseInsensitive) == true
+            || i.value()->getArtist().contains(searchData, Qt::CaseInsensitive) == true){
             qDebug() << i.value()->getName();
             searchResult.append(i.value());
         }

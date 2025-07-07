@@ -41,7 +41,7 @@ QVector<Music*> ClientMusicService::musicSearch(Client* musicTab){
                 // 음반 이름으로 검색
                 qDebug() << "음반 이름으로 검색 진행";
                 if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getName().contains(searchData) == true){
+                    && i.value()->getName().contains(searchData, Qt::CaseInsensitive) == true){
                     qDebug() << i.value()->getName();
                     searchResult.append(i.value());
                 }
@@ -49,7 +49,7 @@ QVector<Music*> ClientMusicService::musicSearch(Client* musicTab){
                 // 음반 제작사로 검색
                 qDebug() << "음반 제작사로 검색 진행";
                 if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getCompany().contains(searchData) == true){
+                    && i.value()->getCompany().contains(searchData, Qt::CaseInsensitive) == true){
                     qDebug() << i.value()->getName();
                     searchResult.append(i.value());
                 }
@@ -57,7 +57,7 @@ QVector<Music*> ClientMusicService::musicSearch(Client* musicTab){
                 // 아티스트로 검색
                 qDebug() << "아티스트로 검색 진행";
                 if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getArtist().contains(searchData) == true){
+                    && i.value()->getArtist().contains(searchData, Qt::CaseInsensitive) == true){
                     qDebug() << i.value()->getName();
                     searchResult.append(i.value());
                 }
@@ -99,8 +99,9 @@ QVector<Music*> ClientMusicService::musicHomeSearch(const QString& searchData){
 
     for(auto i = list.begin(); i != list.end(); ++i){
         qDebug() << "home call -> 음반 이름 / 제작사 / 아티스트로 검색 진행";
-        if(i.value()->getName().contains(searchData) == true || i.value()->getCompany().contains(searchData) == true
-            || i.value()->getArtist().contains(searchData) == true){
+        // Qt::CaseInsensitive -> 대소문자 구별하지 않음
+        if(i.value()->getName().contains(searchData, Qt::CaseInsensitive) == true || i.value()->getCompany().contains(searchData, Qt::CaseInsensitive) == true
+            || i.value()->getArtist().contains(searchData, Qt::CaseInsensitive) == true){
             qDebug() << i.value()->getName();
             searchResult.append(i.value());
         }
