@@ -39,7 +39,8 @@ Client::Client(QWidget *parent)
     QPixmap qimage(logoPath);
     ui->home_image_label->setPixmap(qimage);
 
-
+    // 시작 tab 고정
+    ui->tabWidget->setCurrentIndex(0);
 }
 
 Client::~Client()
