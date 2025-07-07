@@ -1,4 +1,4 @@
-#include "productinfo.h"
+#include "productInfo.h"
 
 ProductInfo::ProductInfo(){}
 ProductInfo::~ProductInfo(){}

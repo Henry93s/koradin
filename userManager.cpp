@@ -9,6 +9,9 @@
 // json 파싱 라이브러리(json.hpp - by https://github.com/nlohmann/json/releases/tag/v3.12.0) 적용
 #include "json.hpp"
 #include "userInfo.h"
+// windows, mac 다른 파일 경로 고려하여 filepath 수정 (250706)
+#include <QCoreApplication>
+#include <QDir>
 
 using namespace std;
 using json = nlohmann::json;
@@ -25,8 +28,17 @@ UserManager* UserManager::getInstance(){
 }
 
 void UserManager::userListJsonLoad(){
-    // Qt creator 에서는 기본적으로 파일을 열 때 프로젝트명~debug or 프로젝트명~release 디렉토리에서 실행되므로 현재 파일 위치로 변경
-    QFile file("./../../userList.json");
+    QString runFilePath = QCoreApplication::applicationDirPath();
+    QString jsonPath;
+#ifdef Q_OS_WIN
+    jsonPath = QDir(runFilePath).filePath("../../../userList.json");
+#elif defined(Q_OS_MAC)
+    jsonPath = QDir(runFilePath).filePath("../../../../../userList.json");
+#endif
+
+    // win : Qt creator 에서는 기본적으로 파일을 열 때 프로젝트명~debug or 프로젝트명~release 디렉토리에서 실행되므로 현재 파일 위치로 변경
+    // mac : ......debug > app > contents > MacOS 안에 실행 파일이 있음
+    QFile file(jsonPath);
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
         qDebug() << "userList 파일 오픈 실패";
         return;
@@ -59,7 +71,17 @@ void UserManager::userListJsonLoad(){
     file.close();
 }
 void UserManager::userListJsonSave(){
-    QFile file("./../../userList.json");
+    QString runFilePath = QCoreApplication::applicationDirPath();
+    QString jsonPath;
+#ifdef Q_OS_WIN
+    jsonPath = QDir(runFilePath).filePath("../../../userList.json");
+#elif defined(Q_OS_MAC)
+    jsonPath = QDir(runFilePath).filePath("../../../../../userList.json");
+#endif
+
+    // win : Qt creator 에서는 기본적으로 파일을 열 때 프로젝트명~debug or 프로젝트명~release 디렉토리에서 실행되므로 현재 파일 위치로 변경
+    // mac : ......debug > app > contents > MacOS 안에 실행 파일이 있음
+    QFile file(jsonPath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qDebug() << "userList 파일 저장 실패";
         return;

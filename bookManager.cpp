@@ -9,6 +9,8 @@
 // json 파싱 라이브러리(json.hpp - by https://github.com/nlohmann/json/releases/tag/v3.12.0) 적용
 #include "json.hpp"
 #include "book.h"
+#include <QApplication>
+#include <QDir>
 
 using namespace std;
 using json = nlohmann::json;
@@ -25,8 +27,17 @@ BookManager* BookManager::getInstance(){
 }
 
 void BookManager::bookListJsonLoad(){
-    // Qt creator 에서는 기본적으로 파일을 열 때 프로젝트명~debug or 프로젝트명~release 디렉토리에서 실행되므로 현재 파일 위치로 변경
-    QFile file("./../../bookList.json");
+    QString runFilePath = QCoreApplication::applicationDirPath();
+    QString jsonPath;
+#ifdef Q_OS_WIN
+    jsonPath = QDir(runFilePath).filePath("../../../bookList.json");
+#elif defined(Q_OS_MAC)
+    jsonPath = QDir(runFilePath).filePath("../../../../../bookList.json");
+#endif
+
+    // win : Qt creator 에서는 기본적으로 파일을 열 때 프로젝트명~debug or 프로젝트명~release 디렉토리에서 실행되므로 현재 파일 위치로 변경
+    // mac : ......debug > app > contents > MacOS 안에 실행 파일이 있음
+    QFile file(jsonPath);
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
         qDebug() << "bookList 파일 오픈 실패";
         return;
@@ -61,7 +72,17 @@ void BookManager::bookListJsonLoad(){
     file.close();
 }
 void BookManager::bookListJsonSave(){
-    QFile file("./../../bookList.json");
+    QString runFilePath = QCoreApplication::applicationDirPath();
+    QString jsonPath;
+#ifdef Q_OS_WIN
+    jsonPath = QDir(runFilePath).filePath("../../../bookList.json");
+#elif defined(Q_OS_MAC)
+    jsonPath = QDir(runFilePath).filePath("../../../../../bookList.json");
+#endif
+
+    // win : Qt creator 에서는 기본적으로 파일을 열 때 프로젝트명~debug or 프로젝트명~release 디렉토리에서 실행되므로 현재 파일 위치로 변경
+    // mac : ......debug > app > contents > MacOS 안에 실행 파일이 있음
+    QFile file(jsonPath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qDebug() << "bookList 파일 저장 실패";
         return;

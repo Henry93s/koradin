@@ -73,7 +73,7 @@ HEADERS += \
     perchatting.h \
     perproduct.h \
     popup.h \
-    productinfo.h \
+    productInfo.h \
     productwidget.h \
     tcpcommudefines.h \
     userInfo.h \

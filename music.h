@@ -1,7 +1,7 @@
 #ifndef MUSIC_H
 #define MUSIC_H
 
-#include "productinfo.h"
+#include "productInfo.h"
 
 class Music : public ProductInfo{
 public:

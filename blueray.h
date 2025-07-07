@@ -1,7 +1,7 @@
 #ifndef BLUERAY_H
 #define BLUERAY_H
 
-#include "productinfo.h"
+#include "productInfo.h"
 
 class Blueray : public ProductInfo {
 public:
