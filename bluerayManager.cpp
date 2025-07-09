@@ -60,8 +60,9 @@ void BluerayManager::bluerayListJsonLoad(){
         int price = blueray["price"];
         QString context = QString::fromStdString(blueray["context"]);
         int amount = blueray["amount"];
+        QString image = QString::fromStdString(blueray["image"]);
 
-        Blueray* newBlueray = new Blueray(name, artist, company, price, context, amount);
+        Blueray* newBlueray = new Blueray(name, artist, company, price, context, amount, image);
         // bluerayList stl Map 컨테이너에 저장
         bluerayList.insert(name, newBlueray);
 
@@ -101,7 +102,8 @@ void BluerayManager::bluerayListJsonSave(){
             { "company",  it.value()->getCompany().toStdString() },
             { "price",     it.value()->getPrice() },
             { "context",   it.value()->getContext().toStdString() },
-            { "amount",    it.value()->getAmount() }
+            { "amount",    it.value()->getAmount() },
+            { "image",     it.value()->getQImagePureQString().toStdString()}
         };
         // json 각 요소들을 j_array 에 push
         j_array.push_back(userObj);
@@ -122,7 +124,7 @@ QString BluerayManager::bluerayInsert(Blueray* blueray){
         if(blueray->getName().compare(it.value()->getName()) == 0
             && blueray->getArtist().compare(it.value()->getArtist()) == 0){
             // 중복 blueray 처리
-            return "Duplicate_MUSIC";
+            return "Duplicate_Blueray";
         }
     }
 
@@ -199,6 +201,22 @@ QMap<QString, Blueray*> BluerayManager::bluerayListRead(){
 
 BluerayManager::BluerayManager()
 {
+// test data insert
+/*
+    QImage img("./../../blueray_images/잭 리처 스틸북 한정판.PNG");
+
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    img.save(&buffer, "PNG");
+
+    QString img_string = QString::fromLatin1(byteArray.toBase64());
+
+    // test
+    Blueray* blueray = new Blueray("잭 리처 - 스틸북 한정판", "크리스토퍼 맥쿼리", "파라마운트", 47000, " \
+도심 한복판, 6발의 총성과 함께 5명의 시민이 살해되는 사건이 벌어진다. 현장의 모든 증거들이 한 남자를 유일한 용의자로 지목하지만, 그는 자백을 거부한 채 '잭 리처를 데려오라'는 메모만을 남긴다. 전직 군 수사관 출신이지만 실제 정체를 아는 이는 누구도 없는 의문의 남자 '잭 리처'. 마침내 모습을 드러낸 그는 모든 정황이 완벽해 보이는 사건에 의문을 품고 홀로 진실을 추적하기 위해 나서는데…!", 100, img_string);
+    this->bluerayInsert(blueray);
+    // test end
+*/
     bluerayListJsonLoad();
 }
 

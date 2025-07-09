@@ -3,14 +3,15 @@
 #include "ui_client.h"
 #include "client.h"
 #include "bookitem.h"
-#include "popup.h"
 
 ClientBookService::ClientBookService(){
     // bookmanager singleton 인스턴스 get
     this->bookmanager = this->bookmanager->getInstance();
 
 }
-ClientBookService::~ClientBookService(){}
+ClientBookService::~ClientBookService(){
+
+}
 
 // 다중 검색 로직
 QVector<Book*> ClientBookService::bookSearch(Client* bookTab){
@@ -43,7 +44,7 @@ QVector<Book*> ClientBookService::bookSearch(Client* bookTab){
                 // 책 이름으로 검색
                 qDebug() << "책 이름으로 검색 진행";
                 if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getName().contains(searchData) == true){
+                    && i.value()->getName().contains(searchData, Qt::CaseInsensitive) == true){
                     qDebug() << i.value()->getName();
                     searchResult.append(i.value());
                 }
@@ -51,7 +52,7 @@ QVector<Book*> ClientBookService::bookSearch(Client* bookTab){
                 // 책 출판사로 검색
                 qDebug() << "책 출판사로 검색 진행";
                 if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getCompany().contains(searchData) == true){
+                    && i.value()->getCompany().contains(searchData, Qt::CaseInsensitive) == true){
                     qDebug() << i.value()->getName();
                     searchResult.append(i.value());
                 }
@@ -59,7 +60,7 @@ QVector<Book*> ClientBookService::bookSearch(Client* bookTab){
                 // 책 작가로 검색
                 qDebug() << "책 작가로 검색 진행";
                 if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getWriter().contains(searchData) == true){
+                    && i.value()->getWriter().contains(searchData, Qt::CaseInsensitive) == true){
                     qDebug() << i.value()->getName();
                     searchResult.append(i.value());
                 }
@@ -92,4 +93,21 @@ void ClientBookService::bookOrdering(Client* bookTab){
             qDebug() << "선택한 ListwidgetItem 에 qwidget 아이템이 없거나, qwidget 캐스팅 오류가 발생하였습니다.";
         }
     }
+}
+
+// 홈에서의 통합 책 검색 로직
+QVector<Book*> ClientBookService::bookHomeSearch(const QString& searchData){
+    QVector<Book*> searchResult; // search 결과 vector
+    QMap<QString, Book*> list = this->bookmanager->bookListRead();
+
+    for(auto i = list.begin(); i != list.end(); ++i){
+        qDebug() << "home call -> 책 이름 / 출판사 / 작가 로 검색 진행";
+        if(i.value()->getName().contains(searchData, Qt::CaseInsensitive) == true || i.value()->getCompany().contains(searchData, Qt::CaseInsensitive) == true
+            || i.value()->getWriter().contains(searchData, Qt::CaseInsensitive) == true){
+            qDebug() << i.value()->getName();
+            searchResult.append(i.value());
+        }
+    }
+
+    return searchResult;
 }

@@ -55,3 +55,11 @@ QString ProductInfo::getQImagePureQString(){
 void ProductInfo::setQImagePureQString(const QString& image){
     this->image = image;
 }
+
+QString ProductInfo::getQImageToQStringReturn(const QImage& image){
+    QByteArray byteArray;
+    QBuffer buf(&byteArray);
+    image.save(&buf, "PNG");
+
+    return QString::fromLatin1(byteArray.toBase64());
+}

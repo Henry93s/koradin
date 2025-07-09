@@ -45,8 +45,10 @@ public:
     void setQImagePureQString(const QString& image);
     // QString -- base64 인코딩 --> QImage
     QImage getQImagefromQString(const QString& imageString);
-    // image -- base64 디코딩 --> QString -> set
+    // image -- base64 디코딩 --> QString -> setter
     void setQImageToQString(const QImage& image);
+    // QImage -- base64 디코딩 --> QString return
+    QString getQImageToQStringReturn(const QImage& image);
 
 private:
     QString company;

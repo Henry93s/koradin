@@ -12,6 +12,7 @@ SOURCES += \
     adminwidget.cpp \
     blueray.cpp \
     bluerayManager.cpp \
+    bluerayitem.cpp \
     book.cpp \
     bookManager.cpp \
     bookitem.cpp \
@@ -20,7 +21,10 @@ SOURCES += \
     client.cpp \
     commuInfo.cpp \
     createnewroom.cpp \
+    clientBluerayService.cpp \
     clientBookService.cpp \
+    clientHomeService.cpp \
+    clientMusicService.cpp \
     clientService.cpp \
     customerswidget.cpp \
     editalbumwidget.cpp \
@@ -33,6 +37,8 @@ SOURCES += \
     mainwindow.cpp \
     music.cpp \
     musicManager.cpp \
+    musicitem.cpp \
+    orderitem.cpp \
     orderwidget.cpp \
     perchatting.cpp \
     perproduct.cpp \
@@ -47,14 +53,19 @@ SOURCES += \
 HEADERS += \
     adminwidget.h \
     bluerayManager.h \
+    bluerayitem.h \
     bookManager.h \
     bookitem.h \
     chattinglogwidget.h \
     chattingroom.h \
     client.h \
     createnewroom.h \
+    clientBluerayService.h \
     clientBookService.h \
+    clientHomeService.h \
+    clientMusicService.h \
     clientService.h \
+    commonVariable.h \
     customerswidget.h \
     editalbumwidget.h \
     editbookwidget.h \
@@ -69,6 +80,8 @@ HEADERS += \
     mainController.h \
     mainwindow.h \
     musicManager.h \
+    musicitem.h \
+    orderitem.h \
     orderwidget.h \
     perchatting.h \
     perproduct.h \
@@ -86,11 +99,14 @@ FORMS += \
     adminwidget.ui \
     chattingroom.ui \
     createnewroom.ui \
+    bluerayitem.ui \
     bookitem.ui \
     customerswidget.ui \
     editalbumwidget.ui \
     editbookwidget.ui \
     perchatting.ui \
+    musicitem.ui \
+    orderitem.ui \
     perproduct.ui \
     popup.ui \
     server.ui \

@@ -60,8 +60,9 @@ void MusicManager::musicListJsonLoad(){
         int price = music["price"];
         QString context = QString::fromStdString(music["context"]);
         int amount = music["amount"];
+        QString image = QString::fromStdString(music["image"]);
 
-        Music* newMusic = new Music(name, artist, company, price, context, amount);
+        Music* newMusic = new Music(name, artist, company, price, context, amount, image);
         // musicList stl Map 컨테이너에 저장
         musicList.insert(name, newMusic);
 
@@ -101,7 +102,8 @@ void MusicManager::musicListJsonSave(){
             { "company",  it.value()->getCompany().toStdString() },
             { "price",     it.value()->getPrice() },
             { "context",   it.value()->getContext().toStdString() },
-            { "amount",    it.value()->getAmount() }
+            { "amount",    it.value()->getAmount() },
+            { "image",     it.value()->getQImagePureQString().toStdString()}
         };
         // json 각 요소들을 j_array 에 push
         j_array.push_back(userObj);
@@ -199,6 +201,21 @@ QMap<QString, Music*> MusicManager::musicSearchAllByArtist(const QString& artist
 
 MusicManager::MusicManager()
 {
+// test data insert
+/*
+    QImage img("./../../music_images/From Our 20s.PNG");
+
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    img.save(&buffer, "PNG");
+
+    QString img_string = QString::fromLatin1(byteArray.toBase64());
+
+    // test
+    Music* music = new Music("미니 6집 From Our 20's", "프로미스나인", "드림어스컴퍼니", 23000, "프로미스나인(fromis_9)의 여섯 번째 미니앨범인 From Our 20's는 20대의 감정과 순간들을 담아낸 앨범입니다. 타이틀곡 LIKE YOU BETTER를 포함해 총 6곡이 수록되어 있으며, 멤버 5인 체제로 재편된 후 처음으로 발매하는 앨범입니다. ", 100, img_string);
+    this->musicInsert(music);
+    // test end
+*/
     musicListJsonLoad();
 }
 
