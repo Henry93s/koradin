@@ -114,6 +114,18 @@ void UserManager::userListJsonSave(){
     qDebug() << "userList 저장 완료";
 }
 
+std::vector<UserInfo *> UserManager::getUserListAsVector() const
+{
+    std::vector<UserInfo*> result;
+    result.reserve(userList.size());
+
+    for (auto it = userList.begin(); it != userList.end(); ++it) {
+        result.push_back(it.value());
+    }
+
+    return result;
+}
+
 // create user
 QString UserManager::userInsert(UserInfo* user){
     for (auto it = userList.begin(); it != userList.end(); it++) {

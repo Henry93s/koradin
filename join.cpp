@@ -3,11 +3,12 @@
 #include "userInfo.h"
 #include "mainwindow.h"
 #include "popup.h"
+#include "commuInfo.h"
 
 #include <QTcpSocket>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <commuInfo.h>
+#include <QMessageBox>
 
 Join::Join(QMainWindow *parent)
     : QWidget(parent)
@@ -45,6 +46,7 @@ QString Join::duplicateCheck(){
 
     socket->write(doc.toJson(QJsonDocument::Compact));
 
+    return QString();
     //UserInfo* findUser = userManagerInstance->userSearchById(ui->id_lineEdit->text());
 
     // if(!findUser){
@@ -74,7 +76,8 @@ void Join::on_join_button_clicked()
     }
 
     // // ID 중복 검사 확인
-    // QString duplicateResult = duplicateCheck(); //이거 서버 통신으로.
+    QString duplicateResult = duplicateCheck(); //이거 서버 통신으로.
+
     // if(duplicateResult.compare("OK") == 0){
     //     UserInfo* newUser = new UserInfo(ui->id_lineEdit->text(), ui->name_lineEdit->text(),
     //                                      ui->pw_lineEdit->text(), ui->email_lineEdit->text(), "false");
@@ -109,34 +112,36 @@ void Join::respond()
     if(clientSocket->bytesAvailable() > BLOCK_SIZE) return;
     QByteArray bytearray = clientSocket->read(BLOCK_SIZE);
 
-    //commuInfoQueue.push(CommuInfo{bytearray});
     auto info = CommuInfo{bytearray};
 
     auto type = info.GetType();
 
     if(type == CommuType::AUTH){
         auto p = info.GetIDPwd();
-        if(p.first == QString("No")){   //중복된 아이디가 없다!
-            // UserInfo* newUser = new UserInfo(ui->id_lineEdit->text(), ui->name_lineEdit->text(),
-            //                                  ui->pw_lineEdit->text(), ui->email_lineEdit->text(), "false");
+        if(p.first == QString("No")){
+            //중복된 아이디가 없다!
             UserInfo newUser(ui->id_lineEdit->text(), ui->name_lineEdit->text(),
                              ui->pw_lineEdit->text(), ui->email_lineEdit->text(), "false");
             //userManagerInstance->userInsert(newUser);   //이거 역시 서버 통신으로.
             // 서버로 유저 추가 데이터 날리기
             std::vector<UserInfo> userVec;
             userVec.push_back(newUser);
+            CommuInfo comm;
+            comm.AddUsers(userVec);
+
+            clientSocket->write(comm.GetByteArray());
         }
         else{
             Popup* popup = new Popup(this, tr("중복된 아이디가 있습니다."));
             popup->show();
             return;
-            //return "duplicate_ID";
         }
     }
 
-
     // 다시 mainwindow.ui 로 진입
     MainWindow* mainwindow = new MainWindow();
+    disconnect(socket, SIGNAL(readyRead()), this, SLOT(respond()));
+    connect(socket, SIGNAL(readyRead()), mainwindow, SLOT(respond()));
     mainwindow->show();
     this->close();
 }

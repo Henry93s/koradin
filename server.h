@@ -34,6 +34,9 @@ public:
 
 private:
     void AUTHRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
+    void AddRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
+    void InfosFetchRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
+
 private slots:
     void clientConnect();
     void clientDisconnected();
@@ -44,9 +47,9 @@ private slots:
     void enterRoom(RoomData& roomData);
 
 signals:
-    void InfosFetchRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
     void ChattingRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
     void InfosFixRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
+    void InfosAddRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
     //void AUTHRespond(const CommuInfo& commuInfo);
 private:
     Ui::Server *ui;
@@ -56,8 +59,10 @@ private:
     QVector<ClientData> clients;
     QVector<RoomData> rooms;
 
-    std::vector<std::shared_ptr<ProductInfo>> products;
-    std::vector<std::shared_ptr<UserInfo>> users;
+    //std::vector<std::shared_ptr<ProductInfo>> products;
+    //std::vector<std::shared_ptr<UserInfo>> users;
+
+
 
     // Managers;
     UserManager userManager;

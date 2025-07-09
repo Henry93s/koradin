@@ -65,6 +65,7 @@ Server::Server(QWidget *parent)
             }
         }
     });
+
     //채팅 받기.
     // connect(this, &Server::ChattingRespond, ui->ChattingPage1->, [=](const CommuInfo& commuInfo){
     //     auto data = commuInfo.GetChat();
@@ -120,15 +121,21 @@ void Server::respond()
 
     auto type = info.GetType();
 
+    qDebug("type : %d", type);
+
     switch(type){
     case CommuType::Infos:
-        emit InfosFetchRespond(info, clientConnection);
+        InfosFetchRespond(info, clientConnection);
         break;
     case CommuType::Chatting:
         emit ChattingRespond(info, clientConnection);
         break;
     case CommuType::InfoFix:
         emit InfosFixRespond(info, clientConnection);
+        break;
+    case CommuType::InfoAdd:
+        AddRespond(info, clientConnection);
+        emit InfosAddRespond(info, clientConnection);
         break;
     case CommuType::AUTH:
         AUTHRespond(info, clientConnection);
@@ -218,5 +225,31 @@ void Server::AUTHRespond(const CommuInfo &commuInfo, QTcpSocket* socket)
 
     QJsonDocument docu(whole);
 
-    socket->write(docu.toJson(QJsonDocument::Compact));
+    QByteArray ba = docu.toJson(QJsonDocument::Compact);
+    qDebug("Writee %d", ba.size());
+    socket->write(ba);
+}
+
+void Server::AddRespond(const CommuInfo &commuInfo, QTcpSocket *clientConnection)
+{
+    auto usersToAdd = commuInfo.GetAddingUsers();
+
+    qDebug("AddRespond");
+
+    for(auto user : usersToAdd){
+        auto* perUser = new UserInfo(user.getID(), user.getName(), user.getPassword(), user.getEmail(), user.getIsAdmin());
+        qDebug() << user.getID() << user.getName() << user.getPassword() << user.getEmail() << user.getIsAdmin();
+        userManager.userInsert(perUser);
+    }
+
+    //인서트 한다음 세이브.
+    userManager.userListJsonSave();
+    userManager.userListJsonLoad();
+}
+
+void Server::InfosFetchRespond(const CommuInfo &commuInfo, QTcpSocket *clientConnection)
+{
+    ProductInfo::Filter filter;
+    ProductInfo::ProductType productType = commuInfo.GetRequestProducts(filter);
+
 }

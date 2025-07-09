@@ -10,7 +10,7 @@ UserInfo::UserInfo(const QString& ID, const QString& name, const QString& passwo
     this->setIsAdmin(isAdmin);
 }
 UserInfo::~UserInfo(){}
-QString UserInfo::getID(){
+const QString& UserInfo::getID() const{
     return this->ID;
 }
 void UserInfo::setID(const QString& ID){

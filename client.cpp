@@ -43,6 +43,10 @@ void Client::Initialize(QTcpSocket *sock, const QString& Name)
     clientData.name = Name;
 
     connect(clientData.socket, SIGNAL(readyRead()), SLOT(respond()));
+
+    CommuInfo requestProducts;
+    requestProducts.RequestProducts(ProductInfo::ProductType::Book, ProductInfo::Filter{});
+    sock->write(requestProducts.GetByteArray());
 }
 
 void Client::respond()

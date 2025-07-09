@@ -4,6 +4,7 @@
 #include <QString>
 
 class Info {
+public:
     enum InfoType{
         User,
         Product,

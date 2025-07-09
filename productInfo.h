@@ -9,10 +9,23 @@
 class ProductInfo : public Info {
 public:
     enum ProductType{
-        BOOK,
-        BLUERAY,
-        MUSIC
+        Book,
+        Blueray,
+        Music,
+        None
     };
+    enum FilterType{
+        Name,
+        Author,
+        Company
+    };
+
+    typedef struct filter{
+        FilterType type;
+        QString keyword;
+        int minPrice;
+        int maxPrice;
+    } Filter;
 
 public:
     ProductInfo();

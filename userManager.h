@@ -33,6 +33,7 @@ public:
     // QMap userList -> userList.json 파일로 save
     void userListJsonSave();
 
+    std::vector<UserInfo*> getUserListAsVector() const;
 private:
     static UserManager* instance;
     // userList.json 파일을 읽어서 프로그램에서는 userList STL 컨테이너로 user 데이터 관리

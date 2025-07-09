@@ -11,7 +11,7 @@ public:
     UserInfo(const QString& ID, const QString& name, const QString& password
              , const QString& email, const QString& isAdmin);
     ~UserInfo();
-    QString getID(); // primary Key
+    const QString& getID() const; // primary Key
     void setID(const QString& ID);
     QString getPassword();
     void setPassword(const QString& password);

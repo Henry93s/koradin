@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "server.h"
+#include "client.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -18,7 +19,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    MainWindow window;
+    Client window;
     //Server window;
     window.show();
 

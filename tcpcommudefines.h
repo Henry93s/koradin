@@ -13,6 +13,7 @@ enum CommuType{
     Infos,
     InfoFix,
     InfoAdd,
+    Order,
     AUTH,
     COMMUEND
 };

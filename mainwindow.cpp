@@ -48,10 +48,10 @@ MainWindow::MainWindow(QWidget *parent)
     socket->connectToHost("127.0.0.1", PORT);
 
     // server 가 open 됨을 확인
-    connect(socket, &QTcpSocket::errorOccurred, [=](QAbstractSocket::SocketError) {
-        QMessageBox::information(this, tr("Communication"), tr("서버 안 열림!"));
-        socket->close();
-    });
+    // connect(socket, &QTcpSocket::errorOccurred, [=](QAbstractSocket::SocketError) {
+    //     QMessageBox::information(this, tr("Communication"), tr("서버 안 열림!"));
+    //     socket->close();
+    // });
 
     connect(socket, &QTcpSocket::connected, [=]() {
         connect(socket, SIGNAL(readyRead()), SLOT(respond()));
@@ -73,27 +73,12 @@ void MainWindow::on_login_button_clicked()
 {
     // 로그인 검증
     // ID 검증
-<<<<<<< HEAD
     QJsonObject obj;
     QJsonObject data;
     obj["CommuType"] = tr("AUTH");
     data["ID"] = ui->id_lineEdit->text();
     data["password"] = ui->pw_lineEdit->text();
     obj["Data"] = data;
-=======
-    UserInfo* temp = usermanager->userSearchById(ui->id_lineEdit->text());
-
-    if(temp == nullptr){
-        // id 불일치
-        qDebug() << "입력한 id 가 유저 리스트에 없습니다.";
-        Popup* popup = new Popup(this, tr("존재하지 않는 아이디 입니다."));
-        popup->show();
-    } else{
-        // password 검증
-        if(ui->pw_lineEdit->text().compare(temp->getPassword()) == 0){
-            // client.ui 가 열렸을 때, server connect 를 통한 새 클라이언트 연결 추가.
-            // commuInfo -> client session 관리 리스트에 세션 추가
->>>>>>> geonwoo2
 
     QJsonDocument doc(obj);
     socket->write(doc.toJson(QJsonDocument::Compact));
@@ -141,6 +126,7 @@ void MainWindow::on_join_button_clicked()
     // 회원 가입 버튼 클릭 시 열리는 회원 가입 화면
     Join* joinWindow = new Join(); // 다시 돌아오기 위해서 Join 생성자에 현재 window 를 인자로 넘김
     joinWindow->Initialize(socket); // 소켓을 넘김. 확인하기 위해서
+    disconnect(socket, SIGNAL(readyRead()), this, SLOT(respond()));
     joinWindow->show();
 
     // 회원 가입 취소 또는 완료 후 다시 로그인 화면으로 돌아옴
@@ -208,8 +194,8 @@ void MainWindow::respond()
         else if(auth.first == QString("No")){
             // id 불일치
             qDebug() << "입력한 id 가 유저 리스트에 없습니다.";
-            Popup* popup = new Popup(this, tr("존재하지 않는 아이디 입니다."));
-            popup->show();
+            // Popup* popup = new Popup(this, tr("존재하지 않는 아이디 입니다."));
+            // popup->show();
         }
         else{
             // password 불일치
