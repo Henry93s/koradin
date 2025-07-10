@@ -3,6 +3,12 @@
 ProductInfo::ProductInfo(){}
 ProductInfo::~ProductInfo(){}
 
+QString ProductInfo::getUuid(){
+    return this->Uuid;
+}
+void ProductInfo::setUuid(const QString& uuid){
+    this->Uuid = uuid;
+}
 QString ProductInfo::getCompany(){
     return this->company;
 }

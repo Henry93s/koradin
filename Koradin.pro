@@ -93,7 +93,8 @@ HEADERS += \
     userManager.h \
     server.h \
     orderInfo.h \
-    music.h
+    music.h \
+    uuidCompare.h
 
 FORMS += \
     adminwidget.ui \

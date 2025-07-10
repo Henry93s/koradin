@@ -6,7 +6,7 @@
 class Blueray : public ProductInfo {
 public:
     Blueray();
-    Blueray(const QString& name, const QString& artist, const QString& company
+    Blueray(const QString& uuid, const QString& name, const QString& artist, const QString& company
           , const int& price, const QString& context, const int& amount, const QString& image);
     ~Blueray();
     QString getArtist();

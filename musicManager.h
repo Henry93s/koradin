@@ -27,6 +27,8 @@ public:
     QMap<QString, Music*> musicSearchAllByName(const QString& name);
     // read some musics search by artist(검색 데이터 포함 조회)
     QMap<QString, Music*> musicSearchAllByArtist(const QString& artist);
+    // read some musics search by Uuid
+    QMap<QString, Music*> musicSearchAllByUuid(const QString& uuid);
 
     // musicList.json 파일 -> musicList 로 load
     void musicListJsonLoad();

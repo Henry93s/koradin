@@ -1,8 +1,9 @@
 #include "book.h"
 
 Book::Book(){}
-Book::Book(const QString& name, const QString& writer, const QString& company
+Book::Book(const QString& uuid, const QString& name, const QString& writer, const QString& company
              , const int& price, const QString& context, const int& amount, const QString& image){
+    this->setUuid(uuid);
     this->setName(name);
     this->setWriter(writer);
     this->setCompany(company);

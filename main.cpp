@@ -20,7 +20,8 @@ int main(int argc, char *argv[])
         }
     }
     Client window;
-    //Server window;
+    // Server window;
+    //MainWindow window;
     window.show();
 
     return a.exec();

@@ -11,6 +11,8 @@
 #include "music.h"
 #include <QApplication>
 #include <QDir>
+#include <QUuid>
+#include "uuidCompare.h"
 
 using namespace std;
 using json = nlohmann::json;
@@ -54,6 +56,7 @@ void MusicManager::musicListJsonLoad(){
     json j = json::parse(jsonStdStr);
 
     for(auto music : j){
+        QString uuid = QString::fromStdString(music["uuid"]);
         QString name = QString::fromStdString(music["name"]);
         QString artist = QString::fromStdString(music["artist"]);
         QString company = QString::fromStdString(music["company"]);
@@ -62,11 +65,11 @@ void MusicManager::musicListJsonLoad(){
         int amount = music["amount"];
         QString image = QString::fromStdString(music["image"]);
 
-        Music* newMusic = new Music(name, artist, company, price, context, amount, image);
+        Music* newMusic = new Music(uuid, name, artist, company, price, context, amount, image);
         // musicList stl Map 컨테이너에 저장
-        musicList.insert(name, newMusic);
+        musicList.insert(uuid, newMusic);
 
-        qDebug() << "Loaded Music name, artist : " << name << " (" << artist << ")";
+        qDebug() << "Loaded Music uuid, name : " << uuid << " (" << name << ")";
     }
 
     file.close();
@@ -97,6 +100,7 @@ void MusicManager::musicListJsonSave(){
     for (auto it = musicList.begin(); it != musicList.end(); ++it) {
         if (!it.value()) continue;
         json userObj = {
+            { "uuid",        it.value()->getUuid().toStdString() },
             { "name",        it.value()->getName().toStdString() },
             { "artist",      it.value()->getArtist().toStdString() },
             { "company",  it.value()->getCompany().toStdString() },
@@ -128,8 +132,13 @@ QString MusicManager::musicInsert(Music* music){
         }
     }
 
+    // uuid 중복 체크 -> 중복하지 않을 때까지 새로운 uuid set
+    while(uuidIsduplicate(musicList, music->getUuid()) == true){
+        music->setUuid(QUuid::createUuid().toString());
+    }
+
     // music 중복되지 않음
-    musicList.insert(music->getName(), music);
+    musicList.insert(music->getUuid(), music);
 
     return "OK";
 }

@@ -27,6 +27,8 @@ public:
     QMap<QString, Book*> bookSearchAllByName(const QString& name);
     // read some books search by writer
     QMap<QString, Book*> bookSearchAllByWriter(const QString& artist);
+    // read some books search by uuid
+    QMap<QString, Book*> bookSearchAllByUuid(const QString& uuid);
 
     // bookList.json 파일 -> bookList 로 load
     void bookListJsonLoad();
