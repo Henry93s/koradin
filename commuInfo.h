@@ -34,6 +34,10 @@ public:
     //이건 클라에서 가입한 회원을 서버로 보낼 떄 쓰는것.
     void AddUsers(std::vector<UserInfo>);
     std::vector<UserInfo> GetAddingUsers() const;
+
+    // 서버에서 정제한 response 결과 배열을 bytearray 내부에 추가한다
+    void AppendResponseArray(const QJsonArray& responseArray);
+
 private:
     QByteArray byteArray;
 };

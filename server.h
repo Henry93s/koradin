@@ -36,6 +36,7 @@ private:
     void AUTHRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
     void AddRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
     void InfosFetchRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
+    void SearchDataResponse(const CommuInfo& commuInfo, QTcpSocket* socket);
 
 private slots:
     void clientConnect();

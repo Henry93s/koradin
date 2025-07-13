@@ -94,7 +94,7 @@ void ClientBluerayService::bluerayOrdering(Client* bluerayTab){
 }
 
 // 홈에서의 통합 블루레이 검색 로직
-QVector<Blueray*> ClientBluerayService::bluerayHomeSearch(const QString& searchData){
+QVector<Blueray*> ClientBluerayService::bluerayHomeSearch(Client* homeTab, const QString& searchData){
     QVector<Blueray*> searchResult; // search 결과 vector
     QMap<QString, Blueray*> list = this->blueraymanager->bluerayListRead();
 

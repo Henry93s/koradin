@@ -12,6 +12,9 @@ public:
     QString getWriter();
     void setWriter(const QString& writer);
 
+    QJsonObject toJsonObject();
+    static Book* fromJsonObject(const QJsonObject& obj);
+
 private:
     QString writer;
 };

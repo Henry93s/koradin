@@ -12,7 +12,7 @@ public:
     ~ClientBluerayService();    // 다중 검색 로직
     QVector<Blueray*> blueraySearch(Client* bluerayTab);
     // home call -> search
-    QVector<Blueray*> bluerayHomeSearch(const QString& searchData);
+    QVector<Blueray*> bluerayHomeSearch(Client* homeTab, const QString& searchData);
     // 주문하기 클릭 시 발생 로직
     void bluerayOrdering(Client* bluerayTab);
 

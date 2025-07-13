@@ -186,7 +186,6 @@ ProductInfo::ProductType CommuInfo::GetRequestProducts(ProductInfo::Filter &filt
         return ProductInfo::ProductType::None;
     }
     QJsonObject Product = info["Product"].toObject();
-
     QJsonObject Filter = Product["Filter"].toObject();
     filterRet.keyword = Filter["Keyword"].toString();
     filterRet.minPrice = Filter["Min"].toInt();
@@ -208,6 +207,7 @@ ProductInfo::ProductType CommuInfo::GetRequestProducts(ProductInfo::Filter &filt
     } else{
         return ProductInfo::ProductType::None;
     }
+
 }
 
 void CommuInfo::AddUsers(std::vector<UserInfo> users)
@@ -260,4 +260,20 @@ std::vector<UserInfo> CommuInfo::GetAddingUsers() const
     }
 
     return ret;
+}
+
+void CommuInfo::AppendResponseArray(const QJsonArray& responseArray)
+{
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(byteArray, &err);
+    if (err.error != QJsonParseError::NoError) {
+        qDebug() << "JSON 파싱 실패:" << err.errorString();
+        return;
+    }
+
+    QJsonObject obj = doc.object();
+    obj["response"] = responseArray;
+
+    QJsonDocument newDoc(obj);
+    byteArray = newDoc.toJson(QJsonDocument::Compact);
 }

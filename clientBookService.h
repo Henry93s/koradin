@@ -11,10 +11,9 @@ class ClientBookService : ClientService {
 public:
     ClientBookService();
     ~ClientBookService();
-    // 다중 검색 로직
+    // book 탭에서 book 검색 을 서버에 요청
     QVector<Book*> bookSearch(Client* bookTab);
-    // home 에서 통합 검색 요청으로 인한 search
-    QVector<Book*> bookHomeSearch(const QString& searchData);
+
     // 주문하기 클릭 시 발생 로직
     void bookOrdering(Client* bookTab);
 

@@ -19,9 +19,9 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    Client window;
-    // Server window;
-    //MainWindow window;
+    //Client window;
+    //Server window;
+    MainWindow window;
     window.show();
 
     return a.exec();

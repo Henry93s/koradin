@@ -13,7 +13,7 @@ public:
 
     // 다중 검색 로직
     QVector<Music*> musicSearch(Client* musicTab);
-    QVector<Music*> musicHomeSearch(const QString& searchData);
+    QVector<Music*> musicHomeSearch(Client* homeTab, const QString& searchData);
     // 주문하기 클릭 시 발생 로직
     void musicOrdering(Client* musicTab);
 

@@ -184,10 +184,12 @@ void MainWindow::respond()
     if(type == CommuType::AUTH){
         auto auth = info.GetIDPwd();
         if(auth.first != QString("No") && auth.second != QString("No")){
+            disconnect(socket, SIGNAL(readyRead()), this, SLOT(respond()));
             // client ui open
             Client* clientWindow = new Client();
             clientWindow->Initialize(socket, auth.first);
             clientWindow->show();
+
 
             this->close();
         }

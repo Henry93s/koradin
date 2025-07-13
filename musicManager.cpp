@@ -221,8 +221,8 @@ MusicManager::MusicManager()
     QString img_string = QString::fromLatin1(byteArray.toBase64());
 
     // test
-    Music* music = new Music("미니 6집 From Our 20's", "프로미스나인", "드림어스컴퍼니", 23000, "프로미스나인(fromis_9)의 여섯 번째 미니앨범인 From Our 20's는 20대의 감정과 순간들을 담아낸 앨범입니다. 타이틀곡 LIKE YOU BETTER를 포함해 총 6곡이 수록되어 있으며, 멤버 5인 체제로 재편된 후 처음으로 발매하는 앨범입니다. ", 100, img_string);
-    this->musicInsert(music);
+    QString uuid = QUuid::createUuid().toString();
+    Music* music = new Music(uuid, "test 미니 6집 From Our 20's", "test 프로미스나인", "드림어스컴퍼니", 23000, "프로미스나인(fromis_9)의 여섯 번째 미니앨범인 From Our 20's는 20대의 감정과 순간들을 담아낸 앨범입니다. 타이틀곡 LIKE YOU BETTER를 포함해 총 6곡이 수록되어 있으며, 멤버 5인 체제로 재편된 후 처음으로 발매하는 앨범입니다. ", 100, img_string);
     // test end
 */
     musicListJsonLoad();

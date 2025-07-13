@@ -12,6 +12,9 @@ public:
     QString getArtist();
     void setArtist(const QString& artist);
 
+    QJsonObject toJsonObject();
+    static Music* fromJsonObject(const QJsonObject& obj);
+
 private:
     QString artist;
 };

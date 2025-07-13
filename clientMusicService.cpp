@@ -93,7 +93,7 @@ void ClientMusicService::musicOrdering(Client* musicTab){
 }
 
 // 홈에서의 통합 음반 검색 로직
-QVector<Music*> ClientMusicService::musicHomeSearch(const QString& searchData){
+QVector<Music*> ClientMusicService::musicHomeSearch(Client* homeTab, const QString& searchData){
     QVector<Music*> searchResult; // search 결과 vector
     QMap<QString, Music*> list = this->musicmanager->musicListRead();
 
