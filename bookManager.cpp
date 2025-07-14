@@ -204,18 +204,19 @@ QMap<QString, Book*> BookManager::bookSearchAllByWriter(const QString& writer){
     return returnBooks;
 }
 
-// read some books search by uuid
-QMap<QString, Book*> BookManager::bookSearchAllByUuid(const QString& uuid){
-    QMap<QString, Book*> returnBooks;
+// err 수정 : uuid 로 조회 시 무조건 1개 return 처리
+Book* BookManager::bookSearchByUuid(const QString& uuid){
+    Book* book;
 
     for(auto it = bookList.begin(); it != bookList.end(); ++it){
         if(!it.value()) continue;
-        if(it.value()->getWriter().contains(uuid) == true){
-            returnBooks.insert(it.value()->getUuid(), it.value());
+        if(it.value()->getWriter().compare(uuid) == 0){
+            book = it.value();
+            return book;
         }
     }
 
-    return returnBooks;
+    return nullptr;
 }
 
 // read bookList

@@ -81,7 +81,7 @@ void ClientBookService::bookOrdering(Client* bookTab){
         // qwidget 을 BookItem* 으로 캐스팅(qobject_cast 방식으로 반환 체크를 먼저 진행하기 때문에 widget 이 BookItem* 이 아닐 경우 nullptr 을 반환)
         BookItem* castedItem = qobject_cast<BookItem*>(widget);
         if(castedItem){
-            QMap<QString, QString> selectedData = castedItem->getData();
+            Book* selectedData = castedItem->getData();
             // 선택된 데이터를 orderManager 에 전달해야 함
             qDebug() << selectedData;
             Popup* popup = new Popup(bookTab, QObject::tr("주문이 완료되었습니다."));

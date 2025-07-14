@@ -175,6 +175,19 @@ Music* MusicManager::musicSearchByNameAndArtist(const QString& name, const QStri
     return nullptr;
 }
 
+// uuid 로 music* 조회 누락 추가 : uuid 로 조회 시 무조건 1개 return 처리
+Music* MusicManager::musicSearchByUuid(const QString& uuid){
+    Music* music;
+    for(auto it = musicList.begin(); it!= musicList.end(); ++it){
+        if(!it.value()) continue;
+        if(it.value()->getName().compare(uuid) == 0){
+            music = it.value();
+            return music;
+        }
+    }
+    return nullptr;
+}
+
 // read musicList
 QMap<QString, Music*> MusicManager::musicListRead(){
     return this->musicList;

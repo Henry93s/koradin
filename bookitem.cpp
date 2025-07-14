@@ -62,11 +62,12 @@ QString BookItem::makeImageToolTip(QString base64FromPng){
 }
 
 // QListWidget 에서 선택된 QListWidgetItem -> bookItem 에서
-//  주문에 필요한 데이터(책 이름, 작가 & 출판사, 가격) 만 가져옴
+//  주문에 필요한 데이터(uuid, 책 이름, 작가 & 출판사, 가격) 만 가져옴
 QMap<QString, QString> BookItem::getData(){
     QMap<QString, QString> returnData;
+
     returnData.insert("name", this->ui->book_title_label->text());
-    qDebug() << this->ui->book_title_label->text();
+
     QStringList parts = this->ui->book_info_label->text().split(" | ");
     QString writer = parts.at(0);
     QString company = parts.at(1);

@@ -203,17 +203,21 @@ QMap<QString, Blueray*> BluerayManager::blueraySearchAllByArtist(const QString& 
     return returnBluerays;
 }
 
-QMap<QString, Blueray*> BluerayManager::blueraySearchAllByUuid(const QString& uuid){
+// err 수정 : uuid 로 조회 시 무조건 1개 return 처리
+Blueray* BluerayManager::blueraySearchByUuid(const QString& uuid){
+    Blueray* blueray;
+
     QMap<QString, Blueray*> returnBluerays;
 
     for(auto it = bluerayList.begin(); it != bluerayList.end(); ++it){
         if(!it.value()) continue;
-        if(it.value()->getUuid().contains(uuid) == true){
-            returnBluerays.insert(it.value()->getUuid(), it.value());
+        if(it.value()->getUuid().compare(uuid) == 0){
+            blueray = it.value();
+            return blueray;
         }
     }
 
-    return returnBluerays;
+    return nullptr;
 }
 
 // read bluerayList
