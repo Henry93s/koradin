@@ -264,6 +264,7 @@ void Server::InfosFetchRespond(const CommuInfo &commuInfo, QTcpSocket *clientCon
 
 }
 
+// 도서 or 블루레이 or 음반 상품을 조회하여 json + 데이터의 길이(header) 를 같이 클라이언트에 전달함
 void Server::SearchDataResponse(const CommuInfo& commuInfo, QTcpSocket* socket) {
     ProductInfo::Filter filter;
     auto type = commuInfo.GetRequestProducts(filter);

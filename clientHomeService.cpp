@@ -20,7 +20,7 @@ ClientHomeService::~ClientHomeService(){
     delete clientMusicService;
 }
 
-// 통합 검색 로직
+// 1. 통합 검색 로직
 void ClientHomeService::allSearch(Client* homeTab){
     // 1. home tab 에서 checkbox button 에 따른 검색 조건 설정
     QVector<QString> searchType; // empty : 아무 체크 박스도 선택 안 함.
@@ -40,7 +40,7 @@ void ClientHomeService::allSearch(Client* homeTab){
     auto it = find(searchType.begin(), searchType.end(), "book");
     if(it != searchType.end()){
         // homeBookSearchRequest 메소드로 서버에 book 검색 요청 처리
-        QMessageBox::information(homeTab, "search book", "client : book request");
+        QMessageBox::information(homeTab, "Book Search", "도서 정보를 불러오고 있습니다.");
         this->homeBookSearchRequest(homeTab, searchData);
     }
 
@@ -48,7 +48,7 @@ void ClientHomeService::allSearch(Client* homeTab){
     it = find(searchType.begin(), searchType.end(), "music");
     if(it != searchType.end()){
         // homeMusicSearchRequest 메소드로 서버에 music 검색 요청 처리
-        QMessageBox::information(homeTab, "search music", "client : music request");
+        QMessageBox::information(homeTab, "Music Search", "음반 정보를 불러오고 있습니다.");
         this->homeMusicSearchRequest(homeTab, searchData);
     }
 
@@ -56,12 +56,12 @@ void ClientHomeService::allSearch(Client* homeTab){
     it = find(searchType.begin(), searchType.end(), "blueray");
     if(it != searchType.end()){
         // homeBlueraySearchRequest 메소드로 서버에 blueray 검색 요청 처리
-        QMessageBox::information(homeTab, "search blueray", "client : blueray request");
+        QMessageBox::information(homeTab, "Blueray Search", "블루레이 정보를 불러오고 있습니다.");
         this->homeBlueraySearchRequest(homeTab, searchData);
     }
 }
 
-// 클라이언트 HOME 에서 책 검색 을 서버에 요청
+// 2. 클라이언트 HOME 에서 책 검색 을 서버에 요청
 void ClientHomeService::homeBookSearchRequest(Client* homeTab, const QString& searchData){
     // 검색 데이터 json 작성 및 서버에 요청
     CommuInfo commuinfo;
@@ -71,7 +71,7 @@ void ClientHomeService::homeBookSearchRequest(Client* homeTab, const QString& se
     homeTab->getClientData()->socket->write(commuinfo.GetByteArray());
 }
 
-// 클라이언트 HOME 에서 음반 검색 을 서버에 요청
+// 2. 클라이언트 HOME 에서 음반 검색 을 서버에 요청
 void ClientHomeService::homeMusicSearchRequest(Client* homeTab, const QString& searchData){
     // 검색 데이터 json 작성 및 서버에 요청
     CommuInfo commuinfo;
@@ -81,7 +81,7 @@ void ClientHomeService::homeMusicSearchRequest(Client* homeTab, const QString& s
     homeTab->getClientData()->socket->write(commuinfo.GetByteArray());
 }
 
-// 클라이언트 HOME 에서 블루레이 검색 을 서버에 요청
+// 2. 클라이언트 HOME 에서 블루레이 검색 을 서버에 요청
 void ClientHomeService::homeBlueraySearchRequest(Client* homeTab, const QString& searchData){
     // 검색 데이터 json 작성 및 서버에 요청
     CommuInfo commuinfo;

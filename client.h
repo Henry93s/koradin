@@ -27,15 +27,9 @@ public:
     explicit Client(QWidget *parent = nullptr);
     ~Client();
     void Initialize(QTcpSocket* sock, const QString& name = tr("None"));
-    // print Music, Blueray, Book list
-    void printMusicList();
-    void printBluerayList();
-    void printBookList();
+
     // ClientService, clientBookService 등 각 탭의 Service 클래스에서 Ui 에 입력된 값을 요구할 수 있기 때문에 필요
     Ui::Client* getUi();
-
-    void printSearchMusicList(const QVector<Music*>& list);
-    void printSearchBluerayList(const QVector<Blueray*>& list);
     clientdata* getClientData();
 
 private slots:

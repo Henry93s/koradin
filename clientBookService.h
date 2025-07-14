@@ -12,7 +12,8 @@ public:
     ClientBookService();
     ~ClientBookService();
     // book 탭에서 book 검색 을 서버에 요청
-    QVector<Book*> bookSearch(Client* bookTab);
+    void bookSearch(Client* bookTab);
+    void bookSearchRequest(Client* bookTab, const QString& searchData, const QString& searchType, const int& beforePriceForSearch, const int& afterPriceForSearch);
 
     // 주문하기 클릭 시 발생 로직
     void bookOrdering(Client* bookTab);

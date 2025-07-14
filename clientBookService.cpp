@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QString>
+#include <QMessageBox>
 
 
 ClientBookService::ClientBookService(){
@@ -18,8 +19,8 @@ ClientBookService::~ClientBookService(){
 
 }
 
-// 다중 검색 로직
-QVector<Book*> ClientBookService::bookSearch(Client* bookTab){
+// 1. 책 다중 검색
+void ClientBookService::bookSearch(Client* bookTab){
     // 1. book tab 에서 radio button 에 따른 검색 조건 설정
     QString searchType =
         bookTab->getUi()->book_name_radioButton->isChecked() == true ? "name" :
@@ -37,44 +38,35 @@ QVector<Book*> ClientBookService::bookSearch(Client* bookTab){
 
     // 3. 검색어 입력 체크(입력하지 않았을 때 전체 데이터를 출력)
     QString searchData = bookTab->getUi()->book_search_lineEdit->text();
-    QVector<Book*> searchResult; // search 결과 vector
-    QMap<QString, Book*> list = this->bookmanager->bookListRead();
-    if(searchType.compare("none") == 0){
-        qDebug() << "검색 조건 설정을 한 개 이상 선택해주세요.";
-        Popup* popup = new Popup(bookTab, QObject::tr("검색 조건 설정을 한 개 이상 선택해주세요."));
-        popup->show();
-    } else {
-        for(auto i = list.begin(); i != list.end(); ++i){
-            if(searchType.compare("name") == 0){
-                // 책 이름으로 검색
-                qDebug() << "책 이름으로 검색 진행";
-                if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getName().contains(searchData, Qt::CaseInsensitive) == true){
-                    qDebug() << i.value()->getName();
-                    searchResult.append(i.value());
-                }
-            } else if(searchType.compare("company") == 0){
-                // 책 출판사로 검색
-                qDebug() << "책 출판사로 검색 진행";
-                if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getCompany().contains(searchData, Qt::CaseInsensitive) == true){
-                    qDebug() << i.value()->getName();
-                    searchResult.append(i.value());
-                }
-            } else if(searchType.compare("writer") == 0){
-                // 책 작가로 검색
-                qDebug() << "책 작가로 검색 진행";
-                if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getWriter().contains(searchData, Qt::CaseInsensitive) == true){
-                    qDebug() << i.value()->getName();
-                    searchResult.append(i.value());
-                }
-            }
-        }
-        //bookTab->printSearchBookList(searchResult);
+    QMessageBox::information(bookTab, "도서 검색", "도서 검색을 진행합니다.");
+    this->bookSearchRequest(bookTab, searchData, searchType, beforePriceForSearch, afterPriceForSearch);
+}
+
+// 2. bookTab 에서 book 검색을 서버에 요청한다.
+void ClientBookService::bookSearchRequest(Client* bookTab, const QString& searchData, const QString& searchType, const int& beforePriceForSearch, const int& afterPriceForSearch){
+    // 통신 데이터 json 구성 및 서버에 요청
+    CommuInfo commuinfo;
+    if(searchType.compare("name") == 0){
+        commuinfo.RequestProducts(ProductInfo::ProductType::Book \
+                                  , ProductInfo::Filter \
+                                  {ProductInfo::FilterType::Name, searchData, \
+                                   beforePriceForSearch, afterPriceForSearch});
+
+    } else if (searchType.compare("writer") == 0){
+        commuinfo.RequestProducts(ProductInfo::ProductType::Book \
+                                  , ProductInfo::Filter \
+                                  {ProductInfo::FilterType::Author, searchData, \
+                                   beforePriceForSearch, afterPriceForSearch});
+
+    } else if (searchType.compare("company") == 0){
+        commuinfo.RequestProducts(ProductInfo::ProductType::Book \
+                                  , ProductInfo::Filter \
+                                  {ProductInfo::FilterType::Company, searchData, \
+                                   beforePriceForSearch, afterPriceForSearch});
+
     }
 
-    return searchResult;
+    bookTab->getClientData()->socket->write(commuinfo.GetByteArray());
 }
 
 void ClientBookService::bookOrdering(Client* bookTab){

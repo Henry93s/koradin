@@ -4,6 +4,8 @@
 #include "client.h"
 #include "bluerayitem.h"
 
+#include <QMessageBox>
+
 ClientBluerayService::ClientBluerayService(){
     // blueraymanager singleton 인스턴스 get
     this->blueraymanager = this->blueraymanager->getInstance();
@@ -11,14 +13,14 @@ ClientBluerayService::ClientBluerayService(){
 }
 ClientBluerayService::~ClientBluerayService(){}
 
-// 다중 검색 로직
-QVector<Blueray*> ClientBluerayService::blueraySearch(Client* bluerayTab){
+// 1. 블루레이 다중 검색
+void ClientBluerayService::blueraySearch(Client* bluerayTab){
     // 1. blueray tab 에서 radio button 에 따른 검색 조건 설정
     QString searchType =
         bluerayTab->getUi()->blueray_name_radioButton->isChecked() == true ? "name" :
             bluerayTab->getUi()->blueray_company_radioButton->isChecked() == true ? "company" :
             // 블루레이 이름 / 제작사 / 아티스트 3 종류의 검색 조건 중 하나가 지정되지 않는 버그가 발생할 때를 방지한 예외 처리 "none"
-            bluerayTab->getUi()->blueray_artist_radioButton->isChecked() == true ? "writer" : "none";
+            bluerayTab->getUi()->blueray_artist_radioButton->isChecked() == true ? "artist" : "none";
 
     // 2. 가격 범위 체크(두 번째 가격 범위 설정을 입력하지 않았거나 잘못된 문자열이 있을 경우 0 ~ 9999999 로 검색)
     int beforePriceForSearch = bluerayTab->getUi()->blueray_price_before_lineEdit->text().toInt();
@@ -30,44 +32,35 @@ QVector<Blueray*> ClientBluerayService::blueraySearch(Client* bluerayTab){
 
     // 3. 검색어 입력 체크(입력하지 않았을 때 전체 데이터를 출력)
     QString searchData = bluerayTab->getUi()->blueray_search_lineEdit->text();
-    QVector<Blueray*> searchResult; // search 결과 vector
-    QMap<QString, Blueray*> list = this->blueraymanager->bluerayListRead();
-    if(searchType.compare("none") == 0){
-        qDebug() << "검색 조건 설정을 한 개 이상 선택해주세요.";
-        Popup* popup = new Popup(bluerayTab, QObject::tr("검색 조건 설정을 한 개 이상 선택해주세요."));
-        popup->show();
-    } else {
-        for(auto i = list.begin(); i != list.end(); ++i){
-            if(searchType.compare("name") == 0){
-                // 블루레이 이름으로 검색
-                qDebug() << "블루레이 이름으로 검색 진행";
-                if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getName().contains(searchData, Qt::CaseInsensitive) == true){
-                    qDebug() << i.value()->getName();
-                    searchResult.append(i.value());
-                }
-            } else if(searchType.compare("company") == 0){
-                // 제작사로 검색
-                qDebug() << "제작사로 검색 진행";
-                if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getCompany().contains(searchData, Qt::CaseInsensitive) == true){
-                    qDebug() << i.value()->getName();
-                    searchResult.append(i.value());
-                }
-            } else if(searchType.compare("writer") == 0){
-                // 아티스트로 검색
-                qDebug() << "아티스트로 검색 진행";
-                if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getArtist().contains(searchData, Qt::CaseInsensitive) == true){
-                    qDebug() << i.value()->getName();
-                    searchResult.append(i.value());
-                }
-            }
-        }
-        bluerayTab->printSearchBluerayList(searchResult);
+    QMessageBox::information(bluerayTab, "블루레이 검색", "블루레이 검색을 진행합니다.");
+    this->blueraySearchRequest(bluerayTab, searchData, searchType, beforePriceForSearch, afterPriceForSearch);
+}
+
+// 2. bluerayTab 에서 blueray 검색을 서버에 요청한다.
+void ClientBluerayService::blueraySearchRequest(Client* bluerayTab, const QString& searchData, const QString& searchType, const int& beforePriceForSearch, const int& afterPriceForSearch){
+    // 통신 데이터 json 구성 및 서버에 요청
+    CommuInfo commuinfo;
+    if(searchType.compare("name") == 0){
+        commuinfo.RequestProducts(ProductInfo::ProductType::Blueray \
+                                  , ProductInfo::Filter \
+                                  {ProductInfo::FilterType::Name, searchData, \
+                                   beforePriceForSearch, afterPriceForSearch});
+
+    } else if (searchType.compare("artist") == 0){
+        commuinfo.RequestProducts(ProductInfo::ProductType::Blueray \
+                                  , ProductInfo::Filter \
+                                  {ProductInfo::FilterType::Author, searchData, \
+                                   beforePriceForSearch, afterPriceForSearch});
+
+    } else if (searchType.compare("company") == 0){
+        commuinfo.RequestProducts(ProductInfo::ProductType::Blueray \
+                                  , ProductInfo::Filter \
+                                  {ProductInfo::FilterType::Company, searchData, \
+                                   beforePriceForSearch, afterPriceForSearch});
+
     }
 
-    return searchResult;
+    bluerayTab->getClientData()->socket->write(commuinfo.GetByteArray());
 }
 
 void ClientBluerayService::bluerayOrdering(Client* bluerayTab){
@@ -93,20 +86,4 @@ void ClientBluerayService::bluerayOrdering(Client* bluerayTab){
     }
 }
 
-// 홈에서의 통합 블루레이 검색 로직
-QVector<Blueray*> ClientBluerayService::bluerayHomeSearch(Client* homeTab, const QString& searchData){
-    QVector<Blueray*> searchResult; // search 결과 vector
-    QMap<QString, Blueray*> list = this->blueraymanager->bluerayListRead();
-
-    for(auto i = list.begin(); i != list.end(); ++i){
-        qDebug() << "home call -> 블루레이 이름 / 제작사 / 아티스트로 검색 진행";
-        if(i.value()->getName().contains(searchData, Qt::CaseInsensitive) == true || i.value()->getCompany().contains(searchData, Qt::CaseInsensitive) == true
-            || i.value()->getArtist().contains(searchData, Qt::CaseInsensitive) == true){
-            qDebug() << i.value()->getName();
-            searchResult.append(i.value());
-        }
-    }
-
-    return searchResult;
-}
 
