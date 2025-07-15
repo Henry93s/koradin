@@ -21,7 +21,9 @@ public:
     Info::InfoType GetInfoType() const;
     ProductInfo::ProductType GetProductType() const;
 
+    void SetChat(const QString& clientName, const QString& chat);
     std::pair<QString, QString> GetChat() const;
+
     std::vector<std::pair<QString, QString>> GetUserIDAndNames() const;
 
     std::pair<QString, QString> GetIDPwd() const;
@@ -34,6 +36,13 @@ public:
     //이건 클라에서 가입한 회원을 서버로 보낼 떄 쓰는것.
     void AddUsers(std::vector<UserInfo>);
     std::vector<UserInfo> GetAddingUsers() const;
+
+    // true 넣으면 로그인 알림, false 넣으면 로그아웃 알림
+    void LoginOrOut(bool isLogin, QString name);
+    bool GetLoginOrOut(QString& name) const;
+
+    void ServerComfirmLoginOrOut(bool isLogin);
+
 private:
     QByteArray byteArray;
 };

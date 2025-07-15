@@ -38,6 +38,8 @@ public:
     void printSearchBluerayList(const QVector<Blueray*>& list);
 
 private slots:
+    void chatForServer();
+
     // book tab button event
     void on_book_search_pushButton_clicked();
     void on_book_order_pushButton_clicked();
@@ -62,6 +64,7 @@ private slots:
 
 private:
     ClientData clientData;
+    QTcpSocket* socket;
 
     Ui::Client *ui;
     BookManager* bookmanager;

@@ -29,7 +29,7 @@ ChattingRoom::ChattingRoom(QWidget *parent)
             QJsonDocument doc(root);
             QByteArray array = doc.toJson(QJsonDocument::Compact);
 
-            clientData->socket->write(array);
+            //clientData->socket->write(array);
         }
     };
     connect(ui->inputEdit, &QLineEdit::returnPressed, this, func);
@@ -55,7 +55,7 @@ void ChattingRoom::SetRoomData(RoomData *room)
     }
     // 기록된 채팅 복기
     for(auto message : room->messages){
-        ui->chattingList->addItem(message.first + QString(" : ") + message.second);
+        //ui->chattingList->addItem(message.first + QString(" : ") + message.second);
     }
 }
 
@@ -67,10 +67,10 @@ void ChattingRoom::DeleteClientData(const ClientData *data)
 
 void ChattingRoom::Initialize(Server *server)
 {
-    connect(server, &Server::ChattingRespond, ui->chattingList, [=](const CommuInfo& commuInfo){
-        auto data = commuInfo.GetChat();
-        ui->chattingList->addItem(data.first + QString(" : ") + data.second);
-    });
+    // connect(server, &Server::ChattingRespond, ui->chattingList, [=](const CommuInfo& commuInfo){
+    //     auto data = commuInfo.GetChat();
+    //     ui->chattingList->addItem(data.first + QString(" : ") + data.second);
+    // });
 }
 
 QListWidget *ChattingRoom::GetChattingList()

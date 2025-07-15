@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    addAtUserList.cpp \
     adminwidget.cpp \
     blueray.cpp \
     bluerayManager.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
     chattinglogwidget.cpp \
     chattingroom.cpp \
     client.cpp \
+    clienthandler.cpp \
     commuInfo.cpp \
     createnewroom.cpp \
     clientBluerayService.cpp \
@@ -48,9 +50,12 @@ SOURCES += \
     server.cpp \
     userInfo.cpp \
     orderInfo.cpp \
-    userManager.cpp
+    userManager.cpp \
+    useritem.cpp
 
 HEADERS += \
+    MapToVector.h \
+    addAtUserList.h \
     adminwidget.h \
     bluerayManager.h \
     bluerayitem.h \
@@ -59,6 +64,7 @@ HEADERS += \
     chattinglogwidget.h \
     chattingroom.h \
     client.h \
+    clienthandler.h \
     createnewroom.h \
     clientBluerayService.h \
     clientBookService.h \
@@ -93,7 +99,8 @@ HEADERS += \
     userManager.h \
     server.h \
     orderInfo.h \
-    music.h
+    music.h \
+    useritem.h
 
 FORMS += \
     adminwidget.ui \

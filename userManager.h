@@ -13,7 +13,7 @@ public:
     ~UserManager();
 
     // STL file 을 관리하기 때문에, 서버에서 한 번 인스턴스 생성을 위한 싱글턴 패턴 적용
-    UserManager* getInstance();
+    static UserManager* getInstance();
 
     // create user
     QString userInsert(UserInfo* user);

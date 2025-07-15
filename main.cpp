@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    Client window;
+    MainWindow window;
     //Server window;
     window.show();
 

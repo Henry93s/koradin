@@ -20,14 +20,24 @@ CommuType CommuInfo::GetType() const
 
         if(commu == QString("Infos")){
             return CommuType::Infos;
-        }else if(commu == QString("Chatting")){
+        }
+        else if(commu == QString("Chatting")){
             return CommuType::Chatting;
-        }else if(commu == QString("InfoFix")){
+        }
+        else if(commu == QString("InfoFix")){
             return CommuType::InfoFix;
-        }else if(commu == QString("InfoAdd")){
+        }
+        else if(commu == QString("InfoAdd")){
             return CommuType::InfoAdd;
-        }else if(commu == QString("AUTH")){
+        }
+        else if(commu == QString("Order")){
+            return CommuType::Order;
+        }
+        else if(commu == QString("AUTH")){
             return CommuType::AUTH;
+        }
+        else if(commu == QString("LOGINOUT")){
+            return CommuType::LOGINOUT;
         }
         else{
             return CommuType::COMMUEND;
@@ -50,8 +60,8 @@ Info::InfoType CommuInfo::GetInfoType() const
         return InfoType::User;
     }else if(infotype == QString("Product")){
         return InfoType::Product;
-    } else if(infotype == QString("Music")){
-        return InfoType::Music;
+    } else if(infotype == QString("Order")){
+        return InfoType::Order;
     } else {
         return InfoType::None;
     }
@@ -76,6 +86,20 @@ ProductInfo::ProductType CommuInfo::GetProductType() const
     } else{
         return ProductInfo::None;
     }
+}
+
+void CommuInfo::SetChat(const QString &clientName, const QString &chat)
+{
+    QJsonObject whole;
+    QJsonObject Data;
+    Data["UsrName"] = clientName;
+    Data["Message"] = chat;
+
+    whole["CommuType"] = QString("Chatting");
+    whole["Data"] = Data;
+
+    QJsonDocument doc{whole};
+    byteArray = doc.toJson(QJsonDocument::Compact);
 }
 
 std::pair<QString, QString> CommuInfo::GetChat() const
@@ -260,4 +284,43 @@ std::vector<UserInfo> CommuInfo::GetAddingUsers() const
     }
 
     return ret;
+}
+
+void CommuInfo::LoginOrOut(bool isLogin, QString name)
+{
+    QJsonObject obj;
+    obj["CommuType"] = QString("LOGINOUT");
+    if(isLogin){
+        obj["LOG"] = QString("In");
+    }
+    else{
+        obj["LOG"] = QString("Out");
+    }
+    obj["Name"] = name;
+    QJsonDocument doc(obj);
+    byteArray = doc.toJson(QJsonDocument::Compact);
+}
+
+bool CommuInfo::GetLoginOrOut(QString &name) const
+{
+    QJsonParseError error;
+    auto obj = QJsonDocument::fromJson(byteArray, &error).object();
+    QString log = obj["LOG"].toString();
+    bool ret;
+    if(log == QString("In")){
+        ret = true;
+    }
+    else {
+        ret = false;
+    }
+    name = obj["Name"].toString();
+    return ret;
+}
+
+void CommuInfo::ServerComfirmLoginOrOut(bool isLogin)
+{
+    QJsonObject obj;
+    obj["CommuType"] = QString("LOGINOUT");
+    QJsonDocument doc(obj);
+    byteArray = doc.toJson(QJsonDocument::Compact);
 }

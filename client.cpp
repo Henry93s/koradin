@@ -47,22 +47,25 @@ Client::Client(QWidget *parent)
 
     // 시작 tab 고정
     ui->tabWidget->setCurrentIndex(0);
+
+    connect(ui->chatLineEdit, &QLineEdit::returnPressed, this, &Client::chatForServer);
+    connect(ui->client_send_pushButton, &QPushButton::clicked, this, &Client::chatForServer);
 }
 
 Client::~Client()
 {
     delete ui;
-    clientData.socket->close();
+    socket->close();
 }
 
 void Client::Initialize(QTcpSocket *sock, const QString& Name)
 {
     //qDebug("Client Initialize");
     //sprintf(buf, "%p, %s", sock, Name.toString().data());
-    clientData.socket = sock;
+    socket = sock;
     clientData.name = Name;
 
-    connect(clientData.socket, SIGNAL(readyRead()), SLOT(respond()));
+    connect(socket, SIGNAL(readyRead()), SLOT(respond()));
 
     CommuInfo requestProducts;
     requestProducts.RequestProducts(ProductInfo::ProductType::Book, ProductInfo::Filter{});
@@ -72,7 +75,7 @@ void Client::Initialize(QTcpSocket *sock, const QString& Name)
 void Client::respond()
 {
     QTcpSocket* clientSocket = dynamic_cast<QTcpSocket*>(sender());
-    if(clientSocket->bytesAvailable() > BLOCK_SIZE) return;
+    //if(clientSocket->bytesAvailable() > BLOCK_SIZE) return;
     QByteArray bytearray = clientSocket->read(BLOCK_SIZE);
 
     //commuInfoQueue.push(CommuInfo{bytearray});
@@ -206,6 +209,14 @@ void Client::printSearchBluerayList(const QVector<Blueray*>& list){
         // 생성된 틀에 커스텀 위젯을 설정
         ui->blueray_listWidget->setItemWidget(item, bluerayitem);
     }
+}
+
+void Client::chatForServer()
+{
+    QString chat = ui->chatLineEdit->text();
+    CommuInfo com;
+    com.SetChat(clientData.name, chat);
+    socket->write(com.GetByteArray());
 }
 
 Ui::Client* Client::getUi(){

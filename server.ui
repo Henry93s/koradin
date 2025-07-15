@@ -7,21 +7,26 @@
     <x>0</x>
     <y>0</y>
     <width>834</width>
-    <height>681</height>
+    <height>664</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>664</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_5">
-    <item>
-     <widget class="QSplitter" name="splitter_2">
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="minimumSize">
@@ -57,18 +62,7 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="CustomersWidget" name="customerWidget" native="true">
-          <widget class="AdminWidget" name="widget" native="true">
-           <property name="geometry">
-            <rect>
-             <x>300</x>
-             <y>160</y>
-             <width>120</width>
-             <height>80</height>
-            </rect>
-           </property>
-          </widget>
-         </widget>
+         <widget class="CustomersWidget" name="customerWidget" native="true"/>
         </item>
        </layout>
       </widget>
@@ -76,463 +70,544 @@
        <attribute name="title">
         <string>Products</string>
        </attribute>
-       <widget class="QSplitter" name="splitter_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>811</width>
-          <height>531</height>
-         </rect>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Orientation::Horizontal</enum>
-        </property>
-        <widget class="QWidget" name="EnrollWidget_2" native="true">
-         <widget class="QWidget" name="EditWidget_2" native="true">
-          <property name="geometry">
-           <rect>
-            <x>50</x>
-            <y>-90</y>
-            <width>151</width>
-            <height>591</height>
-           </rect>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QListWidget" name="productsListWidget"/>
+        </item>
+        <item>
+         <widget class="QTabWidget" name="tabWidget_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-          <widget class="QLabel" name="label">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>10</y>
-             <width>71</width>
-             <height>20</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>제품 검색</string>
-           </property>
-          </widget>
-          <widget class="QRadioButton" name="RadioBluray_2">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>110</y>
-             <width>112</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>블루레이</string>
-           </property>
-          </widget>
-          <widget class="QRadioButton" name="RadioBook_2">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>50</y>
-             <width>112</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>책</string>
-           </property>
-          </widget>
-          <widget class="QRadioButton" name="RadioRecord_2">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>80</y>
-             <width>112</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>음반</string>
-           </property>
-          </widget>
-         </widget>
-         <widget class="QPushButton" name="pushButton_2">
-          <property name="geometry">
-           <rect>
-            <x>70</x>
-            <y>470</y>
-            <width>93</width>
-            <height>29</height>
-           </rect>
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>0</height>
+           </size>
           </property>
-          <property name="text">
-           <string>검색</string>
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>16777215</height>
+           </size>
           </property>
-         </widget>
-         <widget class="QWidget" name="formLayoutWidget_2">
-          <property name="geometry">
-           <rect>
-            <x>30</x>
-            <y>70</y>
-            <width>141</width>
-            <height>396</height>
-           </rect>
+          <property name="currentIndex">
+           <number>1</number>
           </property>
-          <layout class="QFormLayout" name="formLayout_2">
-           <property name="fieldGrowthPolicy">
-            <enum>QFormLayout::FieldGrowthPolicy::FieldsStayAtSizeHint</enum>
-           </property>
-           <item row="0" column="0">
-            <widget class="QLabel" name="nameLabel_2">
-             <property name="text">
-              <string>제목</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QTextEdit" name="textEdit_5"/>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="authorLabel_2">
-             <property name="text">
-              <string>저자</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QTextEdit" name="textEdit_6"/>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="companyLabel_2">
-             <property name="text">
-              <string>출판사</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QTextEdit" name="textEdit_7"/>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="priceLabel_2">
-             <property name="text">
-              <string>가격</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QSpinBox" name="spinBox_3"/>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-        <widget class="QSplitter" name="splitter">
-         <property name="orientation">
-          <enum>Qt::Orientation::Horizontal</enum>
-         </property>
-         <widget class="QListWidget" name="listWidget"/>
-         <widget class="QWidget" name="EnrollWidget" native="true">
-          <widget class="QRadioButton" name="RadioBook">
-           <property name="geometry">
-            <rect>
-             <x>70</x>
-             <y>60</y>
-             <width>112</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>책</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">buttonGroup</string>
+          <widget class="QWidget" name="tab">
+           <attribute name="title">
+            <string>등록</string>
            </attribute>
-          </widget>
-          <widget class="QRadioButton" name="RadioRecord">
-           <property name="geometry">
-            <rect>
-             <x>70</x>
-             <y>90</y>
-             <width>112</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>음반</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">buttonGroup</string>
-           </attribute>
-          </widget>
-          <widget class="QRadioButton" name="RadioBluray">
-           <property name="geometry">
-            <rect>
-             <x>70</x>
-             <y>120</y>
-             <width>112</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>블루레이</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">buttonGroup</string>
-           </attribute>
-          </widget>
-          <widget class="QWidget" name="EditWidget" native="true">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>150</y>
-             <width>231</width>
-             <height>301</height>
-            </rect>
-           </property>
-           <widget class="QWidget" name="formLayoutWidget">
+           <widget class="QWidget" name="EnrollWidget" native="true">
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>40</y>
-              <width>181</width>
-              <height>396</height>
+              <y>0</y>
+              <width>200</width>
+              <height>500</height>
              </rect>
             </property>
-            <layout class="QFormLayout" name="formLayout">
-             <property name="fieldGrowthPolicy">
-              <enum>QFormLayout::FieldGrowthPolicy::FieldsStayAtSizeHint</enum>
-             </property>
-             <item row="0" column="0">
-              <widget class="QLabel" name="nameLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>500</height>
+             </size>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_11">
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
-                <string>제목</string>
+                <string>제품 등록</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QTextEdit" name="textEdit"/>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="authorLabel">
+             <item>
+              <widget class="QRadioButton" name="RadioBook">
                <property name="text">
-                <string>저자</string>
+                <string>책</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QTextEdit" name="textEdit_3"/>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="companyLabel">
+             <item>
+              <widget class="QRadioButton" name="RadioRecord">
                <property name="text">
-                <string>출판사</string>
+                <string>음반</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QTextEdit" name="textEdit_2"/>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="priceLabel">
+             <item>
+              <widget class="QRadioButton" name="RadioBluray">
                <property name="text">
-                <string>가격</string>
+                <string>블루레이</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="1">
-              <widget class="QSpinBox" name="spinBox"/>
-             </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="introLabel">
-               <property name="text">
-                <string>소개</string>
+             <item>
+              <widget class="QWidget" name="EditWidget" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>200</width>
+                 <height>500</height>
+                </size>
+               </property>
+               <property name="sizeIncrement">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_12" stretch="0">
+                <property name="spacing">
+                 <number>10</number>
+                </property>
+                <item>
+                 <layout class="QFormLayout" name="formLayout">
+                  <property name="fieldGrowthPolicy">
+                   <enum>QFormLayout::FieldGrowthPolicy::FieldsStayAtSizeHint</enum>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="nameLabel">
+                    <property name="text">
+                     <string>제목</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QTextEdit" name="textEdit"/>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="authorLabel">
+                    <property name="text">
+                     <string>저자</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QTextEdit" name="textEdit_3"/>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="companyLabel">
+                    <property name="text">
+                     <string>출판사</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QTextEdit" name="textEdit_2"/>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="priceLabel">
+                    <property name="text">
+                     <string>가격</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="1">
+                   <widget class="QSpinBox" name="spinBox"/>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="QLabel" name="introLabel">
+                    <property name="text">
+                     <string>소개</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="1">
+                   <widget class="QTextEdit" name="textEdit_4"/>
+                  </item>
+                  <item row="6" column="0">
+                   <widget class="QLabel" name="amountLabel">
+                    <property name="text">
+                     <string>수량</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="1">
+                   <widget class="QSpinBox" name="spinBox_2"/>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
               </widget>
              </item>
-             <item row="5" column="1">
-              <widget class="QTextEdit" name="textEdit_4"/>
-             </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="amountLabel">
+             <item>
+              <widget class="QPushButton" name="pushButton">
                <property name="text">
-                <string>수량</string>
+                <string>등록</string>
                </property>
               </widget>
-             </item>
-             <item row="6" column="1">
-              <widget class="QSpinBox" name="spinBox_2"/>
              </item>
             </layout>
            </widget>
           </widget>
-          <widget class="QPushButton" name="pushButton">
-           <property name="geometry">
-            <rect>
-             <x>70</x>
-             <y>470</y>
-             <width>93</width>
-             <height>29</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>등록</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_2">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>20</y>
-             <width>71</width>
-             <height>20</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>제품 등록</string>
-           </property>
+          <widget class="QWidget" name="tab_2">
+           <attribute name="title">
+            <string>검색</string>
+           </attribute>
+           <widget class="QWidget" name="EnrollWidget_2" native="true">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>200</width>
+              <height>500</height>
+             </rect>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>500</height>
+             </size>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_13">
+             <item>
+              <widget class="QLabel" name="label_5">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>제품 검색</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="RadioBook_2">
+               <property name="text">
+                <string>책</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="RadioRecord_2">
+               <property name="text">
+                <string>음반</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="RadioBluray_2">
+               <property name="text">
+                <string>블루레이</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="EditWidget_2" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>250</width>
+                 <height>500</height>
+                </size>
+               </property>
+               <property name="sizeIncrement">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_14" stretch="0">
+                <property name="spacing">
+                 <number>10</number>
+                </property>
+                <item>
+                 <layout class="QFormLayout" name="formLayout_2">
+                  <property name="fieldGrowthPolicy">
+                   <enum>QFormLayout::FieldGrowthPolicy::FieldsStayAtSizeHint</enum>
+                  </property>
+                  <property name="topMargin">
+                   <number>50</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>50</number>
+                  </property>
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="nameLabel_2">
+                    <property name="text">
+                     <string>제목</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QTextEdit" name="ProductsNameText"/>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="authorLabel_2">
+                    <property name="text">
+                     <string>저자</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QTextEdit" name="ProductAuthorText"/>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="companyLabel_2">
+                    <property name="text">
+                     <string>출판사</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QTextEdit" name="ProductCompanyText"/>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="priceLabel_2">
+                    <property name="text">
+                     <string>최대 가격</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="1">
+                   <widget class="QSpinBox" name="spinBox_3"/>
+                  </item>
+                  <item row="5" column="1">
+                   <widget class="QSpinBox" name="spinBox_4"/>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="QLabel" name="priceLabel_3">
+                    <property name="text">
+                     <string>최소 가격</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="searchProductButton">
+               <property name="text">
+                <string>검색</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </widget>
-        </widget>
-       </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="Orders">
        <attribute name="title">
         <string>Orders</string>
        </attribute>
-       <widget class="OrderWidget" name="widget_4" native="true">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>801</width>
-          <height>551</height>
-         </rect>
-        </property>
-        <widget class="QListWidget" name="listWidget_2">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>571</width>
-           <height>521</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QWidget" name="EnrollWidget_3" native="true">
-         <property name="geometry">
-          <rect>
-           <x>570</x>
-           <y>-10</y>
-           <width>221</width>
-           <height>531</height>
-          </rect>
-         </property>
-         <widget class="QRadioButton" name="RadioBook_3">
-          <property name="geometry">
-           <rect>
-            <x>70</x>
-            <y>60</y>
-            <width>112</width>
-            <height>24</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>책</string>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="RadioRecord_3">
-          <property name="geometry">
-           <rect>
-            <x>70</x>
-            <y>90</y>
-            <width>112</width>
-            <height>24</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>음반</string>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="RadioBluray_3">
-          <property name="geometry">
-           <rect>
-            <x>70</x>
-            <y>120</y>
-            <width>112</width>
-            <height>24</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>블루레이</string>
-          </property>
-         </widget>
-         <widget class="QWidget" name="EditWidget_3" native="true">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>150</y>
-            <width>231</width>
-            <height>301</height>
-           </rect>
-          </property>
-          <widget class="QWidget" name="formLayoutWidget_3">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>30</y>
-             <width>181</width>
-             <height>159</height>
-            </rect>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="OrderWidget" name="widget_4" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <property name="leftMargin">
+            <number>0</number>
            </property>
-           <layout class="QFormLayout" name="formLayout_3">
-            <property name="fieldGrowthPolicy">
-             <enum>QFormLayout::FieldGrowthPolicy::FieldsStayAtSizeHint</enum>
-            </property>
-            <item row="0" column="0">
-             <widget class="QLabel" name="nameLabel_3">
-              <property name="text">
-               <string>사용자</string>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QListWidget" name="listWidget_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>500</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>1000</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="EnrollWidget_3" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_7">
+              <property name="spacing">
+               <number>3</number>
               </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QTextEdit" name="textEdit_9"/>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="authorLabel_3">
-              <property name="text">
-               <string>주문</string>
+              <property name="topMargin">
+               <number>70</number>
               </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QTextEdit" name="textEdit_10"/>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QPushButton" name="pushButton_3">
-           <property name="geometry">
-            <rect>
-             <x>60</x>
-             <y>170</y>
-             <width>93</width>
-             <height>29</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>검색</string>
-           </property>
-          </widget>
+              <property name="bottomMargin">
+               <number>70</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>주문 검색</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="RadioBook_3">
+                <property name="text">
+                 <string>책</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="RadioRecord_3">
+                <property name="text">
+                 <string>음반</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="RadioBluray_3">
+                <property name="text">
+                 <string>블루레이</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="EditWidget_3" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>200</height>
+                 </size>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_8">
+                 <item>
+                  <layout class="QFormLayout" name="formLayout_3">
+                   <property name="fieldGrowthPolicy">
+                    <enum>QFormLayout::FieldGrowthPolicy::FieldsStayAtSizeHint</enum>
+                   </property>
+                   <property name="topMargin">
+                    <number>30</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>30</number>
+                   </property>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="nameLabel_3">
+                     <property name="text">
+                      <string>사용자</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QTextEdit" name="textEdit_9"/>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="authorLabel_3">
+                     <property name="text">
+                      <string>주문</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QTextEdit" name="textEdit_10"/>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_3">
+                   <property name="text">
+                    <string>검색</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
          </widget>
-         <widget class="QLabel" name="label_3">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>20</y>
-            <width>71</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>주문 검색</string>
-          </property>
-         </widget>
-        </widget>
-       </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="ChattingLogs">
        <attribute name="title">
@@ -752,6 +827,320 @@
             </item>
            </layout>
           </widget>
+          <widget class="QWidget" name="page">
+           <widget class="QWidget" name="widget" native="true">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>751</width>
+              <height>491</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_15">
+             <item>
+              <widget class="QWidget" name="widget_11" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>500</height>
+                </size>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_10">
+                <item>
+                 <widget class="QListWidget" name="chattingListInRoom">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>700</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QWidget" name="widget_12" native="true">
+                  <layout class="QVBoxLayout" name="verticalLayout_10">
+                   <item>
+                    <widget class="QListWidget" name="userListInRoom_All">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>130</width>
+                       <height>130</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QWidget" name="widget_13" native="true">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>130</width>
+                       <height>100</height>
+                      </size>
+                     </property>
+                     <layout class="QHBoxLayout" name="horizontalLayout_11">
+                      <item>
+                       <widget class="QPushButton" name="inviteButton">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>40</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>초대</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QListWidget" name="userListInRoom_Invited">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>130</width>
+                       <height>130</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QWidget" name="widget_14" native="true">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>100</height>
+                      </size>
+                     </property>
+                     <layout class="QHBoxLayout" name="horizontalLayout_12">
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QPushButton" name="outButton">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>10</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>40</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>강퇴</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="widget_6" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_9">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLineEdit" name="inputEdit_2">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="inputButton_2">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>40</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>입력</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="widget_7" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777213</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LayoutDirection::RightToLeft</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_13">
+                <item>
+                 <widget class="QPushButton" name="getoutRoomButton">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>60</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>60</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                  <property name="layoutDirection">
+                   <enum>Qt::LayoutDirection::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>나가기</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="roomName">
+                  <property name="text">
+                   <string>None</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -785,16 +1174,7 @@
    <header location="global">orderwidget.h</header>
    <container>1</container>
   </customwidget>
-  <customwidget>
-   <class>AdminWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">adminwidget.h</header>
-   <container>1</container>
-  </customwidget>
  </customwidgets>
  <resources/>
  <connections/>
- <buttongroups>
-  <buttongroup name="buttonGroup"/>
- </buttongroups>
 </ui>

@@ -8,7 +8,7 @@ public:
     enum InfoType{
         User,
         Product,
-        Music,
+        Order,
         None
     };
 

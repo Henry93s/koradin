@@ -29,29 +29,46 @@ public:
     ~Server();
 
 public:
+    void Initialize();
     void CreateNew_Room(const RoomData& newData);
     int GetRoomNum() const { return rooms.size(); }
 
 private:
-    void AUTHRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
-    void AddRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
-    void InfosFetchRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
+    void AUTHRespond(const CommuInfo& commuInfo, ClientData* client);
+    void AddRespond(const CommuInfo& commuInfo, ClientData* client);
+    void InfosFetchRespond(const CommuInfo& commuInfo, ClientData* client);
+    void LoginOutRespond(const CommuInfo& commuInfo, ClientData* client);
+    void ChattingRespond(const CommuInfo& commuInfo, ClientData* client);
+
+    void UpdateUI(Info::InfoType type, ProductInfo::ProductType ifProductType = ProductInfo::None);
+    void UpdateUI_Product(ProductInfo::ProductType productType);
+    void UpdateUI_Product_Book();
+    void UpdateUI_Product_Blueray();
+    void UpdateUI_Product_Music();
+
+public slots:
+    void respond(const QThread* thread, QByteArray bytearray);
+    void clientDisconnected(const QThread* thread);
 
 private slots:
     void clientConnect();
-    void clientDisconnected();
-    void respond();
 
     void transferLabels(bool checked);
 
-    void enterRoom(RoomData& roomData);
+    void enterRoom(int roomIndex);
 
 signals:
-    void ChattingRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
-    void InfosFixRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
-    void InfosAddRespond(const CommuInfo& commuInfo, QTcpSocket* clientConnection);
+    void writeReady(const QThread* compareThread, const QByteArray& byte);
+    void InfosFixRespond(const CommuInfo& commuInfo, ClientData* client);
+    void InfosAddRespond(const CommuInfo& commuInfo, ClientData* client);
     //void AUTHRespond(const CommuInfo& commuInfo);
+
+    void signalForBookUI(const std::vector<Book*> books);
+    void signalForBluerayUI(const std::vector<Blueray*> bluerays);
+    void signalForMusicUI(const std::vector<Music*> musics);
+
 private:
+    int currentRoomIndex = -1;
     Ui::Server *ui;
     QTabWidget* tabWidget;
 
@@ -59,16 +76,16 @@ private:
     QVector<ClientData> clients;
     QVector<RoomData> rooms;
 
-    //std::vector<std::shared_ptr<ProductInfo>> products;
-    //std::vector<std::shared_ptr<UserInfo>> users;
-
-
+    std::vector<UserInfo*> users;
+    std::vector<Music*> musics;
+    std::vector<Blueray*> bluerays;
+    std::vector<Book*> books;
 
     // Managers;
-    UserManager userManager;
-    MusicManager musicmanager;
-    BluerayManager bluerayManager;
-    BookManager bookManager;
+    UserManager* userManager;
+    MusicManager* musicManager;
+    BluerayManager* bluerayManager;
+    BookManager* bookManager;
 
     //void echoData();
 };

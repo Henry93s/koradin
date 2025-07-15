@@ -37,6 +37,8 @@ private slots:
     void on_language_comboBox_activated(int index);
 
 private:
+    QString name;
+
     Ui::MainWindow *ui;
     QTabWidget* tabWidget;
     UserManager* usermanager;

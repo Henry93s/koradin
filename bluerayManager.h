@@ -13,7 +13,7 @@ public:
     ~BluerayManager();
 
     // STL file 을 관리하기 때문에, 서버에서 한 번 인스턴스 생성을 위한 싱글턴 패턴 적용
-    BluerayManager* getInstance();
+    static BluerayManager* getInstance();
 
     // create blueray
     QString bluerayInsert(Blueray* blueray);

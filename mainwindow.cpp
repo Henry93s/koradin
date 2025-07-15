@@ -184,12 +184,11 @@ void MainWindow::respond()
     if(type == CommuType::AUTH){
         auto auth = info.GetIDPwd();
         if(auth.first != QString("No") && auth.second != QString("No")){
-            // client ui open
-            Client* clientWindow = new Client();
-            clientWindow->Initialize(socket, auth.first);
-            clientWindow->show();
-
-            this->close();
+            // client ui open, LOGIN
+            CommuInfo com;
+            com.LoginOrOut(true, auth.first);
+            name = auth.first;
+            socket->write(com.GetByteArray());
         }
         else if(auth.first == QString("No")){
             // id 불일치
@@ -203,6 +202,14 @@ void MainWindow::respond()
             Popup* popup = new Popup(this, tr("계정의 password 가 일치하지 않습니다."));
             popup->show();
         }
+    }
+    else if(type == CommuType::LOGINOUT){
+        disconnect(socket, SIGNAL(readyRead()), this, SLOT(respond()));
+        Client* clientWindow = new Client();
+        clientWindow->Initialize(socket, name);
+        clientWindow->show();
+
+        this->close();
     }
 }
 
@@ -218,6 +225,7 @@ void MainWindow::on_admin_button_clicked()
         // 서버 진입
         Server* server = new Server();
         server->show();
+        server->Initialize();
         this->close();
     }
 }

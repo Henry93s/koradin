@@ -34,7 +34,6 @@ void BookManager::bookListJsonLoad(){
 #elif defined(Q_OS_MAC)
     jsonPath = QDir(runFilePath).filePath("../../../../../bookList.json");
 #endif
-
     // win : Qt creator 에서는 기본적으로 파일을 열 때 프로젝트명~debug or 프로젝트명~release 디렉토리에서 실행되므로 현재 파일 위치로 변경
     // mac : ......debug > app > contents > MacOS 안에 실행 파일이 있음
     QFile file(jsonPath);
@@ -42,6 +41,7 @@ void BookManager::bookListJsonLoad(){
         qDebug() << "bookList 파일 오픈 실패";
         return;
     }
+
 
     QTextStream in(&file);
     // json 에 한글 포함일 때 encoding 셋팅 필요
