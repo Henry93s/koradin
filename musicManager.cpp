@@ -11,6 +11,8 @@
 #include "music.h"
 #include <QApplication>
 #include <QDir>
+#include <QUuid>
+#include "uuidCompare.h"
 
 using namespace std;
 using json = nlohmann::json;
@@ -54,6 +56,7 @@ void MusicManager::musicListJsonLoad(){
     json j = json::parse(jsonStdStr);
 
     for(auto music : j){
+        QString uuid = QString::fromStdString(music["uuid"]);
         QString name = QString::fromStdString(music["name"]);
         QString artist = QString::fromStdString(music["artist"]);
         QString company = QString::fromStdString(music["company"]);
@@ -62,11 +65,11 @@ void MusicManager::musicListJsonLoad(){
         int amount = music["amount"];
         QString image = QString::fromStdString(music["image"]);
 
-        Music* newMusic = new Music(name, artist, company, price, context, amount, image);
+        Music* newMusic = new Music(uuid, name, artist, company, price, context, amount, image);
         // musicList stl Map 컨테이너에 저장
-        musicList.insert(name, newMusic);
+        musicList.insert(uuid, newMusic);
 
-        qDebug() << "Loaded Music name, artist : " << name << " (" << artist << ")";
+        qDebug() << "Loaded Music uuid, name : " << uuid << " (" << name << ")";
     }
 
     file.close();
@@ -97,6 +100,7 @@ void MusicManager::musicListJsonSave(){
     for (auto it = musicList.begin(); it != musicList.end(); ++it) {
         if (!it.value()) continue;
         json userObj = {
+            { "uuid",        it.value()->getUuid().toStdString() },
             { "name",        it.value()->getName().toStdString() },
             { "artist",      it.value()->getArtist().toStdString() },
             { "company",  it.value()->getCompany().toStdString() },
@@ -128,8 +132,13 @@ QString MusicManager::musicInsert(Music* music){
         }
     }
 
+    // uuid 중복 체크 -> 중복하지 않을 때까지 새로운 uuid set
+    while(uuidIsduplicate(musicList, music->getUuid()) == true){
+        music->setUuid(QUuid::createUuid().toString());
+    }
+
     // music 중복되지 않음
-    musicList.insert(music->getName(), music);
+    musicList.insert(music->getUuid(), music);
 
     return "OK";
 }
@@ -163,6 +172,19 @@ Music* MusicManager::musicSearchByNameAndArtist(const QString& name, const QStri
         }
     }
 
+    return nullptr;
+}
+
+// uuid 로 music* 조회 누락 추가 : uuid 로 조회 시 무조건 1개 return 처리
+Music* MusicManager::musicSearchByUuid(const QString& uuid){
+    Music* music;
+    for(auto it = musicList.begin(); it!= musicList.end(); ++it){
+        if(!it.value()) continue;
+        if(it.value()->getName().compare(uuid) == 0){
+            music = it.value();
+            return music;
+        }
+    }
     return nullptr;
 }
 
@@ -212,8 +234,8 @@ MusicManager::MusicManager()
     QString img_string = QString::fromLatin1(byteArray.toBase64());
 
     // test
-    Music* music = new Music("미니 6집 From Our 20's", "프로미스나인", "드림어스컴퍼니", 23000, "프로미스나인(fromis_9)의 여섯 번째 미니앨범인 From Our 20's는 20대의 감정과 순간들을 담아낸 앨범입니다. 타이틀곡 LIKE YOU BETTER를 포함해 총 6곡이 수록되어 있으며, 멤버 5인 체제로 재편된 후 처음으로 발매하는 앨범입니다. ", 100, img_string);
-    this->musicInsert(music);
+    QString uuid = QUuid::createUuid().toString();
+    Music* music = new Music(uuid, "test 미니 6집 From Our 20's", "test 프로미스나인", "드림어스컴퍼니", 23000, "프로미스나인(fromis_9)의 여섯 번째 미니앨범인 From Our 20's는 20대의 감정과 순간들을 담아낸 앨범입니다. 타이틀곡 LIKE YOU BETTER를 포함해 총 6곡이 수록되어 있으며, 멤버 5인 체제로 재편된 후 처음으로 발매하는 앨범입니다. ", 100, img_string);
     // test end
 */
     musicListJsonLoad();

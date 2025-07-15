@@ -22,7 +22,7 @@ public:
     QString makeImageToolTip(QString base64FromPng);
 
     // QListWidget 에서 선택된 QListWidgetItem -> bookItem 에서
-    //  주문에 필요한 데이터(이름, 아티스트, 제조사, 가격) 만 가져옴
+    //  주문에 필요한 데이터(이름, uuid, 아티스트, 제조사, 가격) 만 가져옴
     QMap<QString, QString> getData();
 
 private:

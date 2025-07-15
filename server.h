@@ -40,6 +40,8 @@ private:
     void LoginOutRespond(const CommuInfo& commuInfo, ClientData* client);
     void ChattingRespond(const CommuInfo& commuInfo, ClientData* client);
 
+    void SearchDataResponse(const CommuInfo& commuInfo, ClientData* client);
+
     void UpdateUI(Info::InfoType type, ProductInfo::ProductType ifProductType = ProductInfo::None);
     void UpdateUI_Product(ProductInfo::ProductType productType);
     void UpdateUI_Product_Book();

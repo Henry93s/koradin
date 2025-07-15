@@ -11,9 +11,10 @@ public:
     ClientMusicService();
     ~ClientMusicService();
 
-    // 다중 검색 로직
-    QVector<Music*> musicSearch(Client* musicTab);
-    QVector<Music*> musicHomeSearch(const QString& searchData);
+    // music 탭에서 음반 검색 을 서버에 요청
+    void musicSearch(Client* musicTab);
+    void musicSearchRequest(Client* musicTab, const QString& searchData, const QString& searchType, const int& beforePriceForSearch, const int& afterPriceForSearch);
+
     // 주문하기 클릭 시 발생 로직
     void musicOrdering(Client* musicTab);
 

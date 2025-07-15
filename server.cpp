@@ -24,6 +24,8 @@
 #include <commuInfo.h>
 #include <QMutexLocker>
 
+#include <QMap>
+
 #define PORT    5085
 #define PENDING_CONN    5
 #define MAX_CLIENTS 20
@@ -259,11 +261,8 @@ void Server::respond(const QThread* thread, QByteArray bytearray)
 {
     //commuInfoQueue.push(CommuInfo{bytearray});
     auto info = CommuInfo{bytearray};
-
     auto type = info.GetType();
-    qDebug() << bytearray;
 
-    qDebug("type : %d", type);
     auto obj{QJsonDocument::fromJson(bytearray).object()};
     qDebug() << obj;
 
@@ -408,6 +407,16 @@ void Server::InfosFetchRespond(const CommuInfo &commuInfo, ClientData* client)
 {
     ProductInfo::Filter filter;
     ProductInfo::ProductType productType = commuInfo.GetRequestProducts(filter);
+    qDebug() << "Pro TYpe : " << productType;
+    switch (productType) {
+    case ProductInfo::Book:
+    case ProductInfo::Blueray:
+    case ProductInfo::Music:
+        SearchDataResponse(commuInfo, client);
+        break;
+    default:
+        break;
+    }
 
 }
 
@@ -612,4 +621,122 @@ void Server::UpdateUI_Product_Music()
     }
 
     emit signalForMusicUI(musicContain);
+}
+// 도서 or 블루레이 or 음반 상품을 조회하여 json + 데이터의 길이(header) 를 같이 클라이언트에 전달함
+void Server::SearchDataResponse(const CommuInfo& commuInfo, ClientData* client) {
+    ProductInfo::Filter filter;
+    auto type = commuInfo.GetRequestProducts(filter);
+    QString searchData = filter.keyword;
+    int min_price = qMin(filter.minPrice, filter.maxPrice);
+    int max_price = filter.maxPrice == 0 ? 9999999 : filter.maxPrice;
+
+    QJsonArray searchResult;
+
+    if(type == ProductInfo::ProductType::Book){
+        QMap<QString, Book*> list = this->bookManager->bookListRead();
+        for (auto i = list.begin(); i != list.end(); ++i) {
+            Book* book = i.value();
+            if (book->getPrice() < min_price || book->getPrice() > max_price)
+                continue;
+
+            bool matched = false;
+            switch (filter.type) {
+            case ProductInfo::FilterType::Name:
+                matched = book->getName().contains(searchData, Qt::CaseInsensitive);
+                break;
+            case ProductInfo::FilterType::Author:
+                matched = book->getWriter().contains(searchData, Qt::CaseInsensitive);
+                break;
+            case ProductInfo::FilterType::Company:
+                matched = book->getCompany().contains(searchData, Qt::CaseInsensitive);
+                break;
+            case ProductInfo::FilterType::UUID:
+                matched = book->getCompany().compare(searchData, Qt::CaseInsensitive) == 0 \
+                              ? true : false;
+                break;
+            }
+
+            if (matched) {
+                searchResult.append(book->toJsonObject());
+            }
+        }
+    } else if(type == ProductInfo::ProductType::Music){
+        QMap<QString, Music*> list = this->musicManager->musicListRead();
+        for (auto i = list.begin(); i != list.end(); ++i) {
+            Music* music = i.value();
+            if (music->getPrice() < min_price || music->getPrice() > max_price)
+                continue;
+
+            bool matched = false;
+            switch (filter.type) {
+            case ProductInfo::FilterType::Name:
+                matched = music->getName().contains(searchData, Qt::CaseInsensitive);
+                break;
+            case ProductInfo::FilterType::Author:
+                matched = music->getArtist().contains(searchData, Qt::CaseInsensitive);
+                break;
+            case ProductInfo::FilterType::Company:
+                matched = music->getCompany().contains(searchData, Qt::CaseInsensitive);
+                break;
+            case ProductInfo::FilterType::UUID:
+                matched = music->getCompany().compare(searchData, Qt::CaseInsensitive) == 0 \
+                              ? true : false;
+                break;
+            }
+
+            if (matched) {
+                searchResult.append(music->toJsonObject());
+            }
+        }
+    } else if(type == ProductInfo::ProductType::Blueray){
+        QMap<QString, Blueray*> list = this->bluerayManager->bluerayListRead();
+        for (auto i = list.begin(); i != list.end(); ++i) {
+            Blueray* blueray = i.value();
+            if (blueray->getPrice() < min_price || blueray->getPrice() > max_price)
+                continue;
+
+            bool matched = false;
+            switch (filter.type) {
+            case ProductInfo::FilterType::Name:
+                matched = blueray->getName().contains(searchData, Qt::CaseInsensitive);
+                break;
+            case ProductInfo::FilterType::Author:
+                matched = blueray->getArtist().contains(searchData, Qt::CaseInsensitive);
+                break;
+            case ProductInfo::FilterType::Company:
+                matched = blueray->getCompany().contains(searchData, Qt::CaseInsensitive);
+                break;
+            case ProductInfo::FilterType::UUID:
+                matched = blueray->getCompany().compare(searchData, Qt::CaseInsensitive) == 0 \
+                              ? true : false;
+                break;
+            }
+
+            if (matched) {
+                searchResult.append(blueray->toJsonObject());
+            }
+        }
+    }
+
+    CommuInfo responseInfo;
+    if(type == ProductInfo::ProductType::Book){
+        responseInfo.RequestProducts(ProductInfo::ProductType::Book, filter);
+    } else if (type == ProductInfo::ProductType::Music){
+        responseInfo.RequestProducts(ProductInfo::ProductType::Music, filter);
+    } else if (type == ProductInfo::ProductType::Blueray){
+        responseInfo.RequestProducts(ProductInfo::ProductType::Blueray, filter);
+    }
+    responseInfo.AppendResponseArray(searchResult);
+
+    // base64 이미지 QString 이 포함되어 있어서 bytearray 전체 데이터 전송이 아닌 4 바이트 길이를 먼저 보냄
+    QByteArray packet;
+    QDataStream out(&packet, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_0);
+    out << (quint32)responseInfo.GetByteArray().size(); // 길이 프리픽스
+    packet.append(responseInfo.GetByteArray());
+
+    emit writeReady(client->thread, packet);
+    // socket->write(packet); // 길이  + 나머지 모든 데이터(response 데이터 포함)
+    // socket->flush(); // 추가적으로 송신 버퍼를 즉시 밀어줌
+    qDebug() << "서버: BookSearchDataResponse 응답 전송 완료";
 }

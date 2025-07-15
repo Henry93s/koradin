@@ -11,6 +11,8 @@
 #include "blueray.h"
 #include <QApplication>
 #include <QDir>
+#include <QUuid>
+#include "uuidCompare.h"
 
 using namespace std;
 using json = nlohmann::json;
@@ -54,6 +56,7 @@ void BluerayManager::bluerayListJsonLoad(){
     json j = json::parse(jsonStdStr);
 
     for(auto blueray : j){
+        QString uuid = QString::fromStdString(blueray["uuid"]);
         QString name = QString::fromStdString(blueray["name"]);
         QString artist = QString::fromStdString(blueray["artist"]);
         QString company = QString::fromStdString(blueray["company"]);
@@ -62,11 +65,11 @@ void BluerayManager::bluerayListJsonLoad(){
         int amount = blueray["amount"];
         QString image = QString::fromStdString(blueray["image"]);
 
-        Blueray* newBlueray = new Blueray(name, artist, company, price, context, amount, image);
+        Blueray* newBlueray = new Blueray(uuid, name, artist, company, price, context, amount, image);
         // bluerayList stl Map 컨테이너에 저장
-        bluerayList.insert(name, newBlueray);
+        bluerayList.insert(uuid, newBlueray);
 
-        qDebug() << "Loaded Blueray name, artist : " << name << " (" << artist << ")";
+        qDebug() << "Loaded Blueray uuid , name : " << uuid << " (" << name << ")";
     }
 
     file.close();
@@ -97,6 +100,7 @@ void BluerayManager::bluerayListJsonSave(){
     for (auto it = bluerayList.begin(); it != bluerayList.end(); ++it) {
         if (!it.value()) continue;
         json userObj = {
+            { "uuid",        it.value()->getUuid().toStdString() },
             { "name",        it.value()->getName().toStdString() },
             { "artist",      it.value()->getArtist().toStdString() },
             { "company",  it.value()->getCompany().toStdString() },
@@ -128,8 +132,13 @@ QString BluerayManager::bluerayInsert(Blueray* blueray){
         }
     }
 
+    // uuid 중복 체크 -> 중복하지 않을 때까지 새로운 uuid set
+    while(uuidIsduplicate(bluerayList, blueray->getUuid()) == true){
+        blueray->setUuid(QUuid::createUuid().toString());
+    }
+
     // blueray 중복되지 않음
-    bluerayList.insert(blueray->getName(), blueray);
+    bluerayList.insert(blueray->getUuid(), blueray);
 
     return "OK";
 }
@@ -187,15 +196,32 @@ QMap<QString, Blueray*> BluerayManager::blueraySearchAllByArtist(const QString& 
     for(auto it = bluerayList.begin(); it != bluerayList.end(); ++it){
         if(!it.value()) continue;
         if(it.value()->getArtist().contains(artist) == true){
-            returnBluerays.insert(it.value()->getName(), it.value());
+            returnBluerays.insert(it.value()->getUuid(), it.value());
         }
     }
 
     return returnBluerays;
 }
 
+// err 수정 : uuid 로 조회 시 무조건 1개 return 처리
+Blueray* BluerayManager::blueraySearchByUuid(const QString& uuid){
+    Blueray* blueray;
+
+    QMap<QString, Blueray*> returnBluerays;
+
+    for(auto it = bluerayList.begin(); it != bluerayList.end(); ++it){
+        if(!it.value()) continue;
+        if(it.value()->getUuid().compare(uuid) == 0){
+            blueray = it.value();
+            return blueray;
+        }
+    }
+
+    return nullptr;
+}
+
 // read bluerayList
-QMap<QString, Blueray*> BluerayManager::bluerayListRead(){
+QMap<QString, Blueray*> BluerayManager::bluerayListRead() {
     return this->bluerayList;
 }
 
@@ -220,8 +246,7 @@ BluerayManager::BluerayManager()
     bluerayListJsonLoad();
 }
 
-BluerayManager::~BluerayManager()
-{
+BluerayManager::~BluerayManager() {
     qDebug() << "프로그램 종료 발생";
     bluerayListJsonSave();
 }

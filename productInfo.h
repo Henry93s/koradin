@@ -17,7 +17,8 @@ public:
     enum FilterType{
         Name,
         Author,
-        Company
+        Company,
+        UUID
     };
 
     typedef struct filter{
@@ -31,6 +32,8 @@ public:
     ProductInfo();
     ~ProductInfo();
 
+    QString getUuid();
+    void setUuid(const QString& uuid);
     QString getCompany();
     void setCompany(const QString& company);
     int getPrice();
@@ -51,6 +54,7 @@ public:
     QString getQImageToQStringReturn(const QImage& image);
 
 private:
+    QString Uuid;
     QString company;
     int price;
     QString context;

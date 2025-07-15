@@ -33,6 +33,10 @@ void BookItem::setData(Book* book)
     ui->book_context_label->setText(definedText);
     ui->book_amount_label->setText("잔여 수량 : " + QString::number(book->getAmount()));
     ui->book_price_label->setText("가격 : " + QString::number(book->getPrice()) + "원");
+
+    // uuid
+    ui->book_uuid_label->setText(book->getUuid());
+    ui->book_uuid_label->hide();
 }
 
 // 책 소개 부분 자르기
@@ -62,17 +66,17 @@ QString BookItem::makeImageToolTip(QString base64FromPng){
 }
 
 // QListWidget 에서 선택된 QListWidgetItem -> bookItem 에서
-//  주문에 필요한 데이터(책 이름, 작가 & 출판사, 가격) 만 가져옴
+// 주문에 필요한 (이름, AUTHOR, COMPANY, PRICE, UUID)를 찾음
 QMap<QString, QString> BookItem::getData(){
     QMap<QString, QString> returnData;
     returnData.insert("name", this->ui->book_title_label->text());
-    qDebug() << this->ui->book_title_label->text();
     QStringList parts = this->ui->book_info_label->text().split(" | ");
     QString writer = parts.at(0);
     QString company = parts.at(1);
     returnData.insert("writer", writer);
     returnData.insert("company", company);
     returnData.insert("price", this->ui->book_price_label->text());
+    returnData.insert("UUID", this->ui->book_uuid_label->text());
 
     return returnData;
 }

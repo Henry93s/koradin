@@ -189,6 +189,8 @@ void MainWindow::respond()
             com.LoginOrOut(true, auth.first);
             name = auth.first;
             socket->write(com.GetByteArray());
+
+//          clientWindow->Initialize(socket, auth.first);
         }
         else if(auth.first == QString("No")){
             // id 불일치

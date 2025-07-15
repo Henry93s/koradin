@@ -4,14 +4,16 @@
 #include "ui_client.h"
 #include "musicitem.h"
 
+#include <QMessageBox>
+
 ClientMusicService::ClientMusicService() {
     this->musicmanager = this->musicmanager->getInstance();
 }
 
 ClientMusicService::~ClientMusicService(){}
 
-// 다중 검색 로직
-QVector<Music*> ClientMusicService::musicSearch(Client* musicTab){
+// 1. 음반 다중 검색
+void ClientMusicService::musicSearch(Client* musicTab){
     // 1. music tab 에서 radio button 에 따른 검색 조건 설정
     QString searchType =
         musicTab->getUi()->music_name_radioButton->isChecked() == true ? "name" :
@@ -29,44 +31,35 @@ QVector<Music*> ClientMusicService::musicSearch(Client* musicTab){
 
     // 3. 검색어 입력 체크(입력하지 않았을 때 전체 데이터를 출력)
     QString searchData = musicTab->getUi()->music_search_lineEdit->text();
-    QVector<Music*> searchResult; // search 결과 vector
-    QMap<QString, Music*> list = this->musicmanager->musicListRead();
-    if(searchType.compare("none") == 0){
-        qDebug() << "검색 조건 설정을 한 개 이상 선택해주세요.";
-        Popup* popup = new Popup(musicTab, QObject::tr("검색 조건 설정을 한 개 이상 선택해주세요."));
-        popup->show();
-    } else {
-        for(auto i = list.begin(); i != list.end(); ++i){
-            if(searchType.compare("name") == 0){
-                // 음반 이름으로 검색
-                qDebug() << "음반 이름으로 검색 진행";
-                if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getName().contains(searchData, Qt::CaseInsensitive) == true){
-                    qDebug() << i.value()->getName();
-                    searchResult.append(i.value());
-                }
-            } else if(searchType.compare("company") == 0){
-                // 음반 제작사로 검색
-                qDebug() << "음반 제작사로 검색 진행";
-                if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getCompany().contains(searchData, Qt::CaseInsensitive) == true){
-                    qDebug() << i.value()->getName();
-                    searchResult.append(i.value());
-                }
-            } else if(searchType.compare("artist") == 0){
-                // 아티스트로 검색
-                qDebug() << "아티스트로 검색 진행";
-                if(i.value()->getPrice() >= beforePriceForSearch && i.value()->getPrice() <= afterPriceForSearch
-                    && i.value()->getArtist().contains(searchData, Qt::CaseInsensitive) == true){
-                    qDebug() << i.value()->getName();
-                    searchResult.append(i.value());
-                }
-            }
-        }
-        musicTab->printSearchMusicList(searchResult);
+    QMessageBox::information(musicTab, "음반 검색", "음반 검색을 진행합니다.");
+    this->musicSearchRequest(musicTab, searchData, searchType, beforePriceForSearch, afterPriceForSearch);
+}
+
+// 2. musicTab 에서 music 검색을 서버에 요청한다.
+void ClientMusicService::musicSearchRequest(Client* musicTab, const QString& searchData, const QString& searchType, const int& beforePriceForSearch, const int& afterPriceForSearch){
+    // 통신 데이터 json 구성 및 서버에 요청
+    CommuInfo commuinfo;
+    if(searchType.compare("name") == 0){
+        commuinfo.RequestProducts(ProductInfo::ProductType::Music \
+                                  , ProductInfo::Filter \
+                                  {ProductInfo::FilterType::Name, searchData, \
+                                   beforePriceForSearch, afterPriceForSearch});
+
+    } else if (searchType.compare("artist") == 0){
+        commuinfo.RequestProducts(ProductInfo::ProductType::Music \
+                                  , ProductInfo::Filter \
+                                  {ProductInfo::FilterType::Author, searchData, \
+                                   beforePriceForSearch, afterPriceForSearch});
+
+    } else if (searchType.compare("company") == 0){
+        commuinfo.RequestProducts(ProductInfo::ProductType::Music \
+                                  , ProductInfo::Filter \
+                                  {ProductInfo::FilterType::Company, searchData, \
+                                   beforePriceForSearch, afterPriceForSearch});
+
     }
 
-    return searchResult;
+    musicTab->writeSocket(commuinfo.GetByteArray());
 }
 
 void ClientMusicService::musicOrdering(Client* musicTab){
@@ -90,22 +83,4 @@ void ClientMusicService::musicOrdering(Client* musicTab){
             qDebug() << "선택한 ListwidgetItem 에 qwidget 아이템이 없거나, qwidget 캐스팅 오류가 발생하였습니다.";
         }
     }
-}
-
-// 홈에서의 통합 음반 검색 로직
-QVector<Music*> ClientMusicService::musicHomeSearch(const QString& searchData){
-    QVector<Music*> searchResult; // search 결과 vector
-    QMap<QString, Music*> list = this->musicmanager->musicListRead();
-
-    for(auto i = list.begin(); i != list.end(); ++i){
-        qDebug() << "home call -> 음반 이름 / 제작사 / 아티스트로 검색 진행";
-        // Qt::CaseInsensitive -> 대소문자 구별하지 않음
-        if(i.value()->getName().contains(searchData, Qt::CaseInsensitive) == true || i.value()->getCompany().contains(searchData, Qt::CaseInsensitive) == true
-            || i.value()->getArtist().contains(searchData, Qt::CaseInsensitive) == true){
-            qDebug() << i.value()->getName();
-            searchResult.append(i.value());
-        }
-    }
-
-    return searchResult;
 }

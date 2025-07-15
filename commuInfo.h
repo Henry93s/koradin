@@ -42,6 +42,8 @@ public:
     bool GetLoginOrOut(QString& name) const;
 
     void ServerComfirmLoginOrOut(bool isLogin);
+    // 서버에서 정제한 response 결과 배열을 bytearray 내부에 추가한다
+    void AppendResponseArray(const QJsonArray& responseArray);
 
 private:
     QByteArray byteArray;

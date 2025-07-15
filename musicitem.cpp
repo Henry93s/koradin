@@ -33,6 +33,10 @@ void MusicItem::setData(Music* music)
     ui->music_context_label->setText(definedText);
     ui->music_amount_label->setText("잔여 수량 : " + QString::number(music->getAmount()));
     ui->music_price_label->setText("가격 : " + QString::number(music->getPrice()) + "원");
+
+    // uuid
+    ui->music_uuid_label->setText(music->getUuid());
+    ui->music_uuid_label->hide();
 }
 
 // 소개 부분 자르기
@@ -62,7 +66,7 @@ QString MusicItem::makeImageToolTip(QString base64FromPng){
 }
 
 // QListWidget 에서 선택된 QListWidgetItem -> musicItem 에서
-//  주문에 필요한 데이터(이름, 아티스트 & 음반사, 가격) 만 가져옴
+//  주문에 필요한 데이터(이름, uuid, 아티스트 & 음반사, 가격) 만 가져옴
 QMap<QString, QString> MusicItem::getData(){
     QMap<QString, QString> returnData;
     returnData.insert("name", this->ui->music_title_label->text());
@@ -73,6 +77,7 @@ QMap<QString, QString> MusicItem::getData(){
     returnData.insert("artist", artist);
     returnData.insert("company", company);
     returnData.insert("price", this->ui->music_price_label->text());
+    returnData.insert("UUID", this->ui->music_uuid_label->text());
 
     return returnData;
 }

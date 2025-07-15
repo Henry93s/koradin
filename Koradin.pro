@@ -101,6 +101,7 @@ HEADERS += \
     orderInfo.h \
     music.h \
     useritem.h
+    uuidCompare.h
 
 FORMS += \
     adminwidget.ui \

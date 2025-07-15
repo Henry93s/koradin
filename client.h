@@ -27,15 +27,12 @@ public:
     explicit Client(QWidget *parent = nullptr);
     ~Client();
     void Initialize(QTcpSocket* sock, const QString& name = tr("None"));
-    // print Music, Blueray, Book list
-    void printMusicList();
-    void printBluerayList();
-    void printBookList();
+
     // ClientService, clientBookService 등 각 탭의 Service 클래스에서 Ui 에 입력된 값을 요구할 수 있기 때문에 필요
     Ui::Client* getUi();
-    void printSearchBookList(const QVector<Book*>& list);
-    void printSearchMusicList(const QVector<Music*>& list);
-    void printSearchBluerayList(const QVector<Blueray*>& list);
+    clientdata* getClientData();
+
+    void writeSocket(const QByteArray& bytes) { if(socket) socket->write(bytes); }
 
 private slots:
     void chatForServer();
@@ -45,7 +42,6 @@ private slots:
     void on_book_order_pushButton_clicked();
 
 signals:
-    void InfosFetchRespond(const CommuInfo& commuInfo);
     void ChattingRespond(const CommuInfo& commuInfo);
     void InfosFixRespond(const CommuInfo& commuInfo);
 private slots:
@@ -74,6 +70,18 @@ private:
     ClientBluerayService clientBluerayService;
     ClientMusicService clientMusicService;
     ClientHomeService clientHomeService;
+
+    void InfosFetchRespond(const CommuInfo& commuInfo);
+    void printBookSearchData(const CommuInfo& commuInfo);
+    void printMusicSearchData(const CommuInfo& commuInfo);
+    void printBlueraySearchData(const CommuInfo& commuInfo);
+
+    // 다음에 수신해야 할 데이터의 바이트 수 (서버가 보내는 4바이트 길이 프리픽스를 기반으로 설정됨)
+    quint32 expectedSize = 0;
+    // 실제 수신된 JSON 또는 바이너리 데이터를 저장하는 버퍼
+    QByteArray buffer;
+    // 처음 client 실행 시에는 모든 product 들을 검색하고 setcurrentindex 가 동작을 안 하게 하기 위한 flag
+    int is_first_search = 0;
 };
 
 #endif // CLIENT_H

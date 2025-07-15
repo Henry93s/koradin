@@ -33,6 +33,10 @@ void BluerayItem::setData(Blueray* blueray)
     ui->blueray_context_label->setText(definedText);
     ui->blueray_amount_label->setText("잔여 수량 : " + QString::number(blueray->getAmount()));
     ui->blueray_price_label->setText("가격 : " + QString::number(blueray->getPrice()) + "원");
+
+    // uuid
+    ui->blueray_uuid_label->setText(blueray->getUuid());
+    ui->blueray_uuid_label->hide();
 }
 
 // 소개 부분 자르기
@@ -62,7 +66,7 @@ QString BluerayItem::makeImageToolTip(QString base64FromPng){
 }
 
 // QListWidget 에서 선택된 QListWidgetItem -> bluerayItem 에서
-//  주문에 필요한 데이터(이름, 아티스트 & 출판사, 가격) 만 가져옴
+//  주문에 필요한 데이터(이름, uuid, 아티스트 & 출판사, 가격) 만 가져옴
 QMap<QString, QString> BluerayItem::getData(){
     QMap<QString, QString> returnData;
     returnData.insert("name", this->ui->blueray_title_label->text());
@@ -73,6 +77,7 @@ QMap<QString, QString> BluerayItem::getData(){
     returnData.insert("artist", artist);
     returnData.insert("company", company);
     returnData.insert("price", this->ui->blueray_price_label->text());
+    returnData.insert("UUID", this->ui->blueray_uuid_label->text());
 
     return returnData;
 }

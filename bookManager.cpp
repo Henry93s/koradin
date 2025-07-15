@@ -11,6 +11,8 @@
 #include "book.h"
 #include <QApplication>
 #include <QDir>
+#include <QUuid>
+#include "uuidCompare.h"
 
 using namespace std;
 using json = nlohmann::json;
@@ -54,6 +56,8 @@ void BookManager::bookListJsonLoad(){
     json j = json::parse(jsonStdStr);
 
     for(auto book : j){
+        // book, blueray, music 클래스 객체에 대해서 유일 키인 quuid 를 부여
+        QString uuid = QString::fromStdString(book["uuid"]);
         QString name = QString::fromStdString(book["name"]);
         QString writer = QString::fromStdString(book["writer"]);
         QString company = QString::fromStdString(book["company"]);
@@ -62,11 +66,11 @@ void BookManager::bookListJsonLoad(){
         int amount = book["amount"];
         QString image = QString::fromStdString(book["image"]);
 
-        Book* newBook = new Book(name, writer, company, price, context, amount, image);
+        Book* newBook = new Book(uuid, name, writer, company, price, context, amount, image);
         // bookList stl Map 컨테이너에 저장
-        bookList.insert(name, newBook);
+        bookList.insert(uuid, newBook);
 
-        qDebug() << "Loaded Book name, writer : " << name << " (" << writer << ")";
+        qDebug() << "Loaded Book uuid, name : " << uuid << " (" << name << ")";
     }
 
     file.close();
@@ -97,6 +101,7 @@ void BookManager::bookListJsonSave(){
     for (auto it = bookList.begin(); it != bookList.end(); ++it) {
         if (!it.value()) continue;
         json userObj = {
+            { "uuid",         it.value()->getUuid().toStdString()},
             { "name",        it.value()->getName().toStdString() },
             { "writer",      it.value()->getWriter().toStdString() },
             { "company",  it.value()->getCompany().toStdString() },
@@ -128,8 +133,13 @@ QString BookManager::bookInsert(Book* book){
         }
     }
 
+    // uuid 중복 체크 -> 중복하지 않을 때까지 새로운 uuid set
+    while(uuidIsduplicate(bookList, book->getUuid()) == true){
+        book->setUuid(QUuid::createUuid().toString());
+    }
+
     // book 중복되지 않음
-    bookList.insert(book->getName(), book);
+    bookList.insert(book->getUuid(), book);
 
     return "OK";
 }
@@ -173,7 +183,7 @@ QMap<QString, Book*> BookManager::bookSearchAllByName(const QString& name){
     for(auto it = bookList.begin(); it != bookList.end(); ++it){
         if(!it.value()) continue;
         if(it.value()->getName().contains(name) == true){
-            returnBooks.insert(it.value()->getName(), it.value());
+            returnBooks.insert(it.value()->getUuid(), it.value());
         }
     }
 
@@ -187,11 +197,26 @@ QMap<QString, Book*> BookManager::bookSearchAllByWriter(const QString& writer){
     for(auto it = bookList.begin(); it != bookList.end(); ++it){
         if(!it.value()) continue;
         if(it.value()->getWriter().contains(writer) == true){
-            returnBooks.insert(it.value()->getName(), it.value());
+            returnBooks.insert(it.value()->getUuid(), it.value());
         }
     }
 
     return returnBooks;
+}
+
+// err 수정 : uuid 로 조회 시 무조건 1개 return 처리
+Book* BookManager::bookSearchByUuid(const QString& uuid){
+    Book* book;
+
+    for(auto it = bookList.begin(); it != bookList.end(); ++it){
+        if(!it.value()) continue;
+        if(it.value()->getWriter().compare(uuid) == 0){
+            book = it.value();
+            return book;
+        }
+    }
+
+    return nullptr;
 }
 
 // read bookList
