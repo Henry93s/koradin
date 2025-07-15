@@ -292,6 +292,10 @@ void Server::SearchDataResponse(const CommuInfo& commuInfo, QTcpSocket* socket) 
             case ProductInfo::FilterType::Company:
                 matched = book->getCompany().contains(searchData, Qt::CaseInsensitive);
                 break;
+            case ProductInfo::FilterType::UUID:
+                matched = book->getCompany().compare(searchData, Qt::CaseInsensitive) == 0 \
+                              ? true : false;
+                break;
             }
 
             if (matched) {
@@ -316,6 +320,10 @@ void Server::SearchDataResponse(const CommuInfo& commuInfo, QTcpSocket* socket) 
             case ProductInfo::FilterType::Company:
                 matched = music->getCompany().contains(searchData, Qt::CaseInsensitive);
                 break;
+            case ProductInfo::FilterType::UUID:
+                matched = music->getCompany().compare(searchData, Qt::CaseInsensitive) == 0 \
+                              ? true : false;
+                break;
             }
 
             if (matched) {
@@ -339,6 +347,10 @@ void Server::SearchDataResponse(const CommuInfo& commuInfo, QTcpSocket* socket) 
                 break;
             case ProductInfo::FilterType::Company:
                 matched = blueray->getCompany().contains(searchData, Qt::CaseInsensitive);
+                break;
+            case ProductInfo::FilterType::UUID:
+                matched = blueray->getCompany().compare(searchData, Qt::CaseInsensitive) == 0 \
+                              ? true : false;
                 break;
             }
 

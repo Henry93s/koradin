@@ -196,6 +196,8 @@ ProductInfo::ProductType CommuInfo::GetRequestProducts(ProductInfo::Filter &filt
         filterRet.type = ProductInfo::FilterType::Author;
     } else if(Filter["Type"] == QString("Company")){
         filterRet.type = ProductInfo::FilterType::Company;
+    } else if(Filter["Type"] == QString("UUID")){
+        filterRet.type = ProductInfo::FilterType::UUID;
     }
 
     if(Product["ProductType"] == QString("Book")){

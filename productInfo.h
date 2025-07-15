@@ -17,7 +17,8 @@ public:
     enum FilterType{
         Name,
         Author,
-        Company
+        Company,
+        UUID
     };
 
     typedef struct filter{
