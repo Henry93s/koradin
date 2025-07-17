@@ -210,7 +210,7 @@ Book* BookManager::bookSearchByUuid(const QString& uuid){
 
     for(auto it = bookList.begin(); it != bookList.end(); ++it){
         if(!it.value()) continue;
-        if(it.value()->getWriter().compare(uuid) == 0){
+        if(it.value()->getUuid().compare(uuid) == 0){
             book = it.value();
             return book;
         }

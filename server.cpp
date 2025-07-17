@@ -170,6 +170,8 @@ Server::Server(QWidget *parent)
     this->bluerayManager = bluerayManager->getInstance();
     this->musicManager = musicManager->getInstance();
     this->bookManager = bookManager->getInstance();
+    this->orderManager = orderManager->getInstance();
+
     users = MapToVector<UserInfo*>(userManager->userListRead());
     books = MapToVector(this->bookManager->bookListRead());
     bluerays = MapToVector(bluerayManager->bluerayListRead());
@@ -293,6 +295,9 @@ void Server::respond(const QThread* thread, QByteArray bytearray)
         break;
     case CommuType::LOGINOUT:
         LoginOutRespond(info, client);
+        break;
+    case CommuType::OrderInfos:
+        OrderInfosFetchRespond(info, client);
         break;
     default:
         break;
@@ -420,15 +425,34 @@ void Server::InfosFetchRespond(const CommuInfo &commuInfo, ClientData* client)
 
 }
 
+void Server::OrderInfosFetchRespond(const CommuInfo &commuInfo, ClientData* client)
+{
+    ProductInfo::Filter filter;
+    ProductInfo::ProductType productType = commuInfo.GetRequestProducts(filter);
+    qDebug() << "order_Prod type : " << productType;
+    switch (productType) {
+    case ProductInfo::Book:
+    case ProductInfo::Blueray:
+    case ProductInfo::Music:
+        SearchOrderDataResponse(commuInfo, client);
+        break;
+    default:
+        break;
+    }
+
+}
+
 void Server::LoginOutRespond(const CommuInfo &commuInfo, ClientData* client)
 {
     QString clientName;
+    QString clientID;
     CommuInfo confirm;
-    bool loginOrOut = commuInfo.GetLoginOrOut(clientName);
+    bool loginOrOut = commuInfo.GetLoginOrOut(clientName, clientID);
     if(loginOrOut){
         // 해당 클라를 찾아 이름 정해주기.
         // 걍 관리자라고 되어있는거 바꾸기.
         client->name = clientName;
+        client->ID = clientID;
         // 채팅 창에 유저 추가.
         AddAtUserList(this, ui->userList, client);
         AddAtUserList(this, ui->userListInRoom_All, client);
@@ -622,6 +646,8 @@ void Server::UpdateUI_Product_Music()
 
     emit signalForMusicUI(musicContain);
 }
+
+
 // 도서 or 블루레이 or 음반 상품을 조회하여 json + 데이터의 길이(header) 를 같이 클라이언트에 전달함
 void Server::SearchDataResponse(const CommuInfo& commuInfo, ClientData* client) {
     ProductInfo::Filter filter;
@@ -651,7 +677,7 @@ void Server::SearchDataResponse(const CommuInfo& commuInfo, ClientData* client) 
                 matched = book->getCompany().contains(searchData, Qt::CaseInsensitive);
                 break;
             case ProductInfo::FilterType::UUID:
-                matched = book->getCompany().compare(searchData, Qt::CaseInsensitive) == 0 \
+                matched = book->getUuid().compare(searchData, Qt::CaseInsensitive) == 0 \
                               ? true : false;
                 break;
             }
@@ -679,7 +705,7 @@ void Server::SearchDataResponse(const CommuInfo& commuInfo, ClientData* client) 
                 matched = music->getCompany().contains(searchData, Qt::CaseInsensitive);
                 break;
             case ProductInfo::FilterType::UUID:
-                matched = music->getCompany().compare(searchData, Qt::CaseInsensitive) == 0 \
+                matched = music->getUuid().compare(searchData, Qt::CaseInsensitive) == 0 \
                               ? true : false;
                 break;
             }
@@ -707,7 +733,7 @@ void Server::SearchDataResponse(const CommuInfo& commuInfo, ClientData* client) 
                 matched = blueray->getCompany().contains(searchData, Qt::CaseInsensitive);
                 break;
             case ProductInfo::FilterType::UUID:
-                matched = blueray->getCompany().compare(searchData, Qt::CaseInsensitive) == 0 \
+                matched = blueray->getUuid().compare(searchData, Qt::CaseInsensitive) == 0 \
                               ? true : false;
                 break;
             }
@@ -738,5 +764,68 @@ void Server::SearchDataResponse(const CommuInfo& commuInfo, ClientData* client) 
     emit writeReady(client->thread, packet);
     // socket->write(packet); // 길이  + 나머지 모든 데이터(response 데이터 포함)
     // socket->flush(); // 추가적으로 송신 버퍼를 즉시 밀어줌
-    qDebug() << "서버: BookSearchDataResponse 응답 전송 완료";
+    qDebug() << "서버: SearchDataResponse 응답 전송 완료";
+}
+
+void Server::SearchOrderDataResponse(const CommuInfo& commuInfo, ClientData* client) {
+    ProductInfo::Filter filter;
+    auto type = commuInfo.GetRequestProducts(filter);
+    QString searchData = filter.keyword;
+    int min_price = qMin(filter.minPrice, filter.maxPrice);
+    int max_price = filter.maxPrice == 0 ? 9999999 : filter.maxPrice;
+
+    QJsonArray searchResult;
+    QMap<UserInfo*, QVector<ProductInfo*>> orderList;
+    orderList = this->orderManager->getOrderList();
+
+    UserInfo* user = this->userManager->userSearchById(client->ID);
+
+    for(auto order = orderList.begin(); order != orderList.end(); ++order){
+        if(order.key() == user){
+            //qDebug() << "SearchOrderDataResponse() - order.key() == user" << order.key() << "/" << user;
+            QVector<ProductInfo*> order_products = order.value();
+            QJsonObject obj;
+            obj["userID"] = user->getID();
+            QJsonArray orderArray;
+            int priceSum = 0;
+
+            for(ProductInfo* order_product : order_products){
+                if(order_product->getPrice() < min_price || order_product->getPrice() > max_price){
+                    continue;
+                }
+                bool matched = false;
+                matched = order_product->getName().contains(searchData, Qt::CaseInsensitive);
+                if(matched){
+                    QJsonObject itemObj;
+                    itemObj["uuid"] = order_product->getUuid();
+                    priceSum += order_product->getPrice();
+                    orderArray.append(itemObj);
+                }
+            }
+            obj["orderItems"] = orderArray;
+            obj["priceSum"] = priceSum;
+            searchResult.append(obj);
+        }
+    }
+
+    CommuInfo responseInfo;
+    if(type == ProductInfo::ProductType::Book){
+        responseInfo.RequestOrderProducts(ProductInfo::ProductType::Book, filter);
+    } else if (type == ProductInfo::ProductType::Music){
+        responseInfo.RequestOrderProducts(ProductInfo::ProductType::Music, filter);
+    } else if (type == ProductInfo::ProductType::Blueray){
+        responseInfo.RequestOrderProducts(ProductInfo::ProductType::Blueray, filter);
+    }
+    responseInfo.AppendResponseArray(searchResult);
+
+    QByteArray packet;
+    QDataStream out(&packet, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_0);
+    out << (quint32)responseInfo.GetByteArray().size(); // 길이 프리픽스
+    packet.append(responseInfo.GetByteArray());
+
+    emit writeReady(client->thread, packet);
+    // socket->write(packet); // 길이  + 나머지 모든 데이터(response 데이터 포함)
+    // socket->flush(); // 추가적으로 송신 버퍼를 즉시 밀어줌
+    qDebug() << "서버: SearchOrderDataResponse 응답 전송 완료";
 }

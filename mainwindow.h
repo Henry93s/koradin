@@ -6,6 +6,7 @@
 #include "musicManager.h"
 #include "bluerayManager.h"
 #include "bookManager.h"
+#include "orderManager.h"
 #include <QTranslator>
 
 class QTabWidget;
@@ -38,6 +39,7 @@ private slots:
 
 private:
     QString name;
+    QString ID;
 
     Ui::MainWindow *ui;
     QTabWidget* tabWidget;
@@ -45,6 +47,7 @@ private:
     MusicManager* musicmanager;
     BluerayManager* bluerayManager;
     BookManager* bookManager;
+    OrderManager* orderManager;
 
     // MainWindow 클래스 내부 멤버로 QTranslator 포인터 선언
     QTranslator* translator = nullptr;

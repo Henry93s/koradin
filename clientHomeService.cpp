@@ -93,26 +93,19 @@ void ClientHomeService::homeBlueraySearchRequest(Client* homeTab, const QString&
 
 
 void ClientHomeService::orderChecking(Client* homeTab){
-    if(homeTab->getUi()->home_order_listWidget->selectedItems().isEmpty()){
-        Popup* popup = new Popup(homeTab, QObject::tr("선택한 항목이 없습니다!"));
-        popup->show();
-    } else {
-        /*
-        // home 탭에서 선택된(selected) orderItem 을 감싸고 있는 틀인 QListWidgetItem 을 먼저 가져옴.
-        QListWidgetItem* firstItem = homeTab->getUi()->home_order_listWidget->selectedItems().first();
-        // QListWidgetItem 에 있는 QWidget 아이템 포인터 가져옴
-        QWidget* widget = homeTab->getUi()->home_order_listWidget->itemWidget(firstItem);
-        // qwidget 을 OrderItem* 으로 캐스팅(qobject_cast 방식으로 반환 체크를 먼저 진행하기 때문에 widget 이 OrderItem* 이 아닐 경우 nullptr 을 반환)
-        OrderItem* castedItem = qobject_cast<OrderItem*>(widget);
-        if(castedItem){
-            QMap<QString, QString> selectedData = castedItem->getData();
-            // 선택된 데이터 확인
-            qDebug() << selectedData;
-            Popup* popup = new Popup(homeTab, QObject::tr("조회가 완료되었습니다."));
-            popup->show();
-        } else {
-            qDebug() << "선택한 ListwidgetItem 에 qwidget 아이템이 없거나, qwidget 캐스팅 오류가 발생하였습니다.";
-        }
-        */
+    CommuInfo commuinfo;
+    ProductInfo::ProductType productType = ProductInfo::ProductType::None;
+
+    if(homeTab->getUi()->home_order_blueray_radioButton->isChecked()){
+        productType = ProductInfo::ProductType::Blueray;
+    } else if(homeTab->getUi()->home_order_book_radioButton->isChecked()){
+        productType = ProductInfo::ProductType::Book;
+    } else if(homeTab->getUi()->home_order_music_radioButton->isChecked()){
+        productType = ProductInfo::ProductType::Music;
     }
+
+    QString searchData = homeTab->getUi()->home_orderSearchlineEdit->text();
+    commuinfo.RequestOrderProducts(productType, ProductInfo::Filter{ProductInfo::FilterType::Name, searchData, 0, 9999999});
+
+    homeTab->writeSocket(commuinfo.GetByteArray());
 }

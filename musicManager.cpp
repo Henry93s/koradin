@@ -180,7 +180,7 @@ Music* MusicManager::musicSearchByUuid(const QString& uuid){
     Music* music;
     for(auto it = musicList.begin(); it!= musicList.end(); ++it){
         if(!it.value()) continue;
-        if(it.value()->getName().compare(uuid) == 0){
+        if(it.value()->getUuid().compare(uuid) == 0){
             music = it.value();
             return music;
         }

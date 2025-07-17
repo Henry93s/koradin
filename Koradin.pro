@@ -40,6 +40,8 @@ SOURCES += \
     music.cpp \
     musicManager.cpp \
     musicitem.cpp \
+    order.cpp \
+    orderManager.cpp \
     orderitem.cpp \
     orderwidget.cpp \
     perchatting.cpp \
@@ -87,6 +89,8 @@ HEADERS += \
     mainwindow.h \
     musicManager.h \
     musicitem.h \
+    order.h \
+    orderManager.h \
     orderitem.h \
     orderwidget.h \
     perchatting.h \

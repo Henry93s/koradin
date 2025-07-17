@@ -15,7 +15,9 @@ enum CommuType{
     Infos,
     InfoFix,
     InfoAdd,
-    Order,
+    OrderInfos,
+    OrderAdd,
+    OrderDelete,
     AUTH,
     LOGINOUT,
     COMMUEND
@@ -25,6 +27,7 @@ typedef struct clientdata{
     int room_idx = -1; // 같은 room_idx 끼리 채팅 대화 진행됨 기본 0
     QString name; // 접속한 클라이언트 이름
     QThread* thread = nullptr;
+    QString ID;
 } ClientData;
 
 typedef struct roomdata{

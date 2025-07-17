@@ -18,6 +18,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
+#include "orderitem.h"
 
 
 Client::Client(QWidget *parent)
@@ -27,9 +28,10 @@ Client::Client(QWidget *parent)
     ui->setupUi(this);
 
     // 클라이언트로 접근하고, 도서 탭 리스트 뷰 구성
-    this->bookmanager = this->bookmanager->getInstance();
-    this->blueraymanager = this->blueraymanager->getInstance();
-    this->musicmanager = this->musicmanager->getInstance();
+    this->bookmanager = BookManager::getInstance();
+    this->blueraymanager = BluerayManager::getInstance();
+    this->musicmanager = MusicManager::getInstance();
+    this->ordermanager = OrderManager::getInstance();
 
     // logo 이미지 삽입
     // 이미지 라벨 사이즈 고정
@@ -57,12 +59,13 @@ Client::~Client()
     socket->close();
 }
 
-void Client::Initialize(QTcpSocket *sock, const QString& Name)
+void Client::Initialize(QTcpSocket *sock, const QString& Name, const QString& ID)
 {
     //qDebug("Client Initialize");
     //sprintf(buf, "%p, %s", sock, Name.toString().data());
     socket = sock;
     clientData.name = Name;
+    clientData.ID = ID;
 
     connect(socket, SIGNAL(readyRead()), SLOT(respond()));
 
@@ -73,7 +76,6 @@ void Client::Initialize(QTcpSocket *sock, const QString& Name)
 void Client::respond()
 {
     QTcpSocket* clientSocket = dynamic_cast<QTcpSocket*>(sender());
-
     // base64 이미지 대용량 byte 가 있는 경우가 있으므로 소켓에서 길이를 먼저 읽어내고
     // 그 길이만큼 전부 도착할 때까지 read를 반복한 다음에 파싱 작업 들어가야함
     QDataStream in(clientSocket);
@@ -111,6 +113,9 @@ void Client::respond()
         case CommuType::AUTH:
 
             break;
+        case CommuType::OrderInfos:
+            OrderInfosFetchRespond(info);
+            break;
         default:
             break;
         }
@@ -140,6 +145,78 @@ void Client::InfosFetchRespond(const CommuInfo &commuInfo)
         break;
     }
 
+}
+
+void Client::OrderInfosFetchRespond(const CommuInfo &commuInfo)
+{
+    ProductInfo::Filter filter;
+    ProductInfo::ProductType productType = commuInfo.GetRequestProducts(filter);
+
+    switch (productType) {
+    case ProductInfo::Book:
+    case ProductInfo::Blueray:
+    case ProductInfo::Music:
+        printOrderSearchData(commuInfo);
+        break;
+    default:
+        break;
+    }
+
+}
+
+void Client::printOrderSearchData(const CommuInfo& commuInfo){
+    ui->home_order_listWidget->clear();
+
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(commuInfo.GetByteArray(), &error);
+    if (error.error != QJsonParseError::NoError) {
+        QMessageBox::critical(this, "파싱 오류", error.errorString());
+        return;
+    }
+
+    QJsonObject rootObj = doc.object();
+    QString productType = rootObj["Info"].toObject()["Product"].toObject()["ProductType"].toString();
+
+    // response 배열에서 첫 번째
+    QJsonArray responseArr = rootObj["response"].toArray();
+    if (responseArr.isEmpty()) {
+        qDebug() << "response 비어있음";
+        return;
+    }
+
+    QJsonObject responseObj = responseArr.at(0).toObject();
+
+    // orderItems의 uuid 리스트 파싱
+    QJsonArray orderItemsArr = responseObj["orderItems"].toArray();
+
+    for (const QJsonValue& val : orderItemsArr) {
+        QString uuid = val.toObject()["uuid"].toString();
+        QString name;
+        int price;
+
+        if(productType.compare("book") == 0){
+            Book* book = this->bookmanager->bookSearchByUuid(uuid);
+            name = book->getName();
+            price = book->getPrice();
+        } else if(productType.compare("music") == 0){
+            Music* music = this->musicmanager->musicSearchByUuid(uuid);
+            name = music->getName();
+            price = music->getPrice();
+        } else { //if(productType.compare("blueray") == 0){
+            Blueray* blueray = this->blueraymanager->blueraySearchByUuid(uuid);
+            name = blueray->getName();
+            price = blueray->getPrice();
+        }
+        OrderItem* orderItem = new OrderItem(this);
+        orderItem->setData(productType, name, price, uuid);
+
+        QMessageBox::critical(this, "test", QString(name));
+
+        QListWidgetItem* item = new QListWidgetItem(ui->home_order_listWidget);
+        item->setSizeHint(orderItem->sizeHint());
+        ui->home_order_listWidget->addItem(item);
+        ui->home_order_listWidget->setItemWidget(item, orderItem);
+    }
 }
 
 void Client::printBookSearchData(const CommuInfo& commuInfo) {

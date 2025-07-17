@@ -1,0 +1,29 @@
+[
+    {
+        "orderItems": [
+            {
+                "uuid": "{1548deee-6e48-4c15-bf82-1ce21501172b}"
+            },
+            {
+                "uuid": "{6d1659e9-b7cb-462c-8592-f4f35a061fe6}"
+            }
+        ],
+        "priceSum": 46000,
+        "userID": "geonwoo"
+    },
+    {
+        "orderItems": [
+            {
+                "uuid": "{2d51a695-12b1-4ffd-97de-c9f82423440d}"
+            },
+            {
+                "uuid": "{8f56be19-d092-4af6-8cdf-fc53b3baf5f7}"
+            },
+            {
+                "uuid": "{66cb0450-6252-4a46-a6ad-1e912adbc326}"
+            }
+        ],
+        "priceSum": 145000,
+        "userID": "geonwoo2"
+    }
+]

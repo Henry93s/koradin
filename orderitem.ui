@@ -34,14 +34,14 @@
      <x>10</x>
      <y>10</y>
      <width>332</width>
-     <height>100</height>
+     <height>116</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QLabel" name="book_title_label">
+     <widget class="QLabel" name="order_title_label">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -58,14 +58,17 @@
        </font>
       </property>
       <property name="text">
-       <string>title</string>
+       <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="book_info_label">
+     <widget class="QLabel" name="order_info_label">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -77,12 +80,21 @@
        </size>
       </property>
       <property name="text">
-       <string>info</string>
+       <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="book_price_label">
+     <widget class="QLabel" name="order_price_label">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="minimumSize">
        <size>
         <width>330</width>
@@ -95,7 +107,17 @@
        </font>
       </property>
       <property name="text">
-       <string>price</string>
+       <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="order_id_label">
+      <property name="text">
+       <string/>
       </property>
      </widget>
     </item>
