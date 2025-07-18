@@ -175,7 +175,7 @@ void Client::printOrderSearchData(const CommuInfo& commuInfo){
     }
 
     QJsonObject rootObj = doc.object();
-    QString productType = rootObj["Info"].toObject()["Product"].toObject()["ProductType"].toString();
+    QString productTypes = rootObj["Info"].toObject()["Product"].toObject()["ProductType"].toString();
 
     // response 배열에서 첫 번째
     QJsonArray responseArr = rootObj["response"].toArray();
@@ -183,34 +183,47 @@ void Client::printOrderSearchData(const CommuInfo& commuInfo){
         qDebug() << "response 비어있음";
         return;
     }
-
     QJsonObject responseObj = responseArr.at(0).toObject();
 
     // orderItems의 uuid 리스트 파싱
     QJsonArray orderItemsArr = responseObj["orderItems"].toArray();
-
-    for (const QJsonValue& val : orderItemsArr) {
+    qDebug() << "orderItemsArr " << orderItemsArr;
+    for (auto val : orderItemsArr) {
         QString uuid = val.toObject()["uuid"].toString();
         QString name;
         int price;
 
-        if(productType.compare("book") == 0){
+        qDebug() << "orderItemsArr uuid : " << uuid;
+
+        if(productTypes.compare("Book") == 0){
             Book* book = this->bookmanager->bookSearchByUuid(uuid);
+            if (!book) {
+                qDebug() << "skip not type uuid " << uuid;
+                continue;
+            }
             name = book->getName();
             price = book->getPrice();
-        } else if(productType.compare("music") == 0){
+            qDebug() << name << " " << price;
+        } else if(productTypes.compare("Music") == 0){
             Music* music = this->musicmanager->musicSearchByUuid(uuid);
+            if (!music) {
+                qDebug() << "skip not type uuid " << uuid;
+                continue;
+            }
             name = music->getName();
             price = music->getPrice();
         } else { //if(productType.compare("blueray") == 0){
             Blueray* blueray = this->blueraymanager->blueraySearchByUuid(uuid);
+            if (!blueray) {
+                qDebug() << "skip not type uuid " << uuid;
+                continue;
+            }
             name = blueray->getName();
             price = blueray->getPrice();
         }
-        OrderItem* orderItem = new OrderItem(this);
-        orderItem->setData(productType, name, price, uuid);
 
-        QMessageBox::critical(this, "test", QString(name));
+        OrderItem* orderItem = new OrderItem(this);
+        orderItem->setData(productTypes, name, price, uuid);
 
         QListWidgetItem* item = new QListWidgetItem(ui->home_order_listWidget);
         item->setSizeHint(orderItem->sizeHint());
