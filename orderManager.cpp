@@ -149,3 +149,64 @@ OrderManager::~OrderManager() {
 QMap<UserInfo*, QVector<ProductInfo*>> OrderManager::getOrderList(){
     return this->orderList;
 }
+
+int OrderManager::addOrderList(UserInfo* user, ProductInfo* product){
+    if(!user || !product){
+        qDebug() << "user 또는 product 없음";
+        return -1; // err
+    }
+
+    QString newUuid = product->getUuid();
+
+    if (orderList.contains(user)) {
+        QVector<ProductInfo*>& productList = orderList[user];
+
+        // UUID가 같은 상품이 이미 있는지 검사
+        bool alreadyExists = false;
+        for (ProductInfo* existingProduct : productList) {
+            if (existingProduct && existingProduct->getUuid() == newUuid) {
+                alreadyExists = true;
+                qDebug() << "product uuid 중복";
+                return 1; // 중복
+            }
+        }
+
+        // UUID가 중복되지 않으면 추가
+        if (!alreadyExists) {
+            productList.append(product);
+            qDebug() << "product 추가";
+            return 0; // ok
+        }
+    } else {
+        // 유저가 없으면 새로운 벡터 생성 후 상품 추가
+        QVector<ProductInfo*> productList;
+        productList.append(product);
+        orderList.insert(user, productList);
+        qDebug() << "user & product 추가";
+        return 0; // ok
+    }
+    return 0;
+}
+int OrderManager::delOrderList(UserInfo* user, ProductInfo* product){
+    if (!user || !product) {
+        qDebug() << "user 또는 product 없음";
+        return -1; // err
+    }
+
+    if (orderList.contains(user)) {
+        QVector<ProductInfo*>& productList = orderList[user];
+
+        // product가 있다면 제거
+        int index = productList.indexOf(product);
+        if (index != -1) {
+            productList.remove(index);
+
+        }
+
+        // 상품이 모두 삭제되면 사용자도 제거
+        if (productList.isEmpty()) {
+            orderList.remove(user);
+        }
+    }
+    return 0; // ok
+}

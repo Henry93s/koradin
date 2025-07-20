@@ -16,6 +16,8 @@ public:
     static OrderManager* getInstance();
 
     QMap<UserInfo*, QVector<ProductInfo*>> getOrderList();
+    int addOrderList(UserInfo* user, ProductInfo* product);
+    int delOrderList(UserInfo* user, ProductInfo* product);
 
     void orderListJsonLoad();
     void orderListJsonSave();

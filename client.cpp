@@ -116,6 +116,12 @@ void Client::respond()
         case CommuType::OrderInfos:
             OrderInfosFetchRespond(info);
             break;
+        case CommuType::OrderAdd:
+            OrderAddRespond(info);
+            break;
+        case CommuType::OrderDelete:
+            OrderAddRespond(info);
+            break;
         default:
             break;
         }
@@ -163,6 +169,119 @@ void Client::OrderInfosFetchRespond(const CommuInfo &commuInfo)
     }
 
 }
+
+void Client::OrderAddRespond(const CommuInfo &commuInfo)
+{
+    ProductInfo::Filter filter;
+    ProductInfo::ProductType productType = commuInfo.GetRequestProducts(filter);
+
+    switch (productType) {
+    case ProductInfo::Book:
+    case ProductInfo::Blueray:
+    case ProductInfo::Music:
+        OrderAddResponse(commuInfo);
+        break;
+    default:
+        break;
+    }
+}
+
+void Client::OrderDeleteRespond(const CommuInfo &commuInfo)
+{
+    ProductInfo::Filter filter;
+    ProductInfo::ProductType productType = commuInfo.GetRequestProducts(filter);
+
+    switch (productType) {
+    case ProductInfo::Book:
+    case ProductInfo::Blueray:
+    case ProductInfo::Music:
+        OrderDeleteResponse(commuInfo);
+        break;
+    default:
+        break;
+    }
+}
+
+void Client::OrderAddResponse(const CommuInfo &commuInfo) {
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(commuInfo.GetByteArray(), &error);
+
+    if (error.error != QJsonParseError::NoError) {
+        QMessageBox::critical(this, tr("파싱 오류"), error.errorString());
+        return;
+    }
+
+    if (!doc.isObject()) {
+        QMessageBox::critical(this, tr("응답 오류"), tr("서버 응답 형식이 잘못되었습니다."));
+        return;
+    }
+
+    QJsonObject root = doc.object();
+
+    if (!root.contains("response") || !root["response"].isArray()) {
+        QMessageBox::critical(this, tr("응답 오류"), tr("서버 응답에 필요한 데이터가 없습니다."));
+        return;
+    }
+
+    QJsonArray responseArray = root["response"].toArray();
+    if (responseArray.isEmpty()) {
+        QMessageBox::information(this, tr("응답"), tr("서버로부터 결과가 도착하지 않았습니다."));
+        return;
+    }
+
+    QJsonObject obj = responseArray.first().toObject();
+
+    QString status = obj.value("status").toString();
+    QString message = obj.value("message").toString();
+    QString uuid = obj.value("uuid").toString();
+    QString userID = obj.value("userID").toString();
+
+    QString title = (status == "success") ? tr("주문 완료") : tr("주문 실패");
+
+    QMessageBox::information(this, title, message);
+    clientHomeService.orderChecking(this);
+}
+
+void Client::OrderDeleteResponse(const CommuInfo &commuInfo) {
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(commuInfo.GetByteArray(), &error);
+
+    if (error.error != QJsonParseError::NoError) {
+        QMessageBox::critical(this, tr("파싱 오류"), error.errorString());
+        return;
+    }
+
+    if (!doc.isObject()) {
+        QMessageBox::critical(this, tr("응답 오류"), tr("서버 응답 형식이 잘못되었습니다."));
+        return;
+    }
+
+    QJsonObject root = doc.object();
+
+    if (!root.contains("response") || !root["response"].isArray()) {
+        QMessageBox::critical(this, tr("응답 오류"), tr("서버 응답에 필요한 데이터가 없습니다."));
+        return;
+    }
+
+    QJsonArray responseArray = root["response"].toArray();
+    if (responseArray.isEmpty()) {
+        QMessageBox::information(this, tr("응답"), tr("서버로부터 결과가 도착하지 않았습니다."));
+        return;
+    }
+
+    QJsonObject obj = responseArray.first().toObject();
+
+    QString status = obj.value("status").toString();
+    QString message = obj.value("message").toString();
+    QString uuid = obj.value("uuid").toString();
+    QString userID = obj.value("userID").toString();
+
+    QString title = (status == "success") ? tr("주문 삭제 완료") : tr("주문 삭제 실패");
+
+    QMessageBox::information(this, title, message);
+    clientHomeService.orderChecking(this);
+}
+
 
 void Client::printOrderSearchData(const CommuInfo& commuInfo){
     ui->home_order_listWidget->clear();
@@ -382,5 +501,11 @@ void Client::on_home_search_pushButton_clicked()
 void Client::on_home_orderSearch_pushButton_clicked()
 {
     clientHomeService.orderChecking(this);
+}
+
+
+void Client::on_home_orderDelete_pushButton_clicked()
+{
+    clientHomeService.orderDelete(this);
 }
 

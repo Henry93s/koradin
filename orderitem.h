@@ -18,6 +18,7 @@ public:
     explicit OrderItem(QWidget *parent = nullptr);
     ~OrderItem();
     void setData(const QString& prodType, const QString& prodName, const int& prodPrice, const QString& prodUuid);
+    QString getData();
 
 private:
     Ui::OrderItem *ui;

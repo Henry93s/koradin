@@ -20,4 +20,12 @@ void OrderItem::setData(const QString& prodType, const QString& prodName, const 
 {
     ui->order_title_label->setText(prodName);
     ui->order_price_label->setText(QString::number(prodPrice));
+    ui->order_uuid_label->setText(prodUuid);
+    ui->order_uuid_label->hide();
+}
+
+QString OrderItem::getData(){
+    QString uuid;
+    uuid = this->ui->order_uuid_label->text();
+    return uuid;
 }

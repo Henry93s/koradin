@@ -105,7 +105,35 @@ void ClientHomeService::orderChecking(Client* homeTab){
     }
 
     QString searchData = homeTab->getUi()->home_orderSearchlineEdit->text();
-    commuinfo.RequestOrderProducts(productType, ProductInfo::Filter{ProductInfo::FilterType::Name, searchData, 0, 9999999});
+    commuinfo.RequestOrderProducts(productType, ProductInfo::Filter{ProductInfo::FilterType::Name, searchData, 0, 9999999}, QString("OrderInfos"));
 
     homeTab->writeSocket(commuinfo.GetByteArray());
+}
+
+void ClientHomeService::orderDelete(Client* homeTab){
+    if(homeTab->getUi()->home_order_listWidget->selectedItems().isEmpty()){
+        Popup* popup = new Popup(homeTab, QObject::tr("선택한 항목이 없습니다!"));
+        popup->show();
+    } else {
+        QListWidgetItem* firstItem = homeTab->getUi()->home_order_listWidget->selectedItems().first();
+        QWidget* widget = homeTab->getUi()->home_order_listWidget->itemWidget(firstItem);
+        OrderItem* castedItem = qobject_cast<OrderItem*>(widget);
+        if(castedItem){
+            QString uuid = castedItem->getData();
+
+            CommuInfo commuinfo;
+            ProductInfo::ProductType productType = ProductInfo::ProductType::None;
+
+            if(homeTab->getUi()->home_order_blueray_radioButton->isChecked()){
+                productType = ProductInfo::ProductType::Blueray;
+            } else if(homeTab->getUi()->home_order_book_radioButton->isChecked()){
+                productType = ProductInfo::ProductType::Book;
+            } else if(homeTab->getUi()->home_order_music_radioButton->isChecked()){
+                productType = ProductInfo::ProductType::Music;
+            }
+
+            commuinfo.RequestOrderProducts(productType, ProductInfo::Filter{ProductInfo::FilterType::UUID, uuid, 0, 9999999}, QString("OrderDelete"));
+            homeTab->writeSocket(commuinfo.GetByteArray());
+        }
+    }
 }

@@ -299,6 +299,12 @@ void Server::respond(const QThread* thread, QByteArray bytearray)
     case CommuType::OrderInfos:
         OrderInfosFetchRespond(info, client);
         break;
+    case CommuType::OrderAdd:
+        OrderAddRespond(info, client);
+        break;
+    case CommuType::OrderDelete:
+        OrderDeleteRespond(info, client);
+        break;
     default:
         break;
     }
@@ -439,8 +445,40 @@ void Server::OrderInfosFetchRespond(const CommuInfo &commuInfo, ClientData* clie
     default:
         break;
     }
-
 }
+
+void Server::OrderAddRespond(const CommuInfo &commuInfo, ClientData* client)
+{
+    ProductInfo::Filter filter;
+    ProductInfo::ProductType productType = commuInfo.GetRequestProducts(filter);
+    qDebug() << "order_Prod type : " << productType;
+    switch (productType) {
+    case ProductInfo::Book:
+    case ProductInfo::Blueray:
+    case ProductInfo::Music:
+        AddOrderDataResponse(commuInfo, client);
+        break;
+    default:
+        break;
+    }
+}
+
+void Server::OrderDeleteRespond(const CommuInfo &commuInfo, ClientData* client)
+{
+    ProductInfo::Filter filter;
+    ProductInfo::ProductType productType = commuInfo.GetRequestProducts(filter);
+    qDebug() << "delete order_Prod type : " << productType;
+    switch (productType) {
+    case ProductInfo::Book:
+    case ProductInfo::Blueray:
+    case ProductInfo::Music:
+        DeleteOrderDataResponse(commuInfo, client);
+        break;
+    default:
+        break;
+    }
+}
+
 
 void Server::LoginOutRespond(const CommuInfo &commuInfo, ClientData* client)
 {
@@ -810,11 +848,11 @@ void Server::SearchOrderDataResponse(const CommuInfo& commuInfo, ClientData* cli
 
     CommuInfo responseInfo;
     if(type == ProductInfo::ProductType::Book){
-        responseInfo.RequestOrderProducts(ProductInfo::ProductType::Book, filter);
+        responseInfo.RequestOrderProducts(ProductInfo::ProductType::Book, filter, QString("OrderInfos"));
     } else if (type == ProductInfo::ProductType::Music){
-        responseInfo.RequestOrderProducts(ProductInfo::ProductType::Music, filter);
+        responseInfo.RequestOrderProducts(ProductInfo::ProductType::Music, filter, QString("OrderInfos"));
     } else if (type == ProductInfo::ProductType::Blueray){
-        responseInfo.RequestOrderProducts(ProductInfo::ProductType::Blueray, filter);
+        responseInfo.RequestOrderProducts(ProductInfo::ProductType::Blueray, filter, QString("OrderInfos"));
     }
     responseInfo.AppendResponseArray(searchResult);
 
@@ -828,4 +866,149 @@ void Server::SearchOrderDataResponse(const CommuInfo& commuInfo, ClientData* cli
     // socket->write(packet); // 길이  + 나머지 모든 데이터(response 데이터 포함)
     // socket->flush(); // 추가적으로 송신 버퍼를 즉시 밀어줌
     qDebug() << "서버: SearchOrderDataResponse 응답 전송 완료";
+}
+
+void Server::AddOrderDataResponse(const CommuInfo& commuInfo, ClientData* client) {
+    ProductInfo::Filter filter;
+    ProductInfo::ProductType type = commuInfo.GetRequestProducts(filter);
+    QString uuid = filter.keyword;
+
+    // 유저 정보 찾기
+    UserInfo* user = this->userManager->userSearchById(client->ID);
+    if (!user) {
+        qDebug() << "서버: 유저를 찾을 수 없습니다.";
+        return;
+    }
+
+    // 전체 상품 목록에서 해당 UUID를 가진 상품 찾기
+    ProductInfo* product = nullptr;
+    if (type == ProductInfo::ProductType::Book) {
+        product = this->bookManager->bookSearchByUuid(uuid);
+    } else if (type == ProductInfo::ProductType::Music) {
+        product = this->musicManager->musicSearchByUuid(uuid);
+    } else if (type == ProductInfo::ProductType::Blueray) {
+        product = this->bluerayManager->blueraySearchByUuid(uuid);
+    }
+    if (!product) {
+        qDebug() << "서버: 해당 uuid 상품 없음";
+        return;
+    }
+    qDebug() << "server addorderdata product -> " << product->getName();
+
+    // 주문 목록에 추가
+    int resultAdd = this->orderManager->addOrderList(user, product);
+    // 클라이언트에게 주문 응답
+    QJsonObject responseObj;
+    responseObj["uuid"] = uuid;
+    responseObj["userID"] = user->getID();
+    if(resultAdd == -1){
+        qDebug() << "user 또는 product 없음";
+        responseObj["status"] = "fail";
+        responseObj["message"] = "user 또는 product 없음";
+    } else if(resultAdd == 1){
+        qDebug() << "product uuid 중복";
+        responseObj["status"] = "fail";
+        responseObj["message"] = "product uuid 중복";
+    } else if(resultAdd == 0){
+        qDebug() << "서버: 주문이 성공적으로 추가되었습니다. UUID:" << uuid << "유저:" << user->getID();
+        responseObj["status"] = "success";
+        responseObj["message"] = "주문이 완료되었습니다.";
+        this->orderManager->orderListJsonSave();
+        this->orderManager->orderListJsonLoad();
+    }
+    QJsonArray responseArray;
+    responseArray.append(responseObj);
+
+    CommuInfo responseInfo;
+    if(type == ProductInfo::ProductType::Book){
+        responseInfo.RequestOrderProducts(ProductInfo::ProductType::Book, filter, QString("OrderAdd"));
+    } else if (type == ProductInfo::ProductType::Music){
+        responseInfo.RequestOrderProducts(ProductInfo::ProductType::Music, filter, QString("OrderAdd"));
+    } else if (type == ProductInfo::ProductType::Blueray){
+        responseInfo.RequestOrderProducts(ProductInfo::ProductType::Blueray, filter, QString("OrderAdd"));
+    }
+    responseInfo.AppendResponseArray(responseArray);
+
+    QByteArray packet;
+    QDataStream out(&packet, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_0);
+    out << (quint32)responseInfo.GetByteArray().size(); // 길이 프리픽스
+    packet.append(responseInfo.GetByteArray());
+
+    emit writeReady(client->thread, packet);
+    // socket->write(packet); // 길이  + 나머지 모든 데이터(response 데이터 포함)
+    // socket->flush(); // 추가적으로 송신 버퍼를 즉시 밀어줌
+    qDebug() << "서버: SearchAddRespond 응답 전송 완료";
+    qDebug() << responseInfo.GetByteArray();
+}
+
+
+void Server::DeleteOrderDataResponse(const CommuInfo& commuInfo, ClientData* client) {
+    ProductInfo::Filter filter;
+    ProductInfo::ProductType type = commuInfo.GetRequestProducts(filter);
+    QString uuid = filter.keyword;
+
+    // 유저 정보 찾기
+    UserInfo* user = this->userManager->userSearchById(client->ID);
+    if (!user) {
+        qDebug() << "서버: 유저를 찾을 수 없습니다.";
+        return;
+    }
+
+    // 전체 상품 목록에서 해당 UUID를 가진 상품 찾기
+    ProductInfo* product = nullptr;
+    if (type == ProductInfo::ProductType::Book) {
+        product = this->bookManager->bookSearchByUuid(uuid);
+    } else if (type == ProductInfo::ProductType::Music) {
+        product = this->musicManager->musicSearchByUuid(uuid);
+    } else if (type == ProductInfo::ProductType::Blueray) {
+        product = this->bluerayManager->blueraySearchByUuid(uuid);
+    }
+    if (!product) {
+        qDebug() << "서버: 해당 uuid 상품 없음";
+        return;
+    }
+    qDebug() << "server : orderList delete orderProduct -> " << product->getName();
+
+    // 주문 목록에 추가
+    int resultDelete = this->orderManager->delOrderList(user, product);
+    // 클라이언트에게 주문 응답
+    QJsonObject responseObj;
+    responseObj["uuid"] = uuid;
+    responseObj["userID"] = user->getID();
+    if(resultDelete == -1){
+        qDebug() << "user 또는 product 없음";
+        responseObj["status"] = "fail";
+        responseObj["message"] = "user 또는 product 없음";
+    } else if(resultDelete == 0){
+        qDebug() << "서버: 주문 삭제가 성공적으로 완료되었습니다. UUID:" << uuid << "유저:" << user->getID();
+        responseObj["status"] = "success";
+        responseObj["message"] = "주문 삭제가 완료되었습니다.";
+        this->orderManager->orderListJsonSave();
+        this->orderManager->orderListJsonLoad();
+    }
+    QJsonArray responseArray;
+    responseArray.append(responseObj);
+
+    CommuInfo responseInfo;
+    if(type == ProductInfo::ProductType::Book){
+        responseInfo.RequestOrderProducts(ProductInfo::ProductType::Book, filter, QString("OrderDelete"));
+    } else if (type == ProductInfo::ProductType::Music){
+        responseInfo.RequestOrderProducts(ProductInfo::ProductType::Music, filter, QString("OrderDelete"));
+    } else if (type == ProductInfo::ProductType::Blueray){
+        responseInfo.RequestOrderProducts(ProductInfo::ProductType::Blueray, filter, QString("OrderDelete"));
+    }
+    responseInfo.AppendResponseArray(responseArray);
+
+    QByteArray packet;
+    QDataStream out(&packet, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_0);
+    out << (quint32)responseInfo.GetByteArray().size(); // 길이 프리픽스
+    packet.append(responseInfo.GetByteArray());
+
+    emit writeReady(client->thread, packet);
+    // socket->write(packet); // 길이  + 나머지 모든 데이터(response 데이터 포함)
+    // socket->flush(); // 추가적으로 송신 버퍼를 즉시 밀어줌
+    qDebug() << "서버: SearchDeleteRespond 응답 전송 완료";
+    qDebug() << responseInfo.GetByteArray();
 }

@@ -84,8 +84,15 @@ void ClientBookService::bookOrdering(Client* bookTab){
             QMap<QString, QString> selectedData = castedItem->getData();
             // 선택된 데이터를 orderManager 에 전달해야 함
             qDebug() << selectedData;
-            Popup* popup = new Popup(bookTab, QObject::tr("주문이 완료되었습니다."));
-            popup->show();
+            CommuInfo commuinfo;
+            QString searchData = selectedData["UUID"];
+            ProductInfo::ProductType productType = ProductInfo::ProductType::Book;
+            commuinfo.RequestOrderProducts(productType, ProductInfo::Filter{
+                                                                            ProductInfo::FilterType::UUID, searchData, 0,9999999}, QString("OrderAdd"));
+            bookTab->writeSocket(commuinfo.GetByteArray());
+
+            // Popup* popup = new Popup(bookTab, QObject::tr("주문이 완료되었습니다."));
+            // popup->show();
         } else {
             qDebug() << "선택한 ListwidgetItem 에 qwidget 아이템이 없거나, qwidget 캐스팅 오류가 발생하였습니다.";
         }

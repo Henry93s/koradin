@@ -59,6 +59,8 @@ private slots:
     void on_home_search_pushButton_clicked();
     void on_home_orderSearch_pushButton_clicked();
 
+    void on_home_orderDelete_pushButton_clicked();
+
 private:
     ClientData clientData;
     QTcpSocket* socket;
@@ -78,7 +80,11 @@ private:
     void printMusicSearchData(const CommuInfo& commuInfo);
     void printBlueraySearchData(const CommuInfo& commuInfo);
     void OrderInfosFetchRespond(const CommuInfo &commuInfo);
+    void OrderAddRespond(const CommuInfo& commuInfo);
+    void OrderDeleteRespond(const CommuInfo& commuInfo);
     void printOrderSearchData(const CommuInfo& commuInfo);
+    void OrderAddResponse(const CommuInfo& commuInfo);
+    void OrderDeleteResponse(const CommuInfo& commuInfo);
 
     // 다음에 수신해야 할 데이터의 바이트 수 (서버가 보내는 4바이트 길이 프리픽스를 기반으로 설정됨)
     quint32 expectedSize = 0;

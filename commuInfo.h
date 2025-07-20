@@ -45,7 +45,7 @@ public:
     // 서버에서 정제한 response 결과 배열을 bytearray 내부에 추가한다
     void AppendResponseArray(const QJsonArray& responseArray);
     void AppendResponseObject(const QJsonObject& responseObject);
-    void RequestOrderProducts(ProductInfo::ProductType productType, const ProductInfo::Filter &filter);
+    void RequestOrderProducts(ProductInfo::ProductType productType, const ProductInfo::Filter &filter, const QString& orderMenu);
 
 private:
     QByteArray byteArray;

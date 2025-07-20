@@ -33,6 +33,12 @@ CommuType CommuInfo::GetType() const
         else if(commu == QString("OrderInfos")){
             return CommuType::OrderInfos;
         }
+        else if(commu == QString("OrderAdd")){
+            return CommuType::OrderAdd;
+        }
+        else if(commu == QString("OrderDelete")){
+            return CommuType::OrderDelete;
+        }
         else if(commu == QString("AUTH")){
             return CommuType::AUTH;
         }
@@ -200,7 +206,7 @@ void CommuInfo::RequestProducts(ProductInfo::ProductType productType, const Prod
     byteArray = docu.toJson(QJsonDocument::Compact);
 }
 
-void CommuInfo::RequestOrderProducts(ProductInfo::ProductType productType, const ProductInfo::Filter &filter)
+void CommuInfo::RequestOrderProducts(ProductInfo::ProductType productType, const ProductInfo::Filter &filter, const QString& orderMenu)
 {
     QJsonObject Filter;
     switch(filter.type){
@@ -241,7 +247,7 @@ void CommuInfo::RequestOrderProducts(ProductInfo::ProductType productType, const
     Info["InfoType"] = QString("Product");
     Info["Product"] = Product;
     QJsonObject Commu;
-    Commu["CommuType"] = QString("OrderInfos");
+    Commu["CommuType"] = orderMenu;
     Commu["Info"] = Info;
 
     QJsonDocument docu(Commu);
@@ -250,7 +256,7 @@ void CommuInfo::RequestOrderProducts(ProductInfo::ProductType productType, const
 
 ProductInfo::ProductType CommuInfo::GetRequestProducts(ProductInfo::Filter &filterRet) const
 {
-    if(!(GetType() == CommuType::Infos || GetType() == CommuType::OrderInfos)){
+    if(!(GetType() == CommuType::Infos || GetType() == CommuType::OrderInfos || GetType() == CommuType::OrderAdd || GetType() == CommuType::OrderDelete)){
         qDebug() << "getRequestProducts() commuType : " << GetType();
         return ProductInfo::ProductType::None;
     }
