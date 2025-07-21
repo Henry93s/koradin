@@ -98,6 +98,8 @@ void Client::Initialize(QTcpSocket *sock, const QString& Name, const QString& ID
     clientData.name = Name;
     clientData.ID = ID;
 
+    qDebug() << "testings : client::initialize - name:  " << clientData.name << ", ID :  " << clientData.ID;
+
     // 데이터 스트림 초기화
     in.setDevice(sock);
     in.setVersion(QDataStream::Qt_6_0);
@@ -115,6 +117,7 @@ void Client::Initialize(QTcpSocket *sock, const QString& Name, const QString& ID
 
     // 첫 실행 시 모든 product 검색 처리(단 tab index 는 넘어가지 않아야 함)
     this->on_home_search_pushButton_clicked();
+    this->on_home_orderSearch_pushButton_clicked();
 }
 
 void Client::respond()
@@ -124,8 +127,8 @@ void Client::respond()
     // 그 길이만큼 전부 도착할 때까지 read를 반복한 다음에 파싱 작업 들어가야함
 
     qDebug() << "Response!!!";
-    qDebug() << "ExpectedSize :" << expectedSize;
-    qDebug() << "ClinetSocket - bytesAvailable :" << clientSocket->bytesAvailable();
+     qDebug() << "ExpectedSize :" << expectedSize;
+     qDebug() << "ClinetSocket - bytesAvailable :" << clientSocket->bytesAvailable();
     while(1){
         if(expectedSize == 0){
             if(clientSocket->bytesAvailable() < 4){
@@ -586,6 +589,7 @@ void Client::on_home_orderSearch_pushButton_clicked()
 void Client::closeEvent(QCloseEvent *event)
 {
     CommuInfo com;
+    qDebug() << "client::closeevent = name : " << clientData.name << " id : " << clientData.ID;
     com.LoginOrOut(false, clientData.name, clientData.ID);
 
     socket->write(com.GetByteArray());

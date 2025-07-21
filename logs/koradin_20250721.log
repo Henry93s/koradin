@@ -1,3 +1,9 @@
-[2025-07-21 16:55:43] [INFO] : server 접속 완료
-[2025-07-21 16:56:06] [INFO] : server 접속 완료
-[2025-07-21 19:12:57] [INFO] : koradin Server Open
+[2025-07-21 21:02:43] [INFO] : ********** koradin Server Open **********
+[2025-07-21 21:02:43] [INFO] : IP: ::ffff:127.0.0.1, Port: 63619 - Client has connected to the server
+[2025-07-21 21:02:46] [INFO] : IP: ::ffff:127.0.0.1, Port: 63620 - Client has connected to the server
+[2025-07-21 21:02:50] [INFO] : (-) client request 7
+[2025-07-21 21:02:50] [WARN] : [LOGIN] - ID : 건우 passed login
+[2025-07-21 21:02:50] [INFO] : (-) client request 8
+[2025-07-21 21:02:51] [INFO] : geonwoo(건우) client request 1
+[2025-07-21 21:02:51] [INFO] : geonwoo(건우) client request 1
+[2025-07-21 21:02:51] [INFO] : geonwoo(건우) client request 10

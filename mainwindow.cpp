@@ -199,7 +199,7 @@ void MainWindow::respond()
 
         bytearray = clientSocket->read(expectedSize);
 
-        qDebug() << "byte " << bytearray;
+        // qDebug() << "byte " << bytearray;
 
         //commuInfoQueue.push(CommuInfo{bytearray});
         auto info = CommuInfo{bytearray};

@@ -27,6 +27,7 @@
 #include <QMutexLocker>
 
 #include <QMap>
+#include <QString>
 
 #define PORT    5085
 #define PENDING_CONN    5
@@ -188,7 +189,7 @@ Server::Server(QWidget *parent)
     musics = MapToVector(musicManager->musicListRead());
 
     // logger
-    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, "koradin Server Open");
+    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, "********** koradin Server Open **********");
 }
 
 Server::~Server()
@@ -205,6 +206,8 @@ void Server::Initialize()
 void Server::clientConnect()
 {
     if(clients.size() == MAX_CLIENTS){
+        // logger
+        logManager->getTimeStamp_and_write(LogManager::LogType::WARN, tr("최대 클라이언트 수 20 을 초과하였습니다."));
         return;
     }
 
@@ -232,6 +235,10 @@ void Server::clientConnect()
 
     thread->start();
 
+    // logger
+    QString msg;
+    msg = QString("IP: %1, Port: %2 - Client has connected to the server").arg(clientConnection->peerAddress().toString(), QString::number(clientConnection->peerPort()));
+    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
     qDebug("Connected!");
 }
 
@@ -249,6 +256,7 @@ void Server::clientDisconnected(const QThread* thread)
 
     clients.erase(found);
 
+    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, tr("client 접속 종료"));
     qDebug("disconnected");
 }
 
@@ -270,35 +278,63 @@ void Server::respond(const QThread* thread, QByteArray bytearray)
         }
     }
 
-    // qDebug() << "type : " << type;
 
+    qDebug() << "server respond - type : " << type;
+    QString msg;
     switch(type){
     case CommuType::Infos:
+        // logger
+        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "검색");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         InfosFetchRespond(info, client);
         break;
     case CommuType::Chatting:
+        // logger
+        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "채팅");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         ChattingRespond(info, client);
         break;
     case CommuType::InfoFix:
+        // logger
+        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "유저 수정");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         emit InfosFixRespond(info, client);
         break;
     case CommuType::InfoAdd:
+        // logger
+        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "유저 추가");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         AddRespond(info, client);
         emit InfosAddRespond(info, client);
         break;
     case CommuType::AUTH:
+        // logger
+        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "로그인");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         AUTHRespond(info, client);
         break;
     case CommuType::LOGINOUT:
+        // logger
+        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "유저 채팅방 셋팅");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         LoginOutRespond(info, client);
         break;
     case CommuType::OrderInfos:
+        // logger
+        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "주문 검색");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         OrderInfosFetchRespond(info, client);
         break;
     case CommuType::OrderAdd:
+        // logger
+        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "주문 추가");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         OrderAddRespond(info, client);
         break;
     case CommuType::OrderDelete:
+        // logger
+        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "주문 삭제");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         OrderDeleteRespond(info, client);
         break;
     default:
@@ -363,6 +399,7 @@ void Server::AUTHRespond(const CommuInfo &commuInfo, ClientData* client)
     if(temp == nullptr){
         // id 불일치
         qDebug() << "입력한 id 가 유저 리스트에 없습니다.";
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::WARN, "[LOGIN] - 입력한 id 가 유저 리스트에 없습니다.");
         ID = tr("No");
     } else{
         // password 검증
@@ -370,10 +407,14 @@ void Server::AUTHRespond(const CommuInfo &commuInfo, ClientData* client)
             // client.ui 가 열렸을 때, server connect 를 통한 새 클라이언트 연결 추가.
             // commuInfo -> client session 관리 리스트에 세션 추가
             ID = temp->getName();
+            QString msg;
+            msg = QString("[LOGIN] - ID : %1 passed login").arg(ID);
+            this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
             Pwd = tr("Yes");
         } else {
             // password 불일치
             qDebug() << "계정의 password 가 일치하지 않습니다.";
+            this->logManager->getTimeStamp_and_write(LogManager::LogType::WARN, "[LOGIN] - 계정의 password 가 일치하지 않습니다.");
             Pwd = tr("No");
         }
     }
@@ -987,7 +1028,7 @@ void Server::AddOrderDataResponse(const CommuInfo& commuInfo, ClientData* client
     // socket->write(packet); // 길이  + 나머지 모든 데이터(response 데이터 포함)
     // socket->flush(); // 추가적으로 송신 버퍼를 즉시 밀어줌
     qDebug() << "서버: SearchAddRespond 응답 전송 완료";
-    qDebug() << responseInfo.GetByteArray();
+    // qDebug() << responseInfo.GetByteArray();
 }
 
 
@@ -995,7 +1036,7 @@ void Server::DeleteOrderDataResponse(const CommuInfo& commuInfo, ClientData* cli
     ProductInfo::Filter filter;
     ProductInfo::ProductType type = commuInfo.GetRequestProducts(filter);
     QString uuid = filter.keyword;
-
+    qDebug() << "deleteOrderDataResponse : client->ID : " << client->ID;
     // 유저 정보 찾기
     UserInfo* user = this->userManager->userSearchById(client->ID);
     if (!user) {
@@ -1058,5 +1099,5 @@ void Server::DeleteOrderDataResponse(const CommuInfo& commuInfo, ClientData* cli
     // socket->write(packet); // 길이  + 나머지 모든 데이터(response 데이터 포함)
     // socket->flush(); // 추가적으로 송신 버퍼를 즉시 밀어줌
     qDebug() << "서버: SearchDeleteRespond 응답 전송 완료";
-    qDebug() << responseInfo.GetByteArray();
+    // qDebug() << responseInfo.GetByteArray();
 }

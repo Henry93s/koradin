@@ -77,7 +77,7 @@ void ClientBluerayService::bluerayOrdering(Client* bluerayTab){
         if(castedItem){
             QMap<QString, QString> selectedData = castedItem->getData();
             // 선택된 데이터를 orderManager 에 전달해야 함
-            qDebug() << selectedData;
+            // qDebug() << selectedData;
             CommuInfo commuinfo;
             QString searchData = selectedData["UUID"];
             ProductInfo::ProductType productType = ProductInfo::ProductType::Blueray;

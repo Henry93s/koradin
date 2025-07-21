@@ -5,6 +5,7 @@
 #include "userInfo.h"
 #include <QVector>
 #include <QMap>
+#include "logManager.h"
 
 class UserManager : public MainController {
 
