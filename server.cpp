@@ -15,6 +15,8 @@
 
 #include "clienthandler.h"
 
+#include "chattinglogwidget.h"
+
 #include <QtNetwork>
 
 #include <QTabWidget>
@@ -83,11 +85,14 @@ Server::Server(QWidget *parent)
     });
 
     connect(ui->userListInRoom_All, &QListWidget::itemDoubleClicked, [this](QListWidgetItem* item){
-        auto* userItem = qobject_cast<UserItem*>(ui->userListInRoom_All->itemWidget(item));
-        if(userItem){
-            auto* user = const_cast<ClientData*>(userItem->GetPointingClient());
-            user->room_idx = currentRoomIndex;
-            AddAtUserList(this, ui->userListInRoom_Invited, user);
+        for(auto& cla : clients){
+            for(auto& doub : cla.listAndItem){
+                if(doub.item == item){
+                    cla.room_idx = currentRoomIndex;
+                    AddAtUserList(this, ui->userListInRoom_Invited, &cla);
+                    break;
+                }
+            }
         }
     });
 
@@ -146,24 +151,28 @@ Server::Server(QWidget *parent)
         auto* selected = ui->userListInRoom_All->currentItem();
         // 클라 고르기
         if(!selected) return;
-        UserItem* widget = qobject_cast<UserItem*>(ui->userListInRoom_All->itemWidget(selected));
-
-        auto* cla = const_cast<ClientData*>(widget->GetPointingClient());
-        cla->room_idx = currentRoomIndex;
-        AddAtUserList(this, ui->userListInRoom_Invited, cla);
+        for(auto& cla : clients){
+            for(auto& doub : cla.listAndItem){
+                if(doub.item == selected){
+                    cla.room_idx = currentRoomIndex;
+                    AddAtUserList(this, ui->userListInRoom_Invited, &cla);
+                }
+            }
+        }
     });
 
     // 강퇴하기 버튼
     connect(ui->outButton, &QPushButton::clicked, this, [this]() {
         auto* selected = ui->userListInRoom_Invited->currentItem();
-        UserItem* widget = qobject_cast<UserItem*>(ui->userListInRoom_Invited->itemWidget(selected));
-
-        return;
-
-        //강퇴하기
-        auto* cla = const_cast<ClientData*>(widget->GetPointingClient());
-        cla->room_idx = -1;
-        DeleteAtUserList(ui->userListInRoom_Invited, cla);
+        if(!selected) return;
+        for(auto& cla : clients){
+            for(auto& doub : cla.listAndItem){
+                if(doub.item == selected){
+                    cla.room_idx = -1;
+                    DeleteAtUserList(ui->userListInRoom_Invited, &cla);
+                }
+            }
+        }
     });
 
     this->userManager = userManager->getInstance();
@@ -196,7 +205,7 @@ void Server::clientConnect()
     QTcpSocket* clientConnection = tcpServer->nextPendingConnection();
     QThread* thread = new QThread;
     //클라 목록에 추가.
-    clients.push_back(ClientData{-1, tr("관리자"), thread});
+    clients.push_back(ClientData{-1, tr("-"), thread});
 
     ClientHandler* handler = new ClientHandler(clientConnection);
 
@@ -217,41 +226,21 @@ void Server::clientConnect()
 
     thread->start();
 
-    //connect(handler, &ClientHandler::finished, thread, &QThread::quit);
-
-    //QByteArray byteName = clientConnection->readAll();
-
-    // connect(clientConnection, SIGNAL(disconnected()), SLOT(clientDisconnected()));
-    // connect(clientConnection, SIGNAL(disconnected()), clientConnection, SLOT(deleteLator()));
-    // connect(clientConnection, SIGNAL(readyRead()), this, SLOT(respond()));
-
     qDebug("Connected!");
 }
 
 void Server::clientDisconnected(const QThread* thread)
 {
+    qDebug() << "clientDisconnected";
     auto found = std::find_if(clients.begin(), clients.end(), [=](const ClientData& cd)->bool{return cd.thread == thread;});
     // 기본 사용자 목록에서 지움
     DeleteAtUserList(ui->userList, &(*found));
 
     // 방안 사용자 목록(전체)에서 지움
-    for(int i = 0; i < ui->userListInRoom_All->count(); ++i){
-        QListWidgetItem* item = ui->userListInRoom_All->item(i);
-        UserItem* widget = qobject_cast<UserItem*>(ui->userListInRoom_All->itemWidget(item));
-        if (widget && widget->GetPointingClient() == &(*found)) {
-            ui->userListInRoom_All->takeItem(i);
-            break;
-        }
-    }
+    DeleteAtUserList(ui->userListInRoom_All, &(*found));
     // 방안 사용자 목록(초대받음)에서 지움
-    for(int i = 0; i < ui->userListInRoom_Invited->count(); ++i){
-        QListWidgetItem* item = ui->userListInRoom_Invited->item(i);
-        UserItem* widget = qobject_cast<UserItem*>(ui->userListInRoom_Invited->itemWidget(item));
-        if (widget && widget->GetPointingClient() == &(*found)) {
-            ui->userListInRoom_Invited->takeItem(i);
-            break;
-        }
-    }
+    DeleteAtUserList(ui->userListInRoom_Invited, &(*found));
+
     clients.erase(found);
 
     qDebug("disconnected");
@@ -263,8 +252,9 @@ void Server::respond(const QThread* thread, QByteArray bytearray)
     auto info = CommuInfo{bytearray};
     auto type = info.GetType();
 
-    auto obj{QJsonDocument::fromJson(bytearray).object()};
-    qDebug() << obj;
+    // auto obj{QJsonDocument::fromJson(bytearray).object()};
+
+    // qDebug() << obj;
 
     ClientData* client = nullptr;
     for(auto& cla : clients){
@@ -273,6 +263,8 @@ void Server::respond(const QThread* thread, QByteArray bytearray)
             break;
         }
     }
+
+    // qDebug() << "type : " << type;
 
     switch(type){
     case CommuType::Infos:
@@ -344,8 +336,8 @@ void Server::CreateNew_Room(const RoomData &newData)
 
 void Server::AUTHRespond(const CommuInfo &commuInfo, ClientData* client)
 {
-    qDebug() << "현재 스레드:" << QThread::currentThread();
-    qDebug() << "handler의 소속 스레드:" << client->thread;
+    // qDebug() << "현재 스레드:" << QThread::currentThread();
+    // qDebug() << "handler의 소속 스레드:" << client->thread;
 
     auto IDAndPwd = commuInfo.GetIDPwd();
 
@@ -381,6 +373,14 @@ void Server::AUTHRespond(const CommuInfo &commuInfo, ClientData* client)
 
     QByteArray ba = docu.toJson(QJsonDocument::Compact);
 
+    QByteArray packet;
+    QDataStream out(&packet, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_0);
+    out << (quint32)ba.size(); // 길이 프리픽스
+
+    packet.append(ba);
+    ba = packet;
+
     if(client && client->thread){
         emit writeReady(client->thread, ba);
     }
@@ -394,7 +394,7 @@ void Server::AddRespond(const CommuInfo &commuInfo, ClientData* client)
 
     for(auto user : usersToAdd){
         auto* perUser = new UserInfo(user.getID(), user.getName(), user.getPassword(), user.getEmail(), user.getIsAdmin());
-        qDebug() << user.getID() << user.getName() << user.getPassword() << user.getEmail() << user.getIsAdmin();
+        // qDebug() << user.getID() << user.getName() << user.getPassword() << user.getEmail() << user.getIsAdmin();
         userManager->userInsert(perUser);
     }
 
@@ -407,7 +407,7 @@ void Server::InfosFetchRespond(const CommuInfo &commuInfo, ClientData* client)
 {
     ProductInfo::Filter filter;
     ProductInfo::ProductType productType = commuInfo.GetRequestProducts(filter);
-    qDebug() << "Pro TYpe : " << productType;
+    // qDebug() << "Pro TYpe : " << productType;
     switch (productType) {
     case ProductInfo::Book:
     case ProductInfo::Blueray:
@@ -425,6 +425,8 @@ void Server::LoginOutRespond(const CommuInfo &commuInfo, ClientData* client)
     QString clientName;
     CommuInfo confirm;
     bool loginOrOut = commuInfo.GetLoginOrOut(clientName);
+    std::vector<QString> clientNames;
+
     if(loginOrOut){
         // 해당 클라를 찾아 이름 정해주기.
         // 걍 관리자라고 되어있는거 바꾸기.
@@ -433,49 +435,90 @@ void Server::LoginOutRespond(const CommuInfo &commuInfo, ClientData* client)
         AddAtUserList(this, ui->userList, client);
         AddAtUserList(this, ui->userListInRoom_All, client);
 
-        confirm.ServerComfirmLoginOrOut(true);
+        for(auto& cla : clients){
+            clientNames.push_back(cla.name);
+        }
+        confirm.ServerComfirmLoginOrOut(true, clientNames);
     }
     else {
-        // 채팅 창에 유저 추가.
-        for (int i = 0; i < ui->userList->count(); ++i) {
-            QListWidgetItem* item = ui->userList->item(i);
-            UserItem* widget = qobject_cast<UserItem*>(ui->userList->itemWidget(item));
-            if (widget && widget->GetPointingClient() == client) {
-                ui->userList->takeItem(i);
-                break;
+        qDebug() << "clientLogOut";
+        // 채팅 창에 유저 삭제.
+        DeleteAtUserList(ui->userList, client);
+        DeleteAtUserList(ui->userListInRoom_All, client);
+
+        // 현 남은 클라이언트들 담아 보내기.
+        for(auto& cla : clients){
+            if(&cla == client){     // 만약 로그아웃한 친구면 빼기
+                continue;
             }
+            clientNames.push_back(cla.name);
         }
-        confirm.ServerComfirmLoginOrOut(false);
+        // CommuInfo 조립
+        confirm.ServerComfirmLoginOrOut(false, clientNames);
     }
 
-    if(client && client->thread){
-        emit writeReady(client->thread, confirm.GetByteArray());
+    // base64 이미지 QString 이 포함되어 있어서 bytearray 전체 데이터 전송이 아닌 4 바이트 길이를 먼저 보냄
+    confirm.AddSizePacket();
+
+    // 모든 클라에게 보내기.
+    for(auto& cla : clients){
+        if(cla.thread){
+            emit writeReady(cla.thread, confirm.GetByteArray());
+        }
     }
 }
 
 void Server::ChattingRespond(const CommuInfo &commuInfo, ClientData* client)
 {
-    auto result = commuInfo.GetChat();
+    ChattingType chatType; QString counterName; QByteArray fileBytes; QString fileName;
+    auto result = commuInfo.GetChat(chatType, counterName, fileBytes, fileName);
     QString name = result.first;
     QString chat = result.second;
+
     QString wholeMessage = name + QString(" : ") + chat;
     //클라가 아무 방에도 속해있지 않다.
 
     QMutex mutex;
     mutex.lock();
     if(client->room_idx == -1){
-        ui->generalChattingLog->addItem(wholeMessage);
-        // general 채팅 json 파일에 더하는 코드
+        // 클라이언트가 방에 없을 경우.
+        AddAtChattingList(this, ui->generalChattingLog, result.first, result.second, fileBytes, fileName);
 
+        // general 채팅 json 파일에 더하는 코드
     }
     else{ //클라가 방에 속해있다.
         rooms[client->room_idx].messages.push_back(wholeMessage);
         if(client->room_idx == currentRoomIndex){
             // 만약 클라이언트가 현재 방에 접속한 경우
-            ui->chattingListInRoom->addItem(wholeMessage);
+            AddAtChattingList(this, ui->chattingListInRoom, result.first, result.second, fileBytes, fileName);
         }
+        // 클라 방의 json 파일에 더하는 코드
     }
     mutex.unlock();
+
+    // 나머지 클라이언트에게도 메시지 보내기.
+    CommuInfo forClients;
+    forClients.SetChat(name, chat, fileBytes, fileName);
+    forClients.AddSizePacket();
+
+    // 모두에게 보내기.
+    if(chatType == ChattingType::General_ForAdmin)
+    {
+        for(auto& cla : clients){
+            if(cla.thread){
+                emit writeReady(cla.thread, forClients.GetByteArray());
+            }
+        }
+    }
+    // 귓속말로 한 사람 그리고 보낸 사람에게만 보내기.
+    else if(chatType == ChattingType::Whisper)
+    {
+        for(auto& cla : clients){
+            if(cla.thread && (cla.name == counterName || &cla == client)){
+                emit writeReady(cla.thread, forClients.GetByteArray());
+            }
+        }
+    }
 }
 
 void Server::UpdateUI(Info::InfoType type, ProductInfo::ProductType ifProductType)

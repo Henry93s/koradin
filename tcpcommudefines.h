@@ -9,6 +9,8 @@
 #define BLOCK_SIZE 1024
 
 class QThread;
+class QListWidget;
+class QListWidgetItem;
 
 enum CommuType{
     Chatting,
@@ -18,13 +20,25 @@ enum CommuType{
     Order,
     AUTH,
     LOGINOUT,
+    File,
     COMMUEND
 };
+
+enum ChattingType {
+    General_ForAdmin,
+    Whisper,
+};
+
+typedef struct listAndItem{
+    QListWidget* list = nullptr;
+    QListWidgetItem* item = nullptr;
+} ListAndItem;
 
 typedef struct clientdata{
     int room_idx = -1; // 같은 room_idx 끼리 채팅 대화 진행됨 기본 0
     QString name; // 접속한 클라이언트 이름
     QThread* thread = nullptr;
+    QVector<ListAndItem> listAndItem;
 } ClientData;
 
 typedef struct roomdata{

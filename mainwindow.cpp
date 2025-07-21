@@ -172,51 +172,86 @@ QString MainWindow::managerKeyJsonLoad(){
 
 void MainWindow::respond()
 {
-    QTcpSocket* clientSocket = dynamic_cast<QTcpSocket*>(sender());
-    if(clientSocket->bytesAvailable() > BLOCK_SIZE) return;
-    QByteArray bytearray = clientSocket->read(BLOCK_SIZE);
-
-    //commuInfoQueue.push(CommuInfo{bytearray});
-    auto info = CommuInfo{bytearray};
-
-    auto type = info.GetType();
-
-    if(type == CommuType::AUTH){
-        auto auth = info.GetIDPwd();
-        if(auth.first != QString("No") && auth.second != QString("No")){
-            // client ui open, LOGIN
-            CommuInfo com;
-            com.LoginOrOut(true, auth.first);
-            name = auth.first;
-            socket->write(com.GetByteArray());
-
-//          clientWindow->Initialize(socket, auth.first);
-        }
-        else if(auth.first == QString("No")){
-            // id 불일치
-            qDebug() << "입력한 id 가 유저 리스트에 없습니다.";
-            // Popup* popup = new Popup(this, tr("존재하지 않는 아이디 입니다."));
-            // popup->show();
-        }
-        else{
-            // password 불일치
-            qDebug() << "계정의 password 가 일치하지 않습니다.";
-            Popup* popup = new Popup(this, tr("계정의 password 가 일치하지 않습니다."));
-            popup->show();
-        }
+    if(isClosed){
+        return;
     }
-    else if(type == CommuType::LOGINOUT){
-        disconnect(socket, SIGNAL(readyRead()), this, SLOT(respond()));
-        Client* clientWindow = new Client();
-        clientWindow->Initialize(socket, name);
-        clientWindow->show();
+    QTcpSocket* clientSocket = dynamic_cast<QTcpSocket*>(sender());
 
-        this->close();
+    QDataStream in(clientSocket);
+    in.setVersion(QDataStream::Qt_6_0);
+
+    while(1){
+        if(expectedSize == 0){
+            if(clientSocket->bytesAvailable() < 4){
+                qDebug() << "Break. clientSocket - bytesAvailable :" << clientSocket->bytesAvailable() << " Expected Size :" << expectedSize;
+                break; // 길이 정보가 아직 다 들어오지 않음
+            }
+            in >> expectedSize;
+        }
+
+        if(clientSocket->bytesAvailable() < expectedSize){
+            qDebug() << "Break2. clientSocket - bytesAvailable :" << clientSocket->bytesAvailable() << " Expected Size :" << expectedSize;
+            break; // 아직 데이터가 다 들어오지 않음
+        }
+
+
+        bytearray = clientSocket->read(expectedSize);
+
+        qDebug() << "byte " << bytearray;
+
+        //commuInfoQueue.push(CommuInfo{bytearray});
+        auto info = CommuInfo{bytearray};
+
+        auto type = info.GetType();
+
+        if(type == CommuType::AUTH){
+            auto auth = info.GetIDPwd();
+            if(auth.first != QString("No") && auth.second != QString("No")){
+                // client ui open, LOGIN
+                CommuInfo com;
+                com.LoginOrOut(true, auth.first);
+                name = auth.first;
+                socket->write(com.GetByteArray());
+
+//              clientWindow->Initialize(socket, auth.first);
+            }
+            else if(auth.first == QString("No")){
+                // id 불일치
+                qDebug() << "입력한 id 가 유저 리스트에 없습니다.";
+                // Popup* popup = new Popup(this, tr("존재하지 않는 아이디 입니다."));
+                // popup->show();
+            }
+            else{
+                // password 불일치
+                qDebug() << "계정의 password 가 일치하지 않습니다.";
+                Popup* popup = new Popup(this, tr("계정의 password 가 일치하지 않습니다."));
+                popup->show();
+            }
+        }
+        else if(type == CommuType::LOGINOUT){
+            disconnect(socket, SIGNAL(readyRead()), this, SLOT(respond()));
+
+            bool isLogin;
+            auto userNames = info.GetConfirmLoginOrOut(isLogin);
+
+            Client* clientWindow = new Client();
+            clientWindow->Initialize(socket, name, userNames);
+            clientWindow->show();
+
+            this->close();
+            // this->deleteLater();
+            isClosed = true;
+        }
+        expectedSize = 0;
+        bytearray.clear();
     }
 }
 
 void MainWindow::on_admin_button_clicked()
 {
+    if(isClosed){
+        return;
+    }
     if(ui->admin_lineEdit->text().compare(managerKeyJsonLoad()) != 0){
         qDebug() << "관리자 코드가 일치하지 않습니다.";
         Popup* popup = new Popup(this, tr("관리자 코드가 일치하지 않습니다."));
@@ -229,6 +264,8 @@ void MainWindow::on_admin_button_clicked()
         server->show();
         server->Initialize();
         this->close();
+        //this->deleteLater();
+        isClosed = true;
     }
 }
 
@@ -300,6 +337,7 @@ void MainWindow::on_code_Typed()
 
         //이건 꺼짐
         this->close();
+        this->deleteLater();
     } else{
         //그저 메시지박스
         QMessageBox::critical(this, tr("Echo Server"), tr("code Unmatched!"));

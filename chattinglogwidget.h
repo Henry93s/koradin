@@ -3,12 +3,18 @@
 
 #include <QWidget>
 
+class QPushButton;
+class QFile;
+
 class ChattingLogWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ChattingLogWidget(QWidget *parent = nullptr);
+    explicit ChattingLogWidget(const QString& userName, const QString& Message, const QString& fileName = QString(), QWidget *parent = nullptr);
 
+    const QPushButton* GetDownloadButton() const { return fileDownloadButton; }
+private:
+    QPushButton* fileDownloadButton;
 signals:
 };
 

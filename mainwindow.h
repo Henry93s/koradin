@@ -50,5 +50,11 @@ private:
     QTranslator* translator = nullptr;
 
     QTcpSocket* socket = nullptr;
+
+    quint32 expectedSize = 0;
+
+    bool isClosed = false;
+
+    QByteArray bytearray;
 };
 #endif // MAINWINDOW_H

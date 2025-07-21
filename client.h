@@ -26,7 +26,7 @@ class Client : public QWidget
 public:
     explicit Client(QWidget *parent = nullptr);
     ~Client();
-    void Initialize(QTcpSocket* sock, const QString& name = tr("None"));
+    void Initialize(QTcpSocket* sock, const QString& name = tr("None"), const std::vector<QString>& otherNames = std::vector<QString>());
 
     // ClientService, clientBookService 등 각 탭의 Service 클래스에서 Ui 에 입력된 값을 요구할 수 있기 때문에 필요
     Ui::Client* getUi();
@@ -42,7 +42,6 @@ private slots:
     void on_book_order_pushButton_clicked();
 
 signals:
-    void ChattingRespond(const CommuInfo& commuInfo);
     void InfosFixRespond(const CommuInfo& commuInfo);
 private slots:
     void respond();
@@ -57,10 +56,14 @@ private slots:
     // 홈 tab button event
     void on_home_search_pushButton_clicked();
     void on_home_orderSearch_pushButton_clicked();
-
+protected:
+    void closeEvent(QCloseEvent* event) override;
 private:
     ClientData clientData;
     QTcpSocket* socket;
+
+    QFile* currentFileInChat = nullptr;
+    QVector<QFile*> filesDownloaded;
 
     Ui::Client *ui;
     BookManager* bookmanager;
@@ -71,7 +74,12 @@ private:
     ClientMusicService clientMusicService;
     ClientHomeService clientHomeService;
 
+    QDataStream in;
+
     void InfosFetchRespond(const CommuInfo& commuInfo);
+    void SomeoneLoginOrOutRespond(const CommuInfo& commuInfo);
+    void ChattingRespond(const CommuInfo& commuInfo);
+
     void printBookSearchData(const CommuInfo& commuInfo);
     void printMusicSearchData(const CommuInfo& commuInfo);
     void printBlueraySearchData(const CommuInfo& commuInfo);

@@ -29,12 +29,11 @@ void ClientHandler::onDisconnected()
 void ClientHandler::send(const QThread* compareThread, const QByteArray &data)
 {
     if(thread() != compareThread)
+    {
+        // qDebug() << "일치안함 :" <<thread() << " and " << compareThread;
         return;
-    qDebug() << "CCR!";
-
-    qDebug() << "현재 스레드:" << QThread::currentThread();
-    qDebug() << "소켓놈의 스레드:" << socket->thread();
+    }
+    // qDebug() << "일치함 :" << thread();
 
     socket->write(data);
-    qDebug() << "Sent";
 }

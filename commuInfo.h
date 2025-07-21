@@ -9,6 +9,8 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 
+class QFile;
+
 class CommuInfo : public Info{
 public:
     CommuInfo() = default;
@@ -21,8 +23,9 @@ public:
     Info::InfoType GetInfoType() const;
     ProductInfo::ProductType GetProductType() const;
 
-    void SetChat(const QString& clientName, const QString& chat);
-    std::pair<QString, QString> GetChat() const;
+    void SetChat(const QString& clientName, const QString& chat, QFile* file = nullptr, ChattingType chatType = ChattingType::General_ForAdmin, const QString& counterName = QString());
+    void SetChat(const QString& clientName, const QString& chat, const QByteArray& fileBytes, const QString& fileName = QString(), ChattingType chatType = ChattingType::General_ForAdmin, const QString& counterName = QString());
+    std::pair<QString, QString> GetChat(ChattingType& chatType, QString& counterName, QByteArray& fileBytes, QString& fileName) const;
 
     std::vector<std::pair<QString, QString>> GetUserIDAndNames() const;
 
@@ -41,10 +44,17 @@ public:
     void LoginOrOut(bool isLogin, QString name);
     bool GetLoginOrOut(QString& name) const;
 
-    void ServerComfirmLoginOrOut(bool isLogin);
+    void ServerComfirmLoginOrOut(bool isLogin, const std::vector<QString>& names);
+    std::vector<QString> GetConfirmLoginOrOut(bool& isLogin) const;
     // 서버에서 정제한 response 결과 배열을 bytearray 내부에 추가한다
     void AppendResponseArray(const QJsonArray& responseArray);
 
+    // file을 보낼때. sendType은 Admin이면 관리자에게만, 다른 경우는 유저한테.
+    void FileFormat(const QString& SendType, QFile& file);
+    // QByteArray 리턴값을 QFile로 치환한다.
+    QByteArray GetFileBytes(QString& objective);
+public:
+    void AddSizePacket();
 private:
     QByteArray byteArray;
 };

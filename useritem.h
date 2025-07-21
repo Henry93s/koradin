@@ -13,14 +13,12 @@ class UserItem : public QWidget
 public:
     explicit UserItem(QWidget *parent = nullptr);
 
-    void Initialize(ClientData* client);
+    void Initialize(const ClientData* client);
 
-    const ClientData* GetPointingClient() const {return pointingClient;}
 signals:
 
 private:
     QLabel* usernameLabel;
-    ClientData* pointingClient;
 };
 
 #endif // USERITEM_H

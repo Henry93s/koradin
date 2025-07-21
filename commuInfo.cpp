@@ -4,6 +4,7 @@
 #include <QJsonArray>
 #include <QString>
 #include <QMessageBox>
+#include <QFile>
 
 CommuInfo::CommuInfo(const QByteArray &commuInfo) : byteArray{commuInfo}
 {
@@ -38,6 +39,9 @@ CommuType CommuInfo::GetType() const
         }
         else if(commu == QString("LOGINOUT")){
             return CommuType::LOGINOUT;
+        }
+        else if(commu == QString("File")){
+            return CommuType::File;
         }
         else{
             return CommuType::COMMUEND;
@@ -88,30 +92,91 @@ ProductInfo::ProductType CommuInfo::GetProductType() const
     }
 }
 
-void CommuInfo::SetChat(const QString &clientName, const QString &chat)
+void CommuInfo::SetChat(const QString &clientName, const QString &chat, QFile* file, ChattingType chatType, const QString& counterName)
 {
     QJsonObject whole;
     QJsonObject Data;
     Data["UsrName"] = clientName;
     Data["Message"] = chat;
 
+    switch(chatType){
+    case ChattingType::General_ForAdmin:
+        Data["ChatType"] = QString("General");
+        break;
+    case ChattingType::Whisper:
+        Data["ChatType"] = QString("Whisper");
+        Data["Counter"] = counterName;
+        break;
+    }
+
     whole["CommuType"] = QString("Chatting");
     whole["Data"] = Data;
+
+    // 파일 넣기.
+    if(file){
+        QByteArray fileBytes;
+        fileBytes = file->read(file->size());
+        whole["File"] = QString::fromLatin1(fileBytes.toBase64());
+        whole["FileName"] = file->fileName();
+    }
 
     QJsonDocument doc{whole};
     byteArray = doc.toJson(QJsonDocument::Compact);
 }
 
-std::pair<QString, QString> CommuInfo::GetChat() const
+void CommuInfo::SetChat(const QString &clientName, const QString &chat, const QByteArray &fileBytes, const QString& fileName, ChattingType chatType, const QString &counterName)
+{
+    QJsonObject whole;
+    QJsonObject Data;
+    Data["UsrName"] = clientName;
+    Data["Message"] = chat;
+
+    switch(chatType){
+    case ChattingType::General_ForAdmin:
+        Data["ChatType"] = QString("General");
+        break;
+    case ChattingType::Whisper:
+        Data["ChatType"] = QString("Whisper");
+        Data["Counter"] = counterName;
+        break;
+    }
+
+    whole["CommuType"] = QString("Chatting");
+    whole["Data"] = Data;
+
+    // 파일 넣기.
+    if(!fileBytes.isEmpty()){
+        whole["File"] = QString::fromLatin1(fileBytes.toBase64());
+        whole["FileName"] = fileName;
+    }
+
+    QJsonDocument doc{whole};
+    byteArray = doc.toJson(QJsonDocument::Compact);
+}
+
+std::pair<QString, QString> CommuInfo::GetChat(ChattingType& chatType, QString& counterName, QByteArray& fileBytes, QString& fileName) const
 {
     if(GetType() != CommuType::Chatting){
         return {"",""};
     }
 
     QJsonParseError error;
-    auto data = QJsonDocument::fromJson(byteArray, &error).object()["Data"].toObject();
+    auto whole = QJsonDocument::fromJson(byteArray, &error).object();
+    auto data = whole["Data"].toObject();
     QString usrname = data["UsrName"].toString();
     QString message = data["Message"].toString();
+    counterName = data["Counter"].toString();
+    QString chatTypeStr = data["ChatType"].toString();
+    if(chatTypeStr == QString("General")){
+        chatType = ChattingType::General_ForAdmin;
+    }
+    else if(chatTypeStr == QString("Whisper")){
+        chatType = ChattingType::Whisper;
+    }
+
+    fileBytes = QByteArray::fromBase64(whole["File"].toString().toLatin1()); // retDoc.toJson(QJsonDocument::Compact);
+    fileName = whole["FileName"].toString();
+
     return {usrname, message};
 }
 
@@ -319,12 +384,53 @@ bool CommuInfo::GetLoginOrOut(QString &name) const
     return ret;
 }
 
-void CommuInfo::ServerComfirmLoginOrOut(bool isLogin)
+void CommuInfo::ServerComfirmLoginOrOut(bool isLogin, const std::vector<QString>& names)
 {
     QJsonObject obj;
     obj["CommuType"] = QString("LOGINOUT");
+    QJsonArray userArray;
+    for(auto& n : names){
+        QJsonObject perObj;
+        perObj["name"] = n;
+        userArray.append(perObj);
+    }
+    obj["Users"] = userArray;
+    if(isLogin){
+        obj["Log"] = QString("in");
+    }else{
+        obj["Log"] = QString("out");
+    }
+
     QJsonDocument doc(obj);
     byteArray = doc.toJson(QJsonDocument::Compact);
+}
+
+std::vector<QString> CommuInfo::GetConfirmLoginOrOut(bool& isLogin) const
+{
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(byteArray, &err);
+    if (err.error != QJsonParseError::NoError || GetType() != CommuType::LOGINOUT) {
+        qDebug() << "JSON 파싱 실패:" << err.errorString();
+        return {"", ""};
+    }
+    std::vector<QString> ret;
+    QJsonObject obj = doc.object();
+    const QJsonArray& userArray = obj["Users"].toArray();
+    for(const auto& user : userArray)
+    {
+        auto perUser = user.toObject();
+        ret.push_back(perUser["name"].toString());
+    }
+    auto log = obj["Log"].toString();
+
+    // 로그인했는지 안했는지 구분
+    if(log == QString("in")){
+        isLogin = true;
+    }
+    else if(log == QString("out")){
+        isLogin = false;
+    }
+    return ret;
 }
 
 void CommuInfo::AppendResponseArray(const QJsonArray& responseArray)
@@ -341,4 +447,45 @@ void CommuInfo::AppendResponseArray(const QJsonArray& responseArray)
 
     QJsonDocument newDoc(obj);
     byteArray = newDoc.toJson(QJsonDocument::Compact);
+}
+
+void CommuInfo::FileFormat(const QString& sendType, QFile &file)
+{
+    QJsonObject obj;
+    QByteArray fileBytes;
+    obj["CommuType"] = QString("File");
+    fileBytes = file.read(file.size());
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(fileBytes, &err);
+    obj["File"] = doc.object();
+    obj["Object"] = sendType;
+
+    QJsonDocument newDoc(obj);
+    byteArray = newDoc.toJson(QJsonDocument::Compact);
+}
+
+QByteArray CommuInfo::GetFileBytes(QString &objective)
+{
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(byteArray, &err);
+    if (err.error != QJsonParseError::NoError || GetType() != CommuType::File) {
+        qDebug() << "JSON 파싱 실패:" << err.errorString();
+        return {};
+    }
+    QJsonObject obj = doc.object();
+    QJsonDocument retDoc = QJsonDocument(obj["File"].toObject());
+    QByteArray ret = retDoc.toJson(QJsonDocument::Compact);
+    objective = obj["Object"].toString();
+
+    return ret;
+}
+
+void CommuInfo::AddSizePacket()
+{
+    QByteArray packet;
+    QDataStream out(&packet, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_0);
+    out << (quint32)byteArray.size(); // 길이 프리픽스
+    packet.append(byteArray);
+    byteArray = packet;
 }

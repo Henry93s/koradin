@@ -51,7 +51,8 @@ SOURCES += \
     userInfo.cpp \
     orderInfo.cpp \
     userManager.cpp \
-    useritem.cpp
+    useritem.cpp \
+    whisperdialog.cpp
 
 HEADERS += \
     MapToVector.h \
@@ -100,7 +101,8 @@ HEADERS += \
     server.h \
     orderInfo.h \
     music.h \
-    useritem.h
+    useritem.h \
+    whisperdialog.h
     uuidCompare.h
 
 FORMS += \

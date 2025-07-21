@@ -1,8 +1,11 @@
 #include "client.h"
+#include "addAtUserList.h"
 #include "ui_client.h"
 #include "tcpcommudefines.h"
 #include "chattingroom.h"
 #include "commuInfo.h"
+#include "whisperdialog.h"
+#include "chattinglogwidget.h"
 
 #include <QLineEdit>
 #include "bookitem.h"
@@ -18,6 +21,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QFileDialog>
 
 
 Client::Client(QWidget *parent)
@@ -49,22 +53,63 @@ Client::Client(QWidget *parent)
 
     connect(ui->chatLineEdit, &QLineEdit::returnPressed, this, &Client::chatForServer);
     connect(ui->client_send_pushButton, &QPushButton::clicked, this, &Client::chatForServer);
+
+    connect(ui->userList, &QListWidget::itemDoubleClicked, [this](QListWidgetItem* item){
+        WhisperDialog* w = new WhisperDialog(item->text(), this, this);
+        w->show();
+    });
+
+    // 클릭 시 파일 로드하는 버튼 연결
+    connect(ui->fileOpenButton, &QPushButton::clicked, [this](){
+        if(currentFileInChat){
+            currentFileInChat->close();
+        }
+        QString filename = QFileDialog::getOpenFileName(this);
+        if(filename.isEmpty())
+            return;
+        QFile* file = new QFile(filename);
+        auto ret = file->open(QFile::ReadOnly);
+        if(ret){
+            currentFileInChat = file;
+
+            ui->fileOpenButton->setText(filename);
+        }
+    });
 }
 
 Client::~Client()
 {
     delete ui;
     socket->close();
+    if(currentFileInChat){
+        currentFileInChat->close();
+    }
+    for(auto file : filesDownloaded){
+        file->close();
+    }
 }
 
-void Client::Initialize(QTcpSocket *sock, const QString& Name)
+void Client::Initialize(QTcpSocket *sock, const QString& Name, const std::vector<QString>& otherNames)
 {
     //qDebug("Client Initialize");
     //sprintf(buf, "%p, %s", sock, Name.toString().data());
     socket = sock;
     clientData.name = Name;
 
+    // 데이터 스트림 초기화
+    in.setDevice(sock);
+    in.setVersion(QDataStream::Qt_6_0);
+
+    //커넥트
     connect(socket, SIGNAL(readyRead()), SLOT(respond()));
+
+    // 타 유저리스트 초기화
+    for(auto name : otherNames){
+        if(name == tr("-")){
+            continue;
+        }
+        ui->userList->addItem(name);
+    }
 
     // 첫 실행 시 모든 product 검색 처리(단 tab index 는 넘어가지 않아야 함)
     this->on_home_search_pushButton_clicked();
@@ -76,18 +121,21 @@ void Client::respond()
 
     // base64 이미지 대용량 byte 가 있는 경우가 있으므로 소켓에서 길이를 먼저 읽어내고
     // 그 길이만큼 전부 도착할 때까지 read를 반복한 다음에 파싱 작업 들어가야함
-    QDataStream in(clientSocket);
-    in.setVersion(QDataStream::Qt_6_0);
 
+    qDebug() << "Response!!!";
+    qDebug() << "ExpectedSize :" << expectedSize;
+    qDebug() << "ClinetSocket - bytesAvailable :" << clientSocket->bytesAvailable();
     while(1){
         if(expectedSize == 0){
             if(clientSocket->bytesAvailable() < 4){
+                qDebug() << "Break. clientSocket - bytesAvailable :" << clientSocket->bytesAvailable() << " Expected Size :" << expectedSize;
                 break; // 길이 정보가 아직 다 들어오지 않음
             }
             in >> expectedSize;
         }
 
         if(clientSocket->bytesAvailable() < expectedSize){
+            qDebug() << "Break2. clientSocket - bytesAvailable :" << clientSocket->bytesAvailable() << " Expected Size :" << expectedSize;
             break; // 아직 데이터가 다 들어오지 않음
         }
 
@@ -103,13 +151,16 @@ void Client::respond()
             InfosFetchRespond(info);
             break;
         case CommuType::Chatting:
-            emit ChattingRespond(info);
+            ChattingRespond(info);
             break;
         case CommuType::InfoFix:
             emit InfosFixRespond(info);
             break;
         case CommuType::AUTH:
 
+            break;
+        case CommuType::LOGINOUT:
+            SomeoneLoginOrOutRespond(info);
             break;
         default:
             break;
@@ -124,7 +175,7 @@ void Client::InfosFetchRespond(const CommuInfo &commuInfo)
     ProductInfo::Filter filter;
     ProductInfo::ProductType productType = commuInfo.GetRequestProducts(filter);
 
-    qDebug() << "client : producttype : " << productType;
+    //qDebug() << "client : producttype : " << productType;
 
     switch (productType) {
     case ProductInfo::Book:
@@ -233,12 +284,43 @@ void Client::printBlueraySearchData(const CommuInfo& commuInfo) {
     }
 }
 
+void Client::SomeoneLoginOrOutRespond(const CommuInfo &commuInfo)
+{
+    qDebug() << "sent client:" << clientData.name;
+    bool isLogin;
+    auto userNames = commuInfo.GetConfirmLoginOrOut(isLogin);
+
+    ui->userList->clear();
+    for(auto& Name : userNames){
+        if(Name == tr("-")){
+            continue;
+        }
+        ui->userList->addItem(Name);
+    }
+}
+
+void Client::ChattingRespond(const CommuInfo &commuInfo)
+{
+    ChattingType type; QString n; QByteArray fileBytes;
+    QString fileName;
+    auto nameAndChat = commuInfo.GetChat(type, n, fileBytes, fileName);
+
+    // 채팅 리스트에 추가.
+    AddAtChattingList(this, ui->client_chatting_listWidget, nameAndChat.first, nameAndChat.second, fileBytes, fileName);
+}
+
 void Client::chatForServer()
 {
     QString chat = ui->chatLineEdit->text();
     CommuInfo com;
-    com.SetChat(clientData.name, chat);
+    com.SetChat(clientData.name, chat, currentFileInChat);
     socket->write(com.GetByteArray());
+    if(currentFileInChat){
+        currentFileInChat->close();
+        delete currentFileInChat;
+        currentFileInChat = nullptr;
+        ui->fileOpenButton->setText(tr("File"));
+    }
 }
 
 Ui::Client* Client::getUi(){
@@ -292,5 +374,15 @@ void Client::on_home_search_pushButton_clicked()
 void Client::on_home_orderSearch_pushButton_clicked()
 {
     clientHomeService.orderChecking(this);
+}
+
+void Client::closeEvent(QCloseEvent *event)
+{
+    CommuInfo com;
+    com.LoginOrOut(false, clientData.name);
+
+    socket->write(com.GetByteArray());
+
+    QWidget::closeEvent(event);
 }
 
