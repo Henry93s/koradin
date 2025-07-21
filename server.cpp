@@ -171,11 +171,15 @@ Server::Server(QWidget *parent)
     this->musicManager = musicManager->getInstance();
     this->bookManager = bookManager->getInstance();
     this->orderManager = orderManager->getInstance();
+    this->logManager = logManager->getInstance();
 
     users = MapToVector<UserInfo*>(userManager->userListRead());
     books = MapToVector(this->bookManager->bookListRead());
     bluerays = MapToVector(bluerayManager->bluerayListRead());
     musics = MapToVector(musicManager->musicListRead());
+
+    // logger
+    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, "koradin Server Open");
 }
 
 Server::~Server()

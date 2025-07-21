@@ -12,6 +12,7 @@
 #include <bookManager.h>
 #include <bluerayManager.h>
 #include <orderManager.h>
+#include <logManager.h>
 
 class QTabWidget;
 
@@ -96,6 +97,7 @@ private:
     BluerayManager* bluerayManager;
     BookManager* bookManager;
     OrderManager* orderManager;
+    LogManager* logManager;
 
     //void echoData();
 };

@@ -34,6 +34,7 @@ SOURCES += \
     editproductwidget.cpp \
     info.cpp \
     join.cpp \
+    logManager.cpp \
     main.cpp \
     mainController.cpp \
     mainwindow.cpp \
@@ -85,6 +86,7 @@ HEADERS += \
     idproduct.h \
     info.h \
     join.h \
+    logManager.h \
     mainController.h \
     mainwindow.h \
     musicManager.h \
