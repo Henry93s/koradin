@@ -17,7 +17,9 @@ enum CommuType{
     Infos,
     InfoFix,
     InfoAdd,
-    Order,
+    OrderInfos,
+    OrderAdd,
+    OrderDelete,
     AUTH,
     LOGINOUT,
     File,
@@ -39,6 +41,7 @@ typedef struct clientdata{
     QString name; // 접속한 클라이언트 이름
     QThread* thread = nullptr;
     QVector<ListAndItem> listAndItem;
+    QString ID;
 } ClientData;
 
 typedef struct roomdata{

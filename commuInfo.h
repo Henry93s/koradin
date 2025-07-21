@@ -41,13 +41,15 @@ public:
     std::vector<UserInfo> GetAddingUsers() const;
 
     // true 넣으면 로그인 알림, false 넣으면 로그아웃 알림
-    void LoginOrOut(bool isLogin, QString name);
-    bool GetLoginOrOut(QString& name) const;
+    void LoginOrOut(bool isLogin, QString name, QString ID);
+    bool GetLoginOrOut(QString& name, QString& ID) const;
 
     void ServerComfirmLoginOrOut(bool isLogin, const std::vector<QString>& names);
     std::vector<QString> GetConfirmLoginOrOut(bool& isLogin) const;
     // 서버에서 정제한 response 결과 배열을 bytearray 내부에 추가한다
     void AppendResponseArray(const QJsonArray& responseArray);
+    void AppendResponseObject(const QJsonObject& responseObject);
+    void RequestOrderProducts(ProductInfo::ProductType productType, const ProductInfo::Filter &filter, const QString& orderMenu);
 
     // file을 보낼때. sendType은 Admin이면 관리자에게만, 다른 경우는 유저한테.
     void FileFormat(const QString& SendType, QFile& file);

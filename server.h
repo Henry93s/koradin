@@ -11,6 +11,8 @@
 #include <musicManager.h>
 #include <bookManager.h>
 #include <bluerayManager.h>
+#include <orderManager.h>
+#include <logManager.h>
 
 class QTabWidget;
 
@@ -39,8 +41,14 @@ private:
     void InfosFetchRespond(const CommuInfo& commuInfo, ClientData* client);
     void LoginOutRespond(const CommuInfo& commuInfo, ClientData* client);
     void ChattingRespond(const CommuInfo& commuInfo, ClientData* client);
+    void OrderInfosFetchRespond(const CommuInfo &commuInfo, ClientData* client);
+    void OrderAddRespond(const CommuInfo& commuInfo, ClientData* client);
+    void OrderDeleteRespond(const CommuInfo& commuInfo, ClientData* client);
 
     void SearchDataResponse(const CommuInfo& commuInfo, ClientData* client);
+    void SearchOrderDataResponse(const CommuInfo& commuInfo, ClientData* client);
+    void AddOrderDataResponse(const CommuInfo& commuInfo, ClientData* client);
+    void DeleteOrderDataResponse(const CommuInfo& commuInfo, ClientData* client);
 
     void UpdateUI(Info::InfoType type, ProductInfo::ProductType ifProductType = ProductInfo::None);
     void UpdateUI_Product(ProductInfo::ProductType productType);
@@ -88,6 +96,8 @@ private:
     MusicManager* musicManager;
     BluerayManager* bluerayManager;
     BookManager* bookManager;
+    OrderManager* orderManager;
+    LogManager* logManager;
 
     //void echoData();
 };

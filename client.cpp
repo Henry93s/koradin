@@ -22,7 +22,7 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QFileDialog>
-
+#include "orderitem.h"
 
 Client::Client(QWidget *parent)
     : QWidget(parent)
@@ -31,9 +31,10 @@ Client::Client(QWidget *parent)
     ui->setupUi(this);
 
     // 클라이언트로 접근하고, 도서 탭 리스트 뷰 구성
-    this->bookmanager = this->bookmanager->getInstance();
-    this->blueraymanager = this->blueraymanager->getInstance();
-    this->musicmanager = this->musicmanager->getInstance();
+    this->bookmanager = BookManager::getInstance();
+    this->blueraymanager = BluerayManager::getInstance();
+    this->musicmanager = MusicManager::getInstance();
+    this->ordermanager = OrderManager::getInstance();
 
     // logo 이미지 삽입
     // 이미지 라벨 사이즈 고정
@@ -89,12 +90,13 @@ Client::~Client()
     }
 }
 
-void Client::Initialize(QTcpSocket *sock, const QString& Name, const std::vector<QString>& otherNames)
+void Client::Initialize(QTcpSocket *sock, const QString& Name, const QString& ID, const std::vector<QString>& otherNames)
 {
     //qDebug("Client Initialize");
     //sprintf(buf, "%p, %s", sock, Name.toString().data());
     socket = sock;
     clientData.name = Name;
+    clientData.ID = ID;
 
     // 데이터 스트림 초기화
     in.setDevice(sock);
@@ -118,7 +120,6 @@ void Client::Initialize(QTcpSocket *sock, const QString& Name, const std::vector
 void Client::respond()
 {
     QTcpSocket* clientSocket = dynamic_cast<QTcpSocket*>(sender());
-
     // base64 이미지 대용량 byte 가 있는 경우가 있으므로 소켓에서 길이를 먼저 읽어내고
     // 그 길이만큼 전부 도착할 때까지 read를 반복한 다음에 파싱 작업 들어가야함
 
@@ -161,6 +162,14 @@ void Client::respond()
             break;
         case CommuType::LOGINOUT:
             SomeoneLoginOrOutRespond(info);
+        case CommuType::OrderInfos:
+            OrderInfosFetchRespond(info);
+            break;
+        case CommuType::OrderAdd:
+            OrderAddRespond(info);
+            break;
+        case CommuType::OrderDelete:
+            OrderAddRespond(info);
             break;
         default:
             break;
@@ -191,6 +200,204 @@ void Client::InfosFetchRespond(const CommuInfo &commuInfo)
         break;
     }
 
+}
+
+void Client::OrderInfosFetchRespond(const CommuInfo &commuInfo)
+{
+    ProductInfo::Filter filter;
+    ProductInfo::ProductType productType = commuInfo.GetRequestProducts(filter);
+
+    switch (productType) {
+    case ProductInfo::Book:
+    case ProductInfo::Blueray:
+    case ProductInfo::Music:
+        printOrderSearchData(commuInfo);
+        break;
+    default:
+        break;
+    }
+
+}
+
+void Client::OrderAddRespond(const CommuInfo &commuInfo)
+{
+    ProductInfo::Filter filter;
+    ProductInfo::ProductType productType = commuInfo.GetRequestProducts(filter);
+
+    switch (productType) {
+    case ProductInfo::Book:
+    case ProductInfo::Blueray:
+    case ProductInfo::Music:
+        OrderAddResponse(commuInfo);
+        break;
+    default:
+        break;
+    }
+}
+
+void Client::OrderDeleteRespond(const CommuInfo &commuInfo)
+{
+    ProductInfo::Filter filter;
+    ProductInfo::ProductType productType = commuInfo.GetRequestProducts(filter);
+
+    switch (productType) {
+    case ProductInfo::Book:
+    case ProductInfo::Blueray:
+    case ProductInfo::Music:
+        OrderDeleteResponse(commuInfo);
+        break;
+    default:
+        break;
+    }
+}
+
+void Client::OrderAddResponse(const CommuInfo &commuInfo) {
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(commuInfo.GetByteArray(), &error);
+
+    if (error.error != QJsonParseError::NoError) {
+        QMessageBox::critical(this, tr("파싱 오류"), error.errorString());
+        return;
+    }
+
+    if (!doc.isObject()) {
+        QMessageBox::critical(this, tr("응답 오류"), tr("서버 응답 형식이 잘못되었습니다."));
+        return;
+    }
+
+    QJsonObject root = doc.object();
+
+    if (!root.contains("response") || !root["response"].isArray()) {
+        QMessageBox::critical(this, tr("응답 오류"), tr("서버 응답에 필요한 데이터가 없습니다."));
+        return;
+    }
+
+    QJsonArray responseArray = root["response"].toArray();
+    if (responseArray.isEmpty()) {
+        QMessageBox::information(this, tr("응답"), tr("서버로부터 결과가 도착하지 않았습니다."));
+        return;
+    }
+
+    QJsonObject obj = responseArray.first().toObject();
+
+    QString status = obj.value("status").toString();
+    QString message = obj.value("message").toString();
+    QString uuid = obj.value("uuid").toString();
+    QString userID = obj.value("userID").toString();
+
+    QString title = (status == "success") ? tr("주문 완료") : tr("주문 실패");
+
+    QMessageBox::information(this, title, message);
+    clientHomeService.orderChecking(this);
+}
+
+void Client::OrderDeleteResponse(const CommuInfo &commuInfo) {
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(commuInfo.GetByteArray(), &error);
+
+    if (error.error != QJsonParseError::NoError) {
+        QMessageBox::critical(this, tr("파싱 오류"), error.errorString());
+        return;
+    }
+
+    if (!doc.isObject()) {
+        QMessageBox::critical(this, tr("응답 오류"), tr("서버 응답 형식이 잘못되었습니다."));
+        return;
+    }
+
+    QJsonObject root = doc.object();
+
+    if (!root.contains("response") || !root["response"].isArray()) {
+        QMessageBox::critical(this, tr("응답 오류"), tr("서버 응답에 필요한 데이터가 없습니다."));
+        return;
+    }
+
+    QJsonArray responseArray = root["response"].toArray();
+    if (responseArray.isEmpty()) {
+        QMessageBox::information(this, tr("응답"), tr("서버로부터 결과가 도착하지 않았습니다."));
+        return;
+    }
+
+    QJsonObject obj = responseArray.first().toObject();
+
+    QString status = obj.value("status").toString();
+    QString message = obj.value("message").toString();
+    QString uuid = obj.value("uuid").toString();
+    QString userID = obj.value("userID").toString();
+
+    QString title = (status == "success") ? tr("주문 삭제 완료") : tr("주문 삭제 실패");
+
+    QMessageBox::information(this, title, message);
+    clientHomeService.orderChecking(this);
+}
+
+
+void Client::printOrderSearchData(const CommuInfo& commuInfo){
+    ui->home_order_listWidget->clear();
+
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(commuInfo.GetByteArray(), &error);
+    if (error.error != QJsonParseError::NoError) {
+        QMessageBox::critical(this, "파싱 오류", error.errorString());
+        return;
+    }
+
+    QJsonObject rootObj = doc.object();
+    QString productTypes = rootObj["Info"].toObject()["Product"].toObject()["ProductType"].toString();
+
+    // response 배열에서 첫 번째
+    QJsonArray responseArr = rootObj["response"].toArray();
+    if (responseArr.isEmpty()) {
+        qDebug() << "response 비어있음";
+        return;
+    }
+    QJsonObject responseObj = responseArr.at(0).toObject();
+
+    // orderItems의 uuid 리스트 파싱
+    QJsonArray orderItemsArr = responseObj["orderItems"].toArray();
+    qDebug() << "orderItemsArr " << orderItemsArr;
+    for (auto val : orderItemsArr) {
+        QString uuid = val.toObject()["uuid"].toString();
+        QString name;
+        int price;
+
+        qDebug() << "orderItemsArr uuid : " << uuid;
+
+        if(productTypes.compare("Book") == 0){
+            Book* book = this->bookmanager->bookSearchByUuid(uuid);
+            if (!book) {
+                qDebug() << "skip not type uuid " << uuid;
+                continue;
+            }
+            name = book->getName();
+            price = book->getPrice();
+            qDebug() << name << " " << price;
+        } else if(productTypes.compare("Music") == 0){
+            Music* music = this->musicmanager->musicSearchByUuid(uuid);
+            if (!music) {
+                qDebug() << "skip not type uuid " << uuid;
+                continue;
+            }
+            name = music->getName();
+            price = music->getPrice();
+        } else { //if(productType.compare("blueray") == 0){
+            Blueray* blueray = this->blueraymanager->blueraySearchByUuid(uuid);
+            if (!blueray) {
+                qDebug() << "skip not type uuid " << uuid;
+                continue;
+            }
+            name = blueray->getName();
+            price = blueray->getPrice();
+        }
+
+        OrderItem* orderItem = new OrderItem(this);
+        orderItem->setData(productTypes, name, price, uuid);
+
+        QListWidgetItem* item = new QListWidgetItem(ui->home_order_listWidget);
+        item->setSizeHint(orderItem->sizeHint());
+        ui->home_order_listWidget->addItem(item);
+        ui->home_order_listWidget->setItemWidget(item, orderItem);
+    }
 }
 
 void Client::printBookSearchData(const CommuInfo& commuInfo) {
@@ -379,10 +586,15 @@ void Client::on_home_orderSearch_pushButton_clicked()
 void Client::closeEvent(QCloseEvent *event)
 {
     CommuInfo com;
-    com.LoginOrOut(false, clientData.name);
+    com.LoginOrOut(false, clientData.name, clientData.ID);
 
     socket->write(com.GetByteArray());
 
     QWidget::closeEvent(event);
+}
+
+void Client::on_home_orderDelete_pushButton_clicked()
+{
+    clientHomeService.orderDelete(this);
 }
 

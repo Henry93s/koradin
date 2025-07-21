@@ -10,6 +10,7 @@ class CommuInfo;
 #include "bookManager.h"
 #include "bluerayManager.h"
 #include "musicManager.h"
+#include "orderManager.h"
 #include "clientBookService.h"
 #include "clientMusicService.h"
 #include "clientBluerayService.h"
@@ -26,7 +27,7 @@ class Client : public QWidget
 public:
     explicit Client(QWidget *parent = nullptr);
     ~Client();
-    void Initialize(QTcpSocket* sock, const QString& name = tr("None"), const std::vector<QString>& otherNames = std::vector<QString>());
+    void Initialize(QTcpSocket* sock, const QString& name = tr("None"), const QString& ID = tr("None"), const std::vector<QString>& otherNames = std::vector<QString>());
 
     // ClientService, clientBookService 등 각 탭의 Service 클래스에서 Ui 에 입력된 값을 요구할 수 있기 때문에 필요
     Ui::Client* getUi();
@@ -58,6 +59,9 @@ private slots:
     void on_home_orderSearch_pushButton_clicked();
 protected:
     void closeEvent(QCloseEvent* event) override;
+
+    void on_home_orderDelete_pushButton_clicked();
+
 private:
     ClientData clientData;
     QTcpSocket* socket;
@@ -69,6 +73,7 @@ private:
     BookManager* bookmanager;
     BluerayManager* blueraymanager;
     MusicManager* musicmanager;
+    OrderManager* ordermanager;
     ClientBookService clientBookService;
     ClientBluerayService clientBluerayService;
     ClientMusicService clientMusicService;
@@ -83,6 +88,12 @@ private:
     void printBookSearchData(const CommuInfo& commuInfo);
     void printMusicSearchData(const CommuInfo& commuInfo);
     void printBlueraySearchData(const CommuInfo& commuInfo);
+    void OrderInfosFetchRespond(const CommuInfo &commuInfo);
+    void OrderAddRespond(const CommuInfo& commuInfo);
+    void OrderDeleteRespond(const CommuInfo& commuInfo);
+    void printOrderSearchData(const CommuInfo& commuInfo);
+    void OrderAddResponse(const CommuInfo& commuInfo);
+    void OrderDeleteResponse(const CommuInfo& commuInfo);
 
     // 다음에 수신해야 할 데이터의 바이트 수 (서버가 보내는 4바이트 길이 프리픽스를 기반으로 설정됨)
     quint32 expectedSize = 0;

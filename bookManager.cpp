@@ -162,14 +162,11 @@ QString BookManager::bookErase(const QString& name, const QString& writer){
 
 // read one book
 Book* BookManager::bookSearchByNameAndWriter(const QString& name, const QString& writer){
-    Book* returnBook;
-
     for (auto it = bookList.begin(); it != bookList.end(); ++it) {
         if (!it.value()) continue;
         if(name.compare(it.value()->getName()) == 0
             && writer.compare(it.value()->getWriter()) == 0){
-            returnBook = it.value();
-            return returnBook;
+            return it.value();
         }
     }
 
@@ -206,13 +203,11 @@ QMap<QString, Book*> BookManager::bookSearchAllByWriter(const QString& writer){
 
 // err 수정 : uuid 로 조회 시 무조건 1개 return 처리
 Book* BookManager::bookSearchByUuid(const QString& uuid){
-    Book* book;
 
     for(auto it = bookList.begin(); it != bookList.end(); ++it){
         if(!it.value()) continue;
-        if(it.value()->getWriter().compare(uuid) == 0){
-            book = it.value();
-            return book;
+        if(it.value()->getUuid().compare(uuid) == 0){
+            return it.value();
         }
     }
 

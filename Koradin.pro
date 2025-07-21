@@ -34,12 +34,15 @@ SOURCES += \
     editproductwidget.cpp \
     info.cpp \
     join.cpp \
+    logManager.cpp \
     main.cpp \
     mainController.cpp \
     mainwindow.cpp \
     music.cpp \
     musicManager.cpp \
     musicitem.cpp \
+    order.cpp \
+    orderManager.cpp \
     orderitem.cpp \
     orderwidget.cpp \
     perchatting.cpp \
@@ -84,10 +87,13 @@ HEADERS += \
     idproduct.h \
     info.h \
     join.h \
+    logManager.h \
     mainController.h \
     mainwindow.h \
     musicManager.h \
     musicitem.h \
+    order.h \
+    orderManager.h \
     orderitem.h \
     orderwidget.h \
     perchatting.h \

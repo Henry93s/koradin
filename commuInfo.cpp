@@ -31,8 +31,14 @@ CommuType CommuInfo::GetType() const
         else if(commu == QString("InfoAdd")){
             return CommuType::InfoAdd;
         }
-        else if(commu == QString("Order")){
-            return CommuType::Order;
+        else if(commu == QString("OrderInfos")){
+            return CommuType::OrderInfos;
+        }
+        else if(commu == QString("OrderAdd")){
+            return CommuType::OrderAdd;
+        }
+        else if(commu == QString("OrderDelete")){
+            return CommuType::OrderDelete;
         }
         else if(commu == QString("AUTH")){
             return CommuType::AUTH;
@@ -230,6 +236,9 @@ void CommuInfo::RequestProducts(ProductInfo::ProductType productType, const Prod
     case ProductInfo::FilterType::Company:
         Filter["Type"] = QString("Company");
         break;
+    case ProductInfo::FilterType::UUID:
+        Filter["Type"] = QString("Uuid");
+        break;
     }
     Filter["Keyword"] = filter.keyword;
     Filter["Min"] = filter.minPrice;
@@ -262,10 +271,58 @@ void CommuInfo::RequestProducts(ProductInfo::ProductType productType, const Prod
     byteArray = docu.toJson(QJsonDocument::Compact);
 }
 
+void CommuInfo::RequestOrderProducts(ProductInfo::ProductType productType, const ProductInfo::Filter &filter, const QString& orderMenu)
+{
+    QJsonObject Filter;
+    switch(filter.type){
+    case ProductInfo::FilterType::Name:
+        Filter["Type"] = QString("Name");
+        break;
+    case ProductInfo::FilterType::Author:
+        Filter["Type"] = QString("Author");
+        break;
+    case ProductInfo::FilterType::Company:
+        Filter["Type"] = QString("Company");
+        break;
+    case ProductInfo::FilterType::UUID:
+        Filter["Type"] = QString("Uuid");
+        break;
+    }
+    Filter["Keyword"] = filter.keyword;
+    Filter["Min"] = filter.minPrice;
+    Filter["Max"] = filter.maxPrice;
+
+    QJsonObject Product;
+    switch(productType){
+    case ProductInfo::Book:
+        Product["ProductType"] = QString("Book");
+        break;
+    case ProductInfo::Blueray:
+        Product["ProductType"] = QString("Blueray");
+        break;
+    case ProductInfo::Music:
+        Product["ProductType"] = QString("Music");
+        break;
+    default:
+        return;
+        break;
+    }
+    Product["Filter"] = Filter;
+    QJsonObject Info;
+    Info["InfoType"] = QString("Product");
+    Info["Product"] = Product;
+    QJsonObject Commu;
+    Commu["CommuType"] = orderMenu;
+    Commu["Info"] = Info;
+
+    QJsonDocument docu(Commu);
+    byteArray = docu.toJson(QJsonDocument::Compact);
+}
+
 ProductInfo::ProductType CommuInfo::GetRequestProducts(ProductInfo::Filter &filterRet) const
 {
-    if(GetType() != CommuType::Infos){
-        qDebug() << GetType();
+    if(!(GetType() == CommuType::Infos || GetType() == CommuType::OrderInfos || GetType() == CommuType::OrderAdd || GetType() == CommuType::OrderDelete)){
+        qDebug() << "getRequestProducts() commuType : " << GetType();
         return ProductInfo::ProductType::None;
     }
 
@@ -274,6 +331,7 @@ ProductInfo::ProductType CommuInfo::GetRequestProducts(ProductInfo::Filter &filt
     if(info["InfoType"] != QString("Product")){
         return ProductInfo::ProductType::None;
     }
+
     QJsonObject Product = info["Product"].toObject();
     QJsonObject Filter = Product["Filter"].toObject();
     filterRet.keyword = Filter["Keyword"].toString();
@@ -353,7 +411,7 @@ std::vector<UserInfo> CommuInfo::GetAddingUsers() const
     return ret;
 }
 
-void CommuInfo::LoginOrOut(bool isLogin, QString name)
+void CommuInfo::LoginOrOut(bool isLogin, QString name, QString ID)
 {
     QJsonObject obj;
     obj["CommuType"] = QString("LOGINOUT");
@@ -364,11 +422,12 @@ void CommuInfo::LoginOrOut(bool isLogin, QString name)
         obj["LOG"] = QString("Out");
     }
     obj["Name"] = name;
+    obj["ID"] = ID;
     QJsonDocument doc(obj);
     byteArray = doc.toJson(QJsonDocument::Compact);
 }
 
-bool CommuInfo::GetLoginOrOut(QString &name) const
+bool CommuInfo::GetLoginOrOut(QString &name, QString& ID) const
 {
     QJsonParseError error;
     auto obj = QJsonDocument::fromJson(byteArray, &error).object();
@@ -381,6 +440,7 @@ bool CommuInfo::GetLoginOrOut(QString &name) const
         ret = false;
     }
     name = obj["Name"].toString();
+    ID = obj["ID"].toString();
     return ret;
 }
 
@@ -488,4 +548,20 @@ void CommuInfo::AddSizePacket()
     out << (quint32)byteArray.size(); // 길이 프리픽스
     packet.append(byteArray);
     byteArray = packet;
+}
+
+void CommuInfo::AppendResponseObject(const QJsonObject& responseObject)
+{
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(byteArray, &err);
+    if (err.error != QJsonParseError::NoError) {
+        qDebug() << "JSON 파싱 실패:" << err.errorString();
+        return;
+    }
+
+    QJsonObject obj = doc.object();
+    obj["response"] = responseObject;
+
+    QJsonDocument newDoc(obj);
+    byteArray = newDoc.toJson(QJsonDocument::Compact);
 }

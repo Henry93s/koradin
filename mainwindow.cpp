@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->musicmanager = this->musicmanager->getInstance();
     this->bluerayManager = this->bluerayManager->getInstance();
     this->bookManager = this->bookManager->getInstance();
+    this->orderManager = this->orderManager->getInstance();
 
     // 셋팅된 언어 변환 콤보박스의 인덱스 적용
     ui->language_comboBox->setCurrentIndex(now_translation_index);
@@ -66,6 +67,7 @@ MainWindow::~MainWindow()
     delete this->musicmanager;
     delete this->bluerayManager;
     delete this->bookManager;
+    delete this->orderManager;
     delete ui;
 }
 
@@ -209,7 +211,8 @@ void MainWindow::respond()
             if(auth.first != QString("No") && auth.second != QString("No")){
                 // client ui open, LOGIN
                 CommuInfo com;
-                com.LoginOrOut(true, auth.first);
+                ID = ui->id_lineEdit->text();
+                com.LoginOrOut(true, auth.first, ID);
                 name = auth.first;
                 socket->write(com.GetByteArray());
 
@@ -235,7 +238,7 @@ void MainWindow::respond()
             auto userNames = info.GetConfirmLoginOrOut(isLogin);
 
             Client* clientWindow = new Client();
-            clientWindow->Initialize(socket, name, userNames);
+            clientWindow->Initialize(socket, name, ID, userNames);
             clientWindow->show();
 
             this->close();

@@ -24,6 +24,9 @@ public:
     // 주문 조회 클릭 시 발생 로직
     void orderChecking(Client* homeTab);
 
+    // 주문 삭제 클릭 시 발생 로직
+    void orderDelete(Client* homeTab);
+
 private:
     ClientBookService* clientBookService;
     ClientBluerayService* clientBluerayService;

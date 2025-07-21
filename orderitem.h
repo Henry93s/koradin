@@ -2,9 +2,9 @@
 #define ORDERITEM_H
 
 #include <QWidget>
-#include "bookitem.h"
-#include "bluerayitem.h"
-#include "musicitem.h"
+#include "bookManager.h"
+#include "bluerayManager.h"
+#include "musicManager.h"
 
 namespace Ui {
 class OrderItem;
@@ -17,9 +17,14 @@ class OrderItem : public QWidget
 public:
     explicit OrderItem(QWidget *parent = nullptr);
     ~OrderItem();
+    void setData(const QString& prodType, const QString& prodName, const int& prodPrice, const QString& prodUuid);
+    QString getData();
 
 private:
     Ui::OrderItem *ui;
+    BookManager* bookmanager;
+    BluerayManager* blueraymanager;
+    MusicManager* musicmanager;
 };
 
 #endif // ORDERITEM_H
