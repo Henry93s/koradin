@@ -211,3 +211,96 @@
 [2025-07-22 15:00:16] [INFO] : client geonwoo(건우) 접속 종료
 [2025-07-22 15:00:25] [INFO] : ********** koradin Server Open **********
 [2025-07-22 15:00:25] [INFO] : IP: ::ffff:127.0.0.1, Port: 55146 - Client has connected to the server
+[2025-07-22 15:03:03] [INFO] : ********** koradin Server Open **********
+[2025-07-22 15:03:04] [INFO] : IP: ::ffff:127.0.0.1, Port: 55162 - Client has connected to the server
+[2025-07-22 15:21:29] [INFO] : ********** koradin Server Open **********
+[2025-07-22 15:21:30] [INFO] : IP: ::ffff:127.0.0.1, Port: 55288 - Client has connected to the server
+[2025-07-22 15:21:33] [INFO] : IP: ::ffff:127.0.0.1, Port: 55289 - Client has connected to the server
+[2025-07-22 15:21:38] [INFO] : (-) client 로그인 request
+[2025-07-22 15:21:38] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-22 15:21:38] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-22 15:21:38] [INFO] : geonwoo(건우) 가 채팅방에 접속하였습니다.
+[2025-07-22 15:21:38] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-22 15:21:38] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-22 15:22:27] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-22 15:22:27] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-22 15:22:28] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-22 15:22:28] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-22 15:22:28] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-22 15:22:28] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-22 15:24:25] [INFO] : geonwoo(건우) client 유저 채팅방 셋팅 request
+[2025-07-22 15:24:25] [INFO] : geonwoo(건우) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-22 15:24:25] [INFO] : client geonwoo(건우) 접속 종료
+[2025-07-22 16:33:42] [INFO] : ********** koradin Server Open **********
+[2025-07-22 16:33:42] [INFO] : IP: ::ffff:127.0.0.1, Port: 55827 - Client has connected to the server
+[2025-07-22 16:36:17] [INFO] : ********** koradin Server Open **********
+[2025-07-22 16:39:13] [INFO] : ********** koradin Server Open **********
+[2025-07-22 16:39:14] [INFO] : IP: ::ffff:127.0.0.1, Port: 55869 - Client has connected to the server
+[2025-07-22 16:40:31] [INFO] : ********** koradin Server Open **********
+[2025-07-22 16:40:31] [INFO] : IP: ::ffff:127.0.0.1, Port: 55875 - Client has connected to the server
+[2025-07-22 16:41:28] [INFO] : ********** koradin Server Open **********
+[2025-07-22 16:41:29] [INFO] : IP: ::ffff:127.0.0.1, Port: 55888 - Client has connected to the server
+[2025-07-22 16:48:29] [INFO] : ********** koradin Server Open **********
+[2025-07-22 18:30:16] [INFO] : ********** koradin Server Open **********
+[2025-07-22 18:30:16] [INFO] : IP: ::ffff:127.0.0.1, Port: 56773 - Client has connected to the server
+[2025-07-22 18:36:24] [INFO] : ********** koradin Server Open **********
+[2025-07-22 18:36:24] [INFO] : IP: ::ffff:127.0.0.1, Port: 56936 - Client has connected to the server
+[2025-07-22 18:37:36] [INFO] : ********** koradin Server Open **********
+[2025-07-22 18:37:36] [INFO] : IP: ::ffff:127.0.0.1, Port: 56954 - Client has connected to the server
+[2025-07-22 18:38:22] [INFO] : ********** koradin Server Open **********
+[2025-07-22 18:38:22] [INFO] : IP: ::ffff:127.0.0.1, Port: 56958 - Client has connected to the server
+[2025-07-22 18:40:39] [INFO] : ********** koradin Server Open **********
+[2025-07-22 18:41:40] [INFO] : ********** koradin Server Open **********
+[2025-07-22 18:41:41] [INFO] : IP: ::ffff:127.0.0.1, Port: 56981 - Client has connected to the server
+[2025-07-22 18:43:42] [INFO] : ********** koradin Server Open **********
+[2025-07-22 18:43:43] [INFO] : IP: ::ffff:127.0.0.1, Port: 56988 - Client has connected to the server
+[2025-07-22 18:59:58] [INFO] : ********** koradin Server Open **********
+[2025-07-22 18:59:58] [INFO] : IP: ::ffff:127.0.0.1, Port: 57314 - Client has connected to the server
+[2025-07-22 19:01:10] [INFO] : ********** koradin Server Open **********
+[2025-07-22 19:01:10] [INFO] : IP: ::ffff:127.0.0.1, Port: 57320 - Client has connected to the server
+[2025-07-22 19:56:33] [INFO] : ********** koradin Server Open **********
+[2025-07-22 19:56:38] [INFO] : IP: ::ffff:127.0.0.1, Port: 57662 - Client has connected to the server
+[2025-07-22 20:47:10] [INFO] : ********** koradin Server Open **********
+[2025-07-22 20:47:25] [INFO] : IP: ::ffff:127.0.0.1, Port: 58029 - Client has connected to the server
+[2025-07-22 20:47:32] [INFO] : (-) client 로그인 request
+[2025-07-22 20:47:32] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-22 20:47:32] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-22 20:47:32] [INFO] : geonwoo(건우) 가 채팅방에 접속하였습니다.
+[2025-07-22 20:47:32] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-22 20:47:32] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-22 20:47:35] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-22 20:47:35] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-22 20:47:36] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-22 20:47:36] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-22 20:47:36] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-22 20:47:36] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-22 20:47:46] [INFO] : geonwoo(건우) client 주문 추가 request
+[2025-07-22 20:47:46] [INFO] : client geonwoo(건우) 주문 추가 request 처리 완료
+[2025-07-22 20:47:47] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-22 20:47:47] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-22 20:47:48] [INFO] : geonwoo(건우) client 주문 추가 request
+[2025-07-22 20:47:48] [ERRO] : client geonwoo(건우) 주문 추가 request 처리 에러 : product uuid 중복
+[2025-07-22 20:47:48] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-22 20:47:48] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-22 20:48:01] [INFO] : geonwoo(건우) client 주문 추가 request
+[2025-07-22 20:48:01] [INFO] : client geonwoo(건우) 주문 추가 request 처리 완료
+[2025-07-22 20:48:02] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-22 20:48:02] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-22 20:48:04] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-22 20:48:04] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-22 20:48:35] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-22 20:48:35] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-22 20:48:36] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-22 20:48:36] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-22 20:48:38] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-22 20:48:38] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-22 20:48:39] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-22 20:48:39] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-22 20:48:43] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-22 20:48:43] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-22 20:48:45] [INFO] : geonwoo(건우) client 유저 채팅방 셋팅 request
+[2025-07-22 20:48:45] [INFO] : geonwoo(건우) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-22 20:48:45] [INFO] : client geonwoo(건우) 접속 종료
+[2025-07-22 20:49:32] [INFO] : ********** koradin Server Open **********
+[2025-07-22 20:53:26] [INFO] : ********** koradin Server Open **********
+[2025-07-22 20:53:26] [INFO] : IP: ::ffff:127.0.0.1, Port: 58136 - Client has connected to the server

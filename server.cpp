@@ -28,6 +28,7 @@
 
 #include <QMap>
 #include <QString>
+#include <QFileDialog>
 
 #define PORT    5085
 #define PENDING_CONN    5
@@ -46,9 +47,9 @@ Server::Server(QWidget *parent)
     ui->setupUi(this);
 
     //고르기
-    connect(ui->RadioBook, &QRadioButton::toggled, this, &Server::transferLabels);
-    connect(ui->RadioRecord, &QRadioButton::toggled, this, &Server::transferLabels);
-    connect(ui->RadioBluray, &QRadioButton::toggled, this, &Server::transferLabels);
+    connect(ui->server_product_insert_book_radiobutton, &QRadioButton::toggled, this, &Server::transferLabels);
+    connect(ui->server_product_insert_music_radiobutton, &QRadioButton::toggled, this, &Server::transferLabels);
+    connect(ui->server_product_insert_blueray_radiobutton, &QRadioButton::toggled, this, &Server::transferLabels);
 
     // 새 방 생성.
     connect(ui->createRoomButton, &QPushButton::clicked, this, [=](){
@@ -278,7 +279,6 @@ void Server::respond(const QThread* thread, QByteArray bytearray)
         }
     }
 
-
     qDebug() << "server respond - type : " << type;
     QString msg;
     switch(type){
@@ -347,15 +347,15 @@ void Server::transferLabels(bool checked)
     if(!checked)
         return;
 
-    if(ui->RadioBook->isChecked()){
+    if(ui->server_product_insert_book_radiobutton->isChecked()){
         ui->authorLabel->setText(tr("저자"));
         ui->companyLabel->setText(tr("출판사"));
     }
-    else if(ui->RadioBluray->isChecked()){
+    else if(ui->server_product_insert_blueray_radiobutton->isChecked()){
         ui->authorLabel->setText(tr("감독/배우"));
         ui->companyLabel->setText(tr("제작사"));
     }
-    else if(ui->RadioRecord->isChecked()){
+    else if(ui->server_product_insert_music_radiobutton->isChecked()){
         ui->authorLabel->setText(tr("아티스트"));
         ui->companyLabel->setText(tr("음반사"));
     }
@@ -529,7 +529,6 @@ void Server::OrderDeleteRespond(const CommuInfo &commuInfo, ClientData* client)
         break;
     }
 }
-
 
 void Server::LoginOutRespond(const CommuInfo &commuInfo, ClientData* client)
 {
@@ -1200,3 +1199,120 @@ void Server::DeleteOrderDataResponse(const CommuInfo& commuInfo, ClientData* cli
     qDebug() << "서버: SearchDeleteRespond 응답 전송 완료";
     // qDebug() << responseInfo.GetByteArray();
 }
+
+void Server::on_server_product_insert_image_pushButton_2_clicked()
+{
+    file_path = QFileDialog::getOpenFileName(this, "open image", "C:/", "File (*.PNG)");
+
+    ui->server_product_insert_image_file_name_label->setText(file_path);
+    ui->server_product_insert_image_file_name_label->setToolTip(file_path);
+}
+
+void Server::on_server_product_insert_pushbutton_clicked()
+{
+    QString uuid = QUuid::createUuid().toString();
+    QString name = ui->server_product_insert_title_lineEdit->text();
+    QString author = ui->server_product_insert_author_lineEdit->text();
+    QString company = ui->server_product_insert_company_lineEdit->text();
+    int price = ui->server_product_insert_price_lineEdit->text().toInt();
+    QString context = ui->server_product_insert_context_textEdit->toPlainText();
+    int amount = ui->server_product_insert_amount_lineEdit->text().toInt();
+
+    if(name.isEmpty() || author.isEmpty() || company.isEmpty() ||
+        price == 0 || context.isEmpty() || amount == 0 || ui->server_product_insert_image_file_name_label->text().isEmpty()
+        || ui->server_product_insert_image_file_name_label->text().compare("이미지를 첨부하세요.") == 0){
+        QMessageBox::critical(this, tr("상품 추가"), tr("상품 등록 정보를 모두 입력하세요."));
+        return;
+    }
+
+    QImage img(ui->server_product_insert_image_file_name_label->text());
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    img.save(&buffer, "PNG");
+    QString img_string = QString::fromLatin1(byteArray.toBase64());
+
+    if(ui->server_product_insert_book_radiobutton->isChecked()){
+        Book* book = new Book(uuid, name, author, company, price, context, amount, img_string);
+        QString result = this->bookManager->bookInsert(book);
+        if(result.compare("OK") == 0){
+            QMessageBox::information(this, tr("상품 추가"), tr("책 상품이 정상 추가되었습니다."));
+        } else {
+            QMessageBox::information(this, tr("상품 추가"), tr("중복 책으로 등록되지 않았습니다."));
+        }
+    } else if(ui->server_product_insert_blueray_radiobutton->isChecked()){
+        Blueray* blueray = new Blueray(uuid, name, author, company, price, context, amount, img_string);
+        QString result = this->bluerayManager->bluerayInsert(blueray);
+        if(result.compare("OK") == 0){
+            QMessageBox::information(this, tr("상품 추가"), tr("블루레이 상품이 정상 추가되었습니다."));
+        } else {
+            QMessageBox::information(this, tr("상품 추가"), tr("중복 블루레이로 등록되지 않았습니다."));
+        }
+    } else if(ui->server_product_insert_music_radiobutton->isChecked()){
+        Music* music = new Music(uuid, name, author, company, price, context, amount, img_string);
+        QString result = this->musicManager->musicInsert(music);
+        if(result.compare("OK") == 0){
+            QMessageBox::information(this, tr("상품 추가"), tr("음반 상품이 정상 추가되었습니다."));
+        } else {
+            QMessageBox::information(this, tr("상품 추가"), tr("중복 음반으로 등록되지 않았습니다."));
+        }
+    } else {
+        QMessageBox::critical(this, tr("상품 추가"), tr("라디오 버튼을 통해 제품 종류가 선택되지 않았습니다 !"));
+        return;
+    }
+}
+
+
+void Server::on_server_product_delete_pushbutton_clicked()
+{
+    if(ui->productsListWidget->selectedItems().isEmpty()){
+        QMessageBox::critical(this, tr("상품 제거"), tr("리스트에서 상품을 선택해주세요."));
+    } else {
+        QListWidgetItem* firstItem = ui->productsListWidget->selectedItems().first();
+        QWidget* widget = ui->productsListWidget->itemWidget(firstItem);
+
+        if(ui->server_product_insert_book_radiobutton->isChecked()){
+            BookItem* castedItem = qobject_cast<BookItem*>(widget);
+            QMap<QString, QString> selectedData = castedItem->getData();
+            QString uuid = selectedData["UUID"];
+            Book* book = this->bookManager->bookSearchByUuid(uuid);
+            // orderlist 에서도 삭제되어야 함
+            this->orderManager->delOrderListUuid(book->getUuid());
+            QString result = this->bookManager->bookEraseUuid(book->getUuid());
+            if(result.compare("OK") == 0){
+                QMessageBox::information(this, tr("상품 제거"), tr("상품이 정상적으로 제거되었습니다."));
+            } else {
+                QMessageBox::critical(this, tr("상품 제거"), tr("선택한 상품의 uuid 를 찾을 수 없었습니다."));
+            }
+        } else if(ui->server_product_insert_blueray_radiobutton->isChecked()){
+            BluerayItem* castedItem = qobject_cast<BluerayItem*>(widget);
+            QMap<QString, QString> selectedData = castedItem->getData();
+            QString uuid = selectedData["UUID"];
+            Blueray* blueray = this->bluerayManager->blueraySearchByUuid(uuid);
+            // orderlist 에서도 삭제되어야 함
+            this->orderManager->delOrderListUuid(blueray->getUuid());
+            QString result = this->bluerayManager->bluerayEraseUuid(blueray->getUuid());
+            if(result.compare("OK") == 0){
+                QMessageBox::information(this, tr("상품 제거"), tr("상품이 정상적으로 제거되었습니다."));
+            } else {
+                QMessageBox::critical(this, tr("상품 제거"), tr("선택한 상품의 uuid 를 찾을 수 없었습니다."));
+            }
+        } else if(ui->server_product_insert_music_radiobutton->isChecked()){
+            MusicItem* castedItem = qobject_cast<MusicItem*>(widget);
+            QMap<QString, QString> selectedData = castedItem->getData();
+            QString uuid = selectedData["UUID"];
+            Music* music = this->musicManager->musicSearchByUuid(uuid);
+            // orderlist 에서도 삭제되어야 함
+            this->orderManager->delOrderListUuid(music->getUuid());
+            QString result = this->musicManager->musicEraseUuid(music->getUuid());
+            if(result.compare("OK") == 0){
+                QMessageBox::information(this, tr("상품 제거"), tr("상품이 정상적으로 제거되었습니다."));
+            } else {
+                QMessageBox::critical(this, tr("상품 제거"), tr("선택한 상품의 uuid 를 찾을 수 없었습니다."));
+            }
+        } else {
+            QMessageBox::critical(this, tr("상품 제거"), tr("제품 종류 를 선택하고 조회를 먼저 해주세요 !"));
+            return;
+        }
+    }
+}
+

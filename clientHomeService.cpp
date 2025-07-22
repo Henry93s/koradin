@@ -43,7 +43,7 @@ void ClientHomeService::allSearch(Client* homeTab){
     if(it != searchType.end()){
         // homeBookSearchRequest 메소드로 서버에 book 검색 요청 처리
         QMessageBox::information(homeTab, "Book Search", "도서 정보를 불러오고 있습니다.");
-        this_thread::sleep_for(chrono::milliseconds(250));
+        this_thread::sleep_for(chrono::milliseconds(100));
         this->homeBookSearchRequest(homeTab, searchData);
     }
 
@@ -52,7 +52,7 @@ void ClientHomeService::allSearch(Client* homeTab){
     if(it != searchType.end()){
         // homeMusicSearchRequest 메소드로 서버에 music 검색 요청 처리
         QMessageBox::information(homeTab, "Music Search", "음반 정보를 불러오고 있습니다.");
-        this_thread::sleep_for(chrono::milliseconds(250));
+        this_thread::sleep_for(chrono::milliseconds(100));
         this->homeMusicSearchRequest(homeTab, searchData);
     }
 
@@ -61,7 +61,7 @@ void ClientHomeService::allSearch(Client* homeTab){
     if(it != searchType.end()){
         // homeBlueraySearchRequest 메소드로 서버에 blueray 검색 요청 처리
         QMessageBox::information(homeTab, "Blueray Search", "블루레이 정보를 불러오고 있습니다.");
-        this_thread::sleep_for(chrono::milliseconds(250));
+        this_thread::sleep_for(chrono::milliseconds(100));
         this->homeBlueraySearchRequest(homeTab, searchData);
     }
 }

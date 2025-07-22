@@ -18,6 +18,7 @@ public:
     QMap<UserInfo*, QVector<ProductInfo*>> getOrderList();
     int addOrderList(UserInfo* user, ProductInfo* product);
     int delOrderList(UserInfo* user, ProductInfo* product);
+    int delOrderListUuid(const QString& product_uuid);
 
     void orderListJsonLoad();
     void orderListJsonSave();

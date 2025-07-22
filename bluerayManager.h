@@ -29,6 +29,7 @@ public:
     QMap<QString, Blueray*> blueraySearchAllByArtist(const QString& artist);
     // read one blueray search by Uuid
     Blueray* blueraySearchByUuid(const QString& uuid);
+    QString bluerayEraseUuid(const QString& uuid);
 
     // bluerayList.json 파일 -> bluerayList 로 load
     void bluerayListJsonLoad();

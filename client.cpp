@@ -601,3 +601,4 @@ void Client::on_home_orderDelete_pushButton_clicked()
     clientHomeService.orderDelete(this);
 }
 
+

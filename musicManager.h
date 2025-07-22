@@ -29,6 +29,7 @@ public:
     QMap<QString, Music*> musicSearchAllByArtist(const QString& artist);
     // read one music search by Uuid
     Music* musicSearchByUuid(const QString& uuid);
+    QString musicEraseUuid(const QString& uuid);
 
     // musicList.json 파일 -> musicList 로 load
     void musicListJsonLoad();
