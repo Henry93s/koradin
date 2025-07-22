@@ -1045,6 +1045,28 @@ void Server::AddOrderDataResponse(const CommuInfo& commuInfo, ClientData* client
         qDebug() << "서버: 주문이 성공적으로 추가되었습니다. UUID:" << uuid << "유저:" << user->getID();
         responseObj["status"] = "success";
         responseObj["message"] = "주문이 완료되었습니다.";
+
+        // 수량 감소 처리
+        ProductInfo* is_product = this->musicManager->musicSearchByUuid(uuid);
+        if(!is_product){
+            // blueray or book
+            is_product = this->bookManager->bookSearchByUuid(uuid);
+            if(!is_product){
+                // blueray
+                is_product = this->bluerayManager->blueraySearchByUuid(uuid);
+                int amount = is_product->getAmount();
+                is_product->setAmount(amount - 1);
+            } else {
+                // book
+                int amount = is_product->getAmount();
+                is_product->setAmount(amount - 1);
+            }
+        } else {
+            // music
+            int amount = is_product->getAmount();
+            is_product->setAmount(amount - 1);
+        }
+
         this->orderManager->orderListJsonSave();
         this->orderManager->orderListJsonLoad();
     }
@@ -1128,6 +1150,28 @@ void Server::DeleteOrderDataResponse(const CommuInfo& commuInfo, ClientData* cli
         qDebug() << "서버: 주문 삭제가 성공적으로 완료되었습니다. UUID:" << uuid << "유저:" << user->getID();
         responseObj["status"] = "success";
         responseObj["message"] = "주문 삭제가 완료되었습니다.";
+
+        // 수량 증가 처리
+        ProductInfo* is_product = this->musicManager->musicSearchByUuid(uuid);
+        if(!is_product){
+            // blueray or book
+            is_product = this->bookManager->bookSearchByUuid(uuid);
+            if(!is_product){
+                // blueray
+                is_product = this->bluerayManager->blueraySearchByUuid(uuid);
+                int amount = is_product->getAmount();
+                is_product->setAmount(amount + 1);
+            } else {
+                // book
+                int amount = is_product->getAmount();
+                is_product->setAmount(amount + 1);
+            }
+        } else {
+            // music
+            int amount = is_product->getAmount();
+            is_product->setAmount(amount + 1);
+        }
+
         this->orderManager->orderListJsonSave();
         this->orderManager->orderListJsonLoad();
     }
