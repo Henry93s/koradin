@@ -7,3 +7,42 @@
 [2025-07-21 21:02:51] [INFO] : geonwoo(건우) client request 1
 [2025-07-21 21:02:51] [INFO] : geonwoo(건우) client request 1
 [2025-07-21 21:02:51] [INFO] : geonwoo(건우) client request 10
+[2025-07-21 21:15:41] [INFO] : ********** koradin Server Open **********
+[2025-07-21 21:15:41] [INFO] : IP: ::ffff:127.0.0.1, Port: 63687 - Client has connected to the server
+[2025-07-21 21:15:46] [INFO] : IP: ::ffff:127.0.0.1, Port: 63688 - Client has connected to the server
+[2025-07-21 21:15:50] [INFO] : (-) client request func : 로그인
+[2025-07-21 21:15:50] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-21 21:15:50] [INFO] : (-) client request func : 유저 채팅방 셋팅
+[2025-07-21 21:15:50] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:15:51] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:15:56] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:15:56] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:15:57] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:16:24] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:16:25] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:16:25] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:16:28] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:16:29] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:16:29] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:16:46] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:16:46] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:16:46] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:20:43] [INFO] : ********** koradin Server Open **********
+[2025-07-21 21:20:43] [INFO] : IP: ::ffff:127.0.0.1, Port: 63716 - Client has connected to the server
+[2025-07-21 21:20:49] [INFO] : IP: ::ffff:127.0.0.1, Port: 63717 - Client has connected to the server
+[2025-07-21 21:20:52] [INFO] : client 접속 종료
+[2025-07-21 21:20:59] [INFO] : IP: ::ffff:127.0.0.1, Port: 63718 - Client has connected to the server
+[2025-07-21 21:21:04] [INFO] : (-) client request func : 로그인
+[2025-07-21 21:21:04] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-21 21:21:04] [INFO] : (-) client request func : 유저 채팅방 셋팅
+[2025-07-21 21:21:06] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:21:11] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:21:30] [INFO] : geonwoo(건우) client request func : 검색
+[2025-07-21 21:21:48] [INFO] : client 접속 종료
+[2025-07-21 21:24:11] [INFO] : ********** koradin Server Open **********
+[2025-07-21 21:24:11] [INFO] : IP: ::ffff:127.0.0.1, Port: 63745 - Client has connected to the server
+[2025-07-21 21:24:16] [INFO] : IP: ::ffff:127.0.0.1, Port: 63746 - Client has connected to the server
+[2025-07-21 21:24:20] [INFO] : (-) client request func : 로그인
+[2025-07-21 21:24:20] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-21 21:24:20] [INFO] : (-) client request func : 유저 채팅방 셋팅
+[2025-07-21 21:24:22] [INFO] : client 접속 종료

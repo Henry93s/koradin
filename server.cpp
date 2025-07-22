@@ -256,7 +256,7 @@ void Server::clientDisconnected(const QThread* thread)
 
     clients.erase(found);
 
-    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, tr("client 접속 종료"));
+    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, tr("client %1(%2) 접속 종료").arg(found->ID, found->name));
     qDebug("disconnected");
 }
 
@@ -284,56 +284,56 @@ void Server::respond(const QThread* thread, QByteArray bytearray)
     switch(type){
     case CommuType::Infos:
         // logger
-        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "검색");
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "검색");
         this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         InfosFetchRespond(info, client);
         break;
     case CommuType::Chatting:
         // logger
-        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "채팅");
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "채팅");
         this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         ChattingRespond(info, client);
         break;
     case CommuType::InfoFix:
         // logger
-        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "유저 수정");
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "유저 수정");
         this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         emit InfosFixRespond(info, client);
         break;
     case CommuType::InfoAdd:
         // logger
-        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "유저 추가");
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "유저 추가");
         this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         AddRespond(info, client);
         emit InfosAddRespond(info, client);
         break;
     case CommuType::AUTH:
         // logger
-        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "로그인");
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "로그인");
         this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         AUTHRespond(info, client);
         break;
     case CommuType::LOGINOUT:
         // logger
-        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "유저 채팅방 셋팅");
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "유저 채팅방 셋팅");
         this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         LoginOutRespond(info, client);
         break;
     case CommuType::OrderInfos:
         // logger
-        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "주문 검색");
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "주문 검색");
         this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         OrderInfosFetchRespond(info, client);
         break;
     case CommuType::OrderAdd:
         // logger
-        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "주문 추가");
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "주문 추가");
         this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         OrderAddRespond(info, client);
         break;
     case CommuType::OrderDelete:
         // logger
-        msg = QString("%1(%2) client request func : %3").arg(client->ID, client->name, "주문 삭제");
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "주문 삭제");
         this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         OrderDeleteRespond(info, client);
         break;
@@ -380,6 +380,9 @@ void Server::CreateNew_Room(const RoomData &newData)
     rooms.push_back(newData);
     rooms.back().index = rooms.size() - 1;
     ui->roomList->addItem(newData.name);
+    QString msg;
+    msg = QString("새 채팅방(%1) 이 생성됩니다.").arg(newData.name);
+    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
 
 
     enterRoom(rooms.size() - 1);
@@ -452,6 +455,9 @@ void Server::AddRespond(const CommuInfo &commuInfo, ClientData* client)
         auto* perUser = new UserInfo(user.getID(), user.getName(), user.getPassword(), user.getEmail(), user.getIsAdmin());
         // qDebug() << user.getID() << user.getName() << user.getPassword() << user.getEmail() << user.getIsAdmin();
         userManager->userInsert(perUser);
+        QString msg;
+        msg = QString("%1(%2) 유저를 추가합니다.").arg(user.getID(), user.getName());
+        logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
     }
 
     //인서트 한다음 세이브.
@@ -543,6 +549,9 @@ void Server::LoginOutRespond(const CommuInfo &commuInfo, ClientData* client)
         AddAtUserList(this, ui->userList, client);
         AddAtUserList(this, ui->userListInRoom_All, client);
 
+        QString msg;
+        msg = QString("%1(%2) 가 채팅방에 접속하였습니다.").arg(client->ID, client->name);
+        logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         for(auto& cla : clients){
             clientNames.push_back(cla.name);
         }
@@ -553,6 +562,10 @@ void Server::LoginOutRespond(const CommuInfo &commuInfo, ClientData* client)
         // 채팅 창에 유저 삭제.
         DeleteAtUserList(ui->userList, client);
         DeleteAtUserList(ui->userListInRoom_All, client);
+
+        QString msg;
+        msg = QString("%1(%2) 가 채팅방에 접속을 해제하였습니다.").arg(client->ID, client->name);
+        logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
 
         // 현 남은 클라이언트들 담아 보내기.
         for(auto& cla : clients){
@@ -617,6 +630,10 @@ void Server::ChattingRespond(const CommuInfo &commuInfo, ClientData* client)
                 emit writeReady(cla.thread, forClients.GetByteArray());
             }
         }
+        QString msg;
+        msg = QString("일반 채팅 - %1(%2) %3 MSG 전송").arg(client->ID, client->name, chat);
+        logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
+
     }
     // 귓속말로 한 사람 그리고 보낸 사람에게만 보내기.
     else if(chatType == ChattingType::Whisper)
@@ -626,6 +643,9 @@ void Server::ChattingRespond(const CommuInfo &commuInfo, ClientData* client)
                 emit writeReady(cla.thread, forClients.GetByteArray());
             }
         }
+        QString msg;
+        msg = QString("귓속말 채팅 - %1(%2) %3 MSG 전송").arg(client->ID, client->name, chat);
+        logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
     }
 }
 
@@ -891,6 +911,9 @@ void Server::SearchDataResponse(const CommuInfo& commuInfo, ClientData* client) 
     emit writeReady(client->thread, packet);
     // socket->write(packet); // 길이  + 나머지 모든 데이터(response 데이터 포함)
     // socket->flush(); // 추가적으로 송신 버퍼를 즉시 밀어줌
+    QString msg;
+    msg = QString("client %1(%2) %3 request 처리 완료").arg(client->ID, client->name, "검색");
+    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
     qDebug() << "서버: SearchDataResponse 응답 전송 완료";
 }
 
@@ -954,6 +977,10 @@ void Server::SearchOrderDataResponse(const CommuInfo& commuInfo, ClientData* cli
     emit writeReady(client->thread, packet);
     // socket->write(packet); // 길이  + 나머지 모든 데이터(response 데이터 포함)
     // socket->flush(); // 추가적으로 송신 버퍼를 즉시 밀어줌
+    QString msg;
+    msg = QString("client %1(%2) %3 request 처리 완료").arg(client->ID, client->name, "주문 조회");
+    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
+
     qDebug() << "서버: SearchOrderDataResponse 응답 전송 완료";
 }
 
@@ -965,6 +992,10 @@ void Server::AddOrderDataResponse(const CommuInfo& commuInfo, ClientData* client
     // 유저 정보 찾기
     UserInfo* user = this->userManager->userSearchById(client->ID);
     if (!user) {
+        QString msg;
+        msg = QString("client %1(%2) %3 request 처리 에러 : 유저를 찾을 수 없음").arg(client->ID, client->name, "주문 추가");
+        logManager->getTimeStamp_and_write(LogManager::LogType::ERRO, msg);
+
         qDebug() << "서버: 유저를 찾을 수 없습니다.";
         return;
     }
@@ -979,6 +1010,10 @@ void Server::AddOrderDataResponse(const CommuInfo& commuInfo, ClientData* client
         product = this->bluerayManager->blueraySearchByUuid(uuid);
     }
     if (!product) {
+        QString msg;
+        msg = QString("client %1(%2) %3 request 처리 에러 : uuid 상품 없음").arg(client->ID, client->name, "주문 추가");
+        logManager->getTimeStamp_and_write(LogManager::LogType::ERRO, msg);
+
         qDebug() << "서버: 해당 uuid 상품 없음";
         return;
     }
@@ -995,10 +1030,18 @@ void Server::AddOrderDataResponse(const CommuInfo& commuInfo, ClientData* client
         responseObj["status"] = "fail";
         responseObj["message"] = "user 또는 product 없음";
     } else if(resultAdd == 1){
+        QString msg;
+        msg = QString("client %1(%2) %3 request 처리 에러 : product uuid 중복").arg(client->ID, client->name, "주문 추가");
+        logManager->getTimeStamp_and_write(LogManager::LogType::ERRO, msg);
+
         qDebug() << "product uuid 중복";
         responseObj["status"] = "fail";
         responseObj["message"] = "product uuid 중복";
     } else if(resultAdd == 0){
+        QString msg;
+        msg = QString("client %1(%2) %3 request 처리 완료").arg(client->ID, client->name, "주문 추가");
+        logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
+
         qDebug() << "서버: 주문이 성공적으로 추가되었습니다. UUID:" << uuid << "유저:" << user->getID();
         responseObj["status"] = "success";
         responseObj["message"] = "주문이 완료되었습니다.";
@@ -1040,6 +1083,10 @@ void Server::DeleteOrderDataResponse(const CommuInfo& commuInfo, ClientData* cli
     // 유저 정보 찾기
     UserInfo* user = this->userManager->userSearchById(client->ID);
     if (!user) {
+        QString msg;
+        msg = QString("client %1(%2) %3 request 처리 에러 : user 없음").arg(client->ID, client->name, "주문 삭제");
+        logManager->getTimeStamp_and_write(LogManager::LogType::ERRO, msg);
+
         qDebug() << "서버: 유저를 찾을 수 없습니다.";
         return;
     }
@@ -1054,6 +1101,10 @@ void Server::DeleteOrderDataResponse(const CommuInfo& commuInfo, ClientData* cli
         product = this->bluerayManager->blueraySearchByUuid(uuid);
     }
     if (!product) {
+        QString msg;
+        msg = QString("client %1(%2) %3 request 처리 에러 : 조회된 uuid 상품 없음").arg(client->ID, client->name, "주문 삭제");
+        logManager->getTimeStamp_and_write(LogManager::LogType::ERRO, msg);
+
         qDebug() << "서버: 해당 uuid 상품 없음";
         return;
     }
@@ -1070,6 +1121,10 @@ void Server::DeleteOrderDataResponse(const CommuInfo& commuInfo, ClientData* cli
         responseObj["status"] = "fail";
         responseObj["message"] = "user 또는 product 없음";
     } else if(resultDelete == 0){
+        QString msg;
+        msg = QString("client %1(%2) %3 request 처리 완료").arg(client->ID, client->name, "주문 삭제");
+        logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
+
         qDebug() << "서버: 주문 삭제가 성공적으로 완료되었습니다. UUID:" << uuid << "유저:" << user->getID();
         responseObj["status"] = "success";
         responseObj["message"] = "주문 삭제가 완료되었습니다.";

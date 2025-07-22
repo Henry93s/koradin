@@ -116,7 +116,6 @@ void Client::Initialize(QTcpSocket *sock, const QString& Name, const QString& ID
     }
 
     // 첫 실행 시 모든 product 검색 처리(단 tab index 는 넘어가지 않아야 함)
-    this->on_home_search_pushButton_clicked();
     this->on_home_orderSearch_pushButton_clicked();
 }
 
@@ -187,7 +186,7 @@ void Client::InfosFetchRespond(const CommuInfo &commuInfo)
     ProductInfo::Filter filter;
     ProductInfo::ProductType productType = commuInfo.GetRequestProducts(filter);
 
-    //qDebug() << "client : producttype : " << productType;
+    qDebug() << "client : producttype : " << productType;
 
     switch (productType) {
     case ProductInfo::Book:
