@@ -7,14 +7,18 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QFileDialog>
+#include <QVBoxLayout>
 
 #include "Client.h"
 
 WhisperDialog::WhisperDialog(const QString& CounterName, Client* cla, QWidget *parent)
     : counterName{CounterName}, client{cla}, QDialog{parent}
 {
+    QHBoxLayout* layout = new QHBoxLayout(this);
     line = new QLineEdit(this);
     connect(line, &QLineEdit::returnPressed, this, &WhisperDialog::sendWhisperMessage);
+
+    layout->addWidget(line);
 
     auto * button = new QPushButton(tr("File"), this);
     connect(button, &QPushButton::clicked, this, [this, button](){
@@ -28,10 +32,16 @@ WhisperDialog::WhisperDialog(const QString& CounterName, Client* cla, QWidget *p
         auto ret = newFile->open(QFile::ReadOnly);
         if(ret){
             file = newFile;
-
-            button->setText(filename);
+            QFileInfo fileinfo(filename);
+            button->setText(fileinfo.fileName());
         }
     });
+    layout->addWidget(button);
+
+    layout->setContentsMargins(5, 2, 5, 2); // 여백 설정 (선택사항)
+    layout->setSpacing(8); // 위젯 사이 간격
+
+    setLayout(layout);
 }
 
 void WhisperDialog::keyPressEvent(QKeyEvent *event)
@@ -59,9 +69,9 @@ bool WhisperDialog::event(QEvent *event)
 void WhisperDialog::sendWhisperMessage()
 {
     CommuInfo info;
-    info.SetChat(client->getClientData()->name, line->text(), nullptr, ChattingType::Whisper, counterName);
+    info.SetChat(client->getClientData()->name, line->text(), file, ChattingType::Whisper, counterName);
     //info.AddSizePacket();
-
+    info.AddSizePacket();
     client->writeSocket(info.GetByteArray());
     this->close();
     this->deleteLater();

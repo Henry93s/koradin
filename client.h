@@ -79,7 +79,7 @@ private:
     ClientMusicService clientMusicService;
     ClientHomeService clientHomeService;
 
-    QDataStream in;
+    // QDataStream in;
 
     void InfosFetchRespond(const CommuInfo& commuInfo);
     void SomeoneLoginOrOutRespond(const CommuInfo& commuInfo);

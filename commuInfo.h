@@ -29,6 +29,7 @@ public:
 
     std::vector<std::pair<QString, QString>> GetUserIDAndNames() const;
 
+    void SetIDPwd(const QString& ID, const QString& password);
     std::pair<QString, QString> GetIDPwd() const;
 
     // 클라가 서버한테 요청한다. 정보 보내줄 것을.

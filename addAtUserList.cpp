@@ -58,7 +58,8 @@ void DeleteAtUserList(QListWidget* userList, const QString& name)
 
 void AddAtChattingList(QWidget* parent, QListWidget *chatList, const QString &userName, const QString &chat, const QByteArray& fileBytes, const QString& fileName)
 {
-    ChattingLogWidget* log = new ChattingLogWidget(userName, chat, fileName, chatList);
+    QFileInfo fileinfo(fileName);
+    ChattingLogWidget* log = new ChattingLogWidget(userName, chat, fileinfo.fileName(), chatList);
 
     QListWidgetItem* item = new QListWidgetItem(chatList);
     item->setSizeHint(log->sizeHint());
@@ -68,13 +69,12 @@ void AddAtChattingList(QWidget* parent, QListWidget *chatList, const QString &us
     if(log->GetDownloadButton()){
         QObject::connect(log->GetDownloadButton(), &QPushButton::clicked, chatList, [parent, fileBytes, fileName](){
             if(!fileBytes.isEmpty()){
-                QString saveFile = QFileDialog::getSaveFileName(parent, QString("저장할 폴더 선택"));
+                QString saveFile = QFileDialog::getSaveFileName(parent, QString("저장할 폴더 선택"), QDir::homePath() + fileName);
 
                 if (!saveFile.isEmpty()) {
                     QFile newFile(saveFile);
                     if(newFile.open(QFile::WriteOnly)){
-                        QTextStream out(&newFile);
-                        out << fileBytes;
+                        newFile.write(fileBytes);
                         newFile.close();
                     }
                 }

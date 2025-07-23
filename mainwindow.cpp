@@ -75,15 +75,18 @@ void MainWindow::on_login_button_clicked()
 {
     // 로그인 검증
     // ID 검증
-    QJsonObject obj;
-    QJsonObject data;
-    obj["CommuType"] = tr("AUTH");
-    data["ID"] = ui->id_lineEdit->text();
-    data["password"] = ui->pw_lineEdit->text();
-    obj["Data"] = data;
+    // QJsonObject obj;
+    // QJsonObject data;
+    // obj["CommuType"] = tr("AUTH");
+    // data["ID"] = ui->id_lineEdit->text();
+    // data["password"] = ui->pw_lineEdit->text();
+    // obj["Data"] = data;
 
-    QJsonDocument doc(obj);
-    socket->write(doc.toJson(QJsonDocument::Compact));
+    // QJsonDocument doc(obj);
+    CommuInfo com;
+    com.SetIDPwd(ui->id_lineEdit->text(), ui->pw_lineEdit->text());
+    com.AddSizePacket();
+    socket->write(com.GetByteArray());
 
     // UserInfo* temp = usermanager->userSearchById(ui->id_lineEdit->text());
     // if(temp == nullptr){
@@ -199,7 +202,7 @@ void MainWindow::respond()
 
         bytearray = clientSocket->read(expectedSize);
 
-        qDebug() << "byte " << bytearray;
+        // qDebug() << "byte " << bytearray;
 
         //commuInfoQueue.push(CommuInfo{bytearray});
         auto info = CommuInfo{bytearray};
@@ -213,6 +216,7 @@ void MainWindow::respond()
                 CommuInfo com;
                 ID = ui->id_lineEdit->text();
                 com.LoginOrOut(true, auth.first, ID);
+                com.AddSizePacket();
                 name = auth.first;
                 socket->write(com.GetByteArray());
 

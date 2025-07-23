@@ -67,7 +67,8 @@ void ClientHomeService::homeBookSearchRequest(Client* homeTab, const QString& se
     CommuInfo commuinfo;
     commuinfo.RequestProducts(ProductInfo::ProductType::Book
                               , ProductInfo::Filter{ ProductInfo::FilterType::Name, searchData, 0, 9999999});
-
+    // 김선권 추가
+    commuinfo.AddSizePacket();
     homeTab->writeSocket(commuinfo.GetByteArray());
 }
 
@@ -77,7 +78,8 @@ void ClientHomeService::homeMusicSearchRequest(Client* homeTab, const QString& s
     CommuInfo commuinfo;
     commuinfo.RequestProducts(ProductInfo::ProductType::Music
                               , ProductInfo::Filter{ ProductInfo::FilterType::Name, searchData, 0, 9999999});
-
+    // 김선권 추가
+    commuinfo.AddSizePacket();
     homeTab->writeSocket(commuinfo.GetByteArray());
 }
 
@@ -87,7 +89,8 @@ void ClientHomeService::homeBlueraySearchRequest(Client* homeTab, const QString&
     CommuInfo commuinfo;
     commuinfo.RequestProducts(ProductInfo::ProductType::Blueray
                               , ProductInfo::Filter{ ProductInfo::FilterType::Name, searchData, 0, 9999999});
-
+    // 김선권 추가
+    commuinfo.AddSizePacket();
     homeTab->writeSocket(commuinfo.GetByteArray());
 }
 
@@ -133,6 +136,8 @@ void ClientHomeService::orderDelete(Client* homeTab){
             }
 
             commuinfo.RequestOrderProducts(productType, ProductInfo::Filter{ProductInfo::FilterType::UUID, uuid, 0, 9999999}, QString("OrderDelete"));
+            // 김선권 추가
+            commuinfo.AddSizePacket();
             homeTab->writeSocket(commuinfo.GetByteArray());
         }
     }

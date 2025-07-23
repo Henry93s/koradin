@@ -59,7 +59,7 @@ void ClientBluerayService::blueraySearchRequest(Client* bluerayTab, const QStrin
                                    beforePriceForSearch, afterPriceForSearch});
 
     }
-
+    commuinfo.AddSizePacket();
     bluerayTab->writeSocket(commuinfo.GetByteArray());
 }
 
@@ -83,6 +83,7 @@ void ClientBluerayService::bluerayOrdering(Client* bluerayTab){
             ProductInfo::ProductType productType = ProductInfo::ProductType::Blueray;
             commuinfo.RequestOrderProducts(productType, ProductInfo::Filter{
                                                                             ProductInfo::FilterType::UUID, searchData, 0,9999999}, QString("OrderAdd"));
+            commuinfo.AddSizePacket();
             bluerayTab->writeSocket(commuinfo.GetByteArray());
 
             // Popup* popup = new Popup(bluerayTab, QObject::tr("주문이 완료되었습니다."));

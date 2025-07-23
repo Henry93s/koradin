@@ -65,7 +65,7 @@ void ClientBookService::bookSearchRequest(Client* bookTab, const QString& search
                                    beforePriceForSearch, afterPriceForSearch});
 
     }
-
+    commuinfo.AddSizePacket();
     bookTab->writeSocket(commuinfo.GetByteArray());
 }
 
@@ -89,6 +89,7 @@ void ClientBookService::bookOrdering(Client* bookTab){
             ProductInfo::ProductType productType = ProductInfo::ProductType::Book;
             commuinfo.RequestOrderProducts(productType, ProductInfo::Filter{
                                                                             ProductInfo::FilterType::UUID, searchData, 0,9999999}, QString("OrderAdd"));
+            commuinfo.AddSizePacket();
             bookTab->writeSocket(commuinfo.GetByteArray());
 
             // Popup* popup = new Popup(bookTab, QObject::tr("주문이 완료되었습니다."));

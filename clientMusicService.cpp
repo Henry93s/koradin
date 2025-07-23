@@ -58,7 +58,7 @@ void ClientMusicService::musicSearchRequest(Client* musicTab, const QString& sea
                                    beforePriceForSearch, afterPriceForSearch});
 
     }
-
+    commuinfo.AddSizePacket();
     musicTab->writeSocket(commuinfo.GetByteArray());
 }
 
@@ -82,6 +82,7 @@ void ClientMusicService::musicOrdering(Client* musicTab){
             ProductInfo::ProductType productType = ProductInfo::ProductType::Music;
             commuinfo.RequestOrderProducts(productType, ProductInfo::Filter{
                                                                             ProductInfo::FilterType::UUID, searchData, 0,9999999}, QString("OrderAdd"));
+            commuinfo.AddSizePacket();
             musicTab->writeSocket(commuinfo.GetByteArray());
 
             // Popup* popup = new Popup(musicTab, QObject::tr("주문이 완료되었습니다."));

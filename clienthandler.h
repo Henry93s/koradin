@@ -23,6 +23,8 @@ signals:
     void disConnected(const QThread* thread);
 private:
     QTcpSocket* socket;
+    QByteArray bytearray;
+    quint32 expectedSize = 0;
 };
 
 #endif // CLIENTHANDLER_H

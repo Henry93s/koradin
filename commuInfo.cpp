@@ -211,6 +211,19 @@ std::vector<std::pair<QString, QString>> CommuInfo::GetUserIDAndNames() const
     return ret;
 }
 
+void CommuInfo::SetIDPwd(const QString &ID, const QString &password)
+{
+    QJsonObject obj;
+    QJsonObject data;
+    obj["CommuType"] = QString("AUTH");
+    data["ID"] = ID;
+    data["password"] = password;
+    obj["Data"] = data;
+
+    QJsonDocument doc(obj);
+    byteArray = doc.toJson(QJsonDocument::Compact);
+}
+
 std::pair<QString, QString> CommuInfo::GetIDPwd() const
 {
     if(GetType() != CommuType::AUTH){
@@ -548,6 +561,14 @@ void CommuInfo::AddSizePacket()
     out << (quint32)byteArray.size(); // 길이 프리픽스
     packet.append(byteArray);
     byteArray = packet;
+    // QByteArray packet;
+    // QDataStream out(&packet, QIODevice::WriteOnly);
+    // out.setVersion(QDataStream::Qt_6_0);
+    // //out.setByteOrder(QDataStream::LittleEndian);
+    // out << (quint32)byteArray.size();   // 먼저 길이 프리픽스
+    // out.writeRawData(byteArray.constData(), byteArray.size()); // 그 다음 원 데이터
+
+    // byteArray = packet;
 }
 
 void CommuInfo::AppendResponseObject(const QJsonObject& responseObject)

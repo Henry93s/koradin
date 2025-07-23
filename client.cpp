@@ -72,8 +72,8 @@ Client::Client(QWidget *parent)
         auto ret = file->open(QFile::ReadOnly);
         if(ret){
             currentFileInChat = file;
-
-            ui->fileOpenButton->setText(filename);
+            QFileInfo fileInfo(filename);
+            ui->fileOpenButton->setText(fileInfo.fileName());
         }
     });
 }
@@ -98,9 +98,9 @@ void Client::Initialize(QTcpSocket *sock, const QString& Name, const QString& ID
     clientData.name = Name;
     clientData.ID = ID;
 
-    // 데이터 스트림 초기화
-    in.setDevice(sock);
-    in.setVersion(QDataStream::Qt_6_0);
+    // // 데이터 스트림 초기화
+    // in.setDevice(sock);
+    // in.setVersion(QDataStream::Qt_6_0);
 
     //커넥트
     connect(socket, SIGNAL(readyRead()), SLOT(respond()));
@@ -123,6 +123,8 @@ void Client::respond()
     // base64 이미지 대용량 byte 가 있는 경우가 있으므로 소켓에서 길이를 먼저 읽어내고
     // 그 길이만큼 전부 도착할 때까지 read를 반복한 다음에 파싱 작업 들어가야함
 
+    QDataStream in(socket);
+    // in.setVersion(QDataStream::Qt_6_0);
     qDebug() << "Response!!!";
     qDebug() << "ExpectedSize :" << expectedSize;
     qDebug() << "ClinetSocket - bytesAvailable :" << clientSocket->bytesAvailable();
@@ -521,6 +523,8 @@ void Client::chatForServer()
     QString chat = ui->chatLineEdit->text();
     CommuInfo com;
     com.SetChat(clientData.name, chat, currentFileInChat);
+    // 김선권 추가
+    com.AddSizePacket();
     socket->write(com.GetByteArray());
     if(currentFileInChat){
         currentFileInChat->close();
@@ -587,6 +591,8 @@ void Client::closeEvent(QCloseEvent *event)
 {
     CommuInfo com;
     com.LoginOrOut(false, clientData.name, clientData.ID);
+    // 김선권 추가
+    com.AddSizePacket();
 
     socket->write(com.GetByteArray());
 
