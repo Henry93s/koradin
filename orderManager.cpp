@@ -210,3 +210,42 @@ int OrderManager::delOrderList(UserInfo* user, ProductInfo* product){
     }
     return 0; // ok
 }
+
+int OrderManager::delOrderListUuid(const QString& product_uuid)
+{
+    bool deleted = false;
+
+    // map 순회하면서 조건에 맞는 항목 삭제
+    QList<UserInfo*> keysToRemove;
+
+    for (auto it = orderList.begin(); it != orderList.end(); ++it) {
+        UserInfo* user = it.key();
+        QVector<ProductInfo*>& productList = it.value();
+
+        int beforeSize = productList.size();
+
+        // uuid가 일치하는 상품 제거
+        productList.erase(
+            std::remove_if(productList.begin(), productList.end(),
+                           [&product_uuid](ProductInfo* p) {
+                               return p && p->getUuid() == product_uuid;
+                           }),
+            productList.end());
+
+        if (productList.size() != beforeSize) {
+            deleted = true;
+        }
+
+        // 비었으면 삭제 예정 목록에 추가
+        if (productList.isEmpty()) {
+            keysToRemove.append(user);
+        }
+    }
+
+    // 벡터가 비어 삭제 대상인 유저 제거
+    for (UserInfo* user : keysToRemove) {
+        orderList.remove(user);
+    }
+
+    return deleted ? 1 : 0;
+}

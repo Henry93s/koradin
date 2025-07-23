@@ -27,6 +27,8 @@
 #include <QMutexLocker>
 
 #include <QMap>
+#include <QString>
+#include <QFileDialog>
 
 #define PORT    5085
 #define PENDING_CONN    5
@@ -45,9 +47,9 @@ Server::Server(QWidget *parent)
     ui->setupUi(this);
 
     //고르기
-    connect(ui->RadioBook, &QRadioButton::toggled, this, &Server::transferLabels);
-    connect(ui->RadioRecord, &QRadioButton::toggled, this, &Server::transferLabels);
-    connect(ui->RadioBluray, &QRadioButton::toggled, this, &Server::transferLabels);
+    connect(ui->server_product_insert_book_radiobutton, &QRadioButton::toggled, this, &Server::transferLabels);
+    connect(ui->server_product_insert_music_radiobutton, &QRadioButton::toggled, this, &Server::transferLabels);
+    connect(ui->server_product_insert_blueray_radiobutton, &QRadioButton::toggled, this, &Server::transferLabels);
 
     // 새 방 생성.
     connect(ui->createRoomButton, &QPushButton::clicked, this, [=](){
@@ -188,7 +190,7 @@ Server::Server(QWidget *parent)
     musics = MapToVector(musicManager->musicListRead());
 
     // logger
-    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, "koradin Server Open");
+    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, "********** koradin Server Open **********");
 }
 
 Server::~Server()
@@ -205,6 +207,8 @@ void Server::Initialize()
 void Server::clientConnect()
 {
     if(clients.size() == MAX_CLIENTS){
+        // logger
+        logManager->getTimeStamp_and_write(LogManager::LogType::WARN, tr("최대 클라이언트 수 20 을 초과하였습니다."));
         return;
     }
 
@@ -232,6 +236,10 @@ void Server::clientConnect()
 
     thread->start();
 
+    // logger
+    QString msg;
+    msg = QString("IP: %1, Port: %2 - Client has connected to the server").arg(clientConnection->peerAddress().toString(), QString::number(clientConnection->peerPort()));
+    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
     qDebug("Connected!");
 }
 
@@ -249,6 +257,7 @@ void Server::clientDisconnected(const QThread* thread)
 
     clients.erase(found);
 
+    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, tr("client %1(%2) 접속 종료").arg(found->ID, found->name));
     qDebug("disconnected");
 }
 
@@ -270,35 +279,62 @@ void Server::respond(const QThread* thread, QByteArray bytearray)
         }
     }
 
-    // qDebug() << "type : " << type;
-
+    qDebug() << "server respond - type : " << type;
+    QString msg;
     switch(type){
     case CommuType::Infos:
+        // logger
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "검색");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         InfosFetchRespond(info, client);
         break;
     case CommuType::Chatting:
+        // logger
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "채팅");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         ChattingRespond(info, client);
         break;
     case CommuType::InfoFix:
+        // logger
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "유저 수정");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         emit InfosFixRespond(info, client);
         break;
     case CommuType::InfoAdd:
+        // logger
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "유저 추가");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         AddRespond(info, client);
         emit InfosAddRespond(info, client);
         break;
     case CommuType::AUTH:
+        // logger
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "로그인");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         AUTHRespond(info, client);
         break;
     case CommuType::LOGINOUT:
+        // logger
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "유저 채팅방 셋팅");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         LoginOutRespond(info, client);
         break;
     case CommuType::OrderInfos:
+        // logger
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "주문 검색");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         OrderInfosFetchRespond(info, client);
         break;
     case CommuType::OrderAdd:
+        // logger
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "주문 추가");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         OrderAddRespond(info, client);
         break;
     case CommuType::OrderDelete:
+        // logger
+        msg = QString("%1(%2) client %3 request").arg(client->ID, client->name, "주문 삭제");
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         OrderDeleteRespond(info, client);
         break;
     default:
@@ -311,15 +347,15 @@ void Server::transferLabels(bool checked)
     if(!checked)
         return;
 
-    if(ui->RadioBook->isChecked()){
+    if(ui->server_product_insert_book_radiobutton->isChecked()){
         ui->authorLabel->setText(tr("저자"));
         ui->companyLabel->setText(tr("출판사"));
     }
-    else if(ui->RadioBluray->isChecked()){
+    else if(ui->server_product_insert_blueray_radiobutton->isChecked()){
         ui->authorLabel->setText(tr("감독/배우"));
         ui->companyLabel->setText(tr("제작사"));
     }
-    else if(ui->RadioRecord->isChecked()){
+    else if(ui->server_product_insert_music_radiobutton->isChecked()){
         ui->authorLabel->setText(tr("아티스트"));
         ui->companyLabel->setText(tr("음반사"));
     }
@@ -344,6 +380,9 @@ void Server::CreateNew_Room(const RoomData &newData)
     rooms.push_back(newData);
     rooms.back().index = rooms.size() - 1;
     ui->roomList->addItem(newData.name);
+    QString msg;
+    msg = QString("새 채팅방(%1) 이 생성됩니다.").arg(newData.name);
+    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
 
 
     enterRoom(rooms.size() - 1);
@@ -363,6 +402,7 @@ void Server::AUTHRespond(const CommuInfo &commuInfo, ClientData* client)
     if(temp == nullptr){
         // id 불일치
         qDebug() << "입력한 id 가 유저 리스트에 없습니다.";
+        this->logManager->getTimeStamp_and_write(LogManager::LogType::WARN, "[LOGIN] - 입력한 id 가 유저 리스트에 없습니다.");
         ID = tr("No");
     } else{
         // password 검증
@@ -370,10 +410,14 @@ void Server::AUTHRespond(const CommuInfo &commuInfo, ClientData* client)
             // client.ui 가 열렸을 때, server connect 를 통한 새 클라이언트 연결 추가.
             // commuInfo -> client session 관리 리스트에 세션 추가
             ID = temp->getName();
+            QString msg;
+            msg = QString("[LOGIN] - ID : %1 passed login").arg(ID);
+            this->logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
             Pwd = tr("Yes");
         } else {
             // password 불일치
             qDebug() << "계정의 password 가 일치하지 않습니다.";
+            this->logManager->getTimeStamp_and_write(LogManager::LogType::WARN, "[LOGIN] - 계정의 password 가 일치하지 않습니다.");
             Pwd = tr("No");
         }
     }
@@ -411,6 +455,9 @@ void Server::AddRespond(const CommuInfo &commuInfo, ClientData* client)
         auto* perUser = new UserInfo(user.getID(), user.getName(), user.getPassword(), user.getEmail(), user.getIsAdmin());
         // qDebug() << user.getID() << user.getName() << user.getPassword() << user.getEmail() << user.getIsAdmin();
         userManager->userInsert(perUser);
+        QString msg;
+        msg = QString("%1(%2) 유저를 추가합니다.").arg(user.getID(), user.getName());
+        logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
     }
 
     //인서트 한다음 세이브.
@@ -483,7 +530,6 @@ void Server::OrderDeleteRespond(const CommuInfo &commuInfo, ClientData* client)
     }
 }
 
-
 void Server::LoginOutRespond(const CommuInfo &commuInfo, ClientData* client)
 {
     QString clientName;
@@ -502,6 +548,9 @@ void Server::LoginOutRespond(const CommuInfo &commuInfo, ClientData* client)
         AddAtUserList(this, ui->userList, client);
         AddAtUserList(this, ui->userListInRoom_All, client);
 
+        QString msg;
+        msg = QString("%1(%2) 가 채팅방에 접속하였습니다.").arg(client->ID, client->name);
+        logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
         for(auto& cla : clients){
             clientNames.push_back(cla.name);
         }
@@ -512,6 +561,10 @@ void Server::LoginOutRespond(const CommuInfo &commuInfo, ClientData* client)
         // 채팅 창에 유저 삭제.
         DeleteAtUserList(ui->userList, client);
         DeleteAtUserList(ui->userListInRoom_All, client);
+
+        QString msg;
+        msg = QString("%1(%2) 가 채팅방에 접속을 해제하였습니다.").arg(client->ID, client->name);
+        logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
 
         // 현 남은 클라이언트들 담아 보내기.
         for(auto& cla : clients){
@@ -576,6 +629,10 @@ void Server::ChattingRespond(const CommuInfo &commuInfo, ClientData* client)
                 emit writeReady(cla.thread, forClients.GetByteArray());
             }
         }
+        QString msg;
+        msg = QString("일반 채팅 - %1(%2) %3 MSG 전송").arg(client->ID, client->name, chat);
+        logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
+
     }
     // 귓속말로 한 사람 그리고 보낸 사람에게만 보내기.
     else if(chatType == ChattingType::Whisper)
@@ -585,6 +642,9 @@ void Server::ChattingRespond(const CommuInfo &commuInfo, ClientData* client)
                 emit writeReady(cla.thread, forClients.GetByteArray());
             }
         }
+        QString msg;
+        msg = QString("귓속말 채팅 - %1(%2) %3 MSG 전송").arg(client->ID, client->name, chat);
+        logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
     }
 }
 
@@ -850,6 +910,9 @@ void Server::SearchDataResponse(const CommuInfo& commuInfo, ClientData* client) 
     emit writeReady(client->thread, packet);
     // socket->write(packet); // 길이  + 나머지 모든 데이터(response 데이터 포함)
     // socket->flush(); // 추가적으로 송신 버퍼를 즉시 밀어줌
+    QString msg;
+    msg = QString("client %1(%2) %3 request 처리 완료").arg(client->ID, client->name, "검색");
+    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
     qDebug() << "서버: SearchDataResponse 응답 전송 완료";
 }
 
@@ -913,6 +976,10 @@ void Server::SearchOrderDataResponse(const CommuInfo& commuInfo, ClientData* cli
     emit writeReady(client->thread, packet);
     // socket->write(packet); // 길이  + 나머지 모든 데이터(response 데이터 포함)
     // socket->flush(); // 추가적으로 송신 버퍼를 즉시 밀어줌
+    QString msg;
+    msg = QString("client %1(%2) %3 request 처리 완료").arg(client->ID, client->name, "주문 조회");
+    logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
+
     qDebug() << "서버: SearchOrderDataResponse 응답 전송 완료";
 }
 
@@ -924,6 +991,10 @@ void Server::AddOrderDataResponse(const CommuInfo& commuInfo, ClientData* client
     // 유저 정보 찾기
     UserInfo* user = this->userManager->userSearchById(client->ID);
     if (!user) {
+        QString msg;
+        msg = QString("client %1(%2) %3 request 처리 에러 : 유저를 찾을 수 없음").arg(client->ID, client->name, "주문 추가");
+        logManager->getTimeStamp_and_write(LogManager::LogType::ERRO, msg);
+
         qDebug() << "서버: 유저를 찾을 수 없습니다.";
         return;
     }
@@ -938,6 +1009,10 @@ void Server::AddOrderDataResponse(const CommuInfo& commuInfo, ClientData* client
         product = this->bluerayManager->blueraySearchByUuid(uuid);
     }
     if (!product) {
+        QString msg;
+        msg = QString("client %1(%2) %3 request 처리 에러 : uuid 상품 없음").arg(client->ID, client->name, "주문 추가");
+        logManager->getTimeStamp_and_write(LogManager::LogType::ERRO, msg);
+
         qDebug() << "서버: 해당 uuid 상품 없음";
         return;
     }
@@ -954,13 +1029,43 @@ void Server::AddOrderDataResponse(const CommuInfo& commuInfo, ClientData* client
         responseObj["status"] = "fail";
         responseObj["message"] = "user 또는 product 없음";
     } else if(resultAdd == 1){
+        QString msg;
+        msg = QString("client %1(%2) %3 request 처리 에러 : product uuid 중복").arg(client->ID, client->name, "주문 추가");
+        logManager->getTimeStamp_and_write(LogManager::LogType::ERRO, msg);
+
         qDebug() << "product uuid 중복";
         responseObj["status"] = "fail";
         responseObj["message"] = "product uuid 중복";
     } else if(resultAdd == 0){
+        QString msg;
+        msg = QString("client %1(%2) %3 request 처리 완료").arg(client->ID, client->name, "주문 추가");
+        logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
+
         qDebug() << "서버: 주문이 성공적으로 추가되었습니다. UUID:" << uuid << "유저:" << user->getID();
         responseObj["status"] = "success";
         responseObj["message"] = "주문이 완료되었습니다.";
+
+        // 수량 감소 처리
+        ProductInfo* is_product = this->musicManager->musicSearchByUuid(uuid);
+        if(!is_product){
+            // blueray or book
+            is_product = this->bookManager->bookSearchByUuid(uuid);
+            if(!is_product){
+                // blueray
+                is_product = this->bluerayManager->blueraySearchByUuid(uuid);
+                int amount = is_product->getAmount();
+                is_product->setAmount(amount - 1);
+            } else {
+                // book
+                int amount = is_product->getAmount();
+                is_product->setAmount(amount - 1);
+            }
+        } else {
+            // music
+            int amount = is_product->getAmount();
+            is_product->setAmount(amount - 1);
+        }
+
         this->orderManager->orderListJsonSave();
         this->orderManager->orderListJsonLoad();
     }
@@ -987,7 +1092,7 @@ void Server::AddOrderDataResponse(const CommuInfo& commuInfo, ClientData* client
     // socket->write(packet); // 길이  + 나머지 모든 데이터(response 데이터 포함)
     // socket->flush(); // 추가적으로 송신 버퍼를 즉시 밀어줌
     qDebug() << "서버: SearchAddRespond 응답 전송 완료";
-    qDebug() << responseInfo.GetByteArray();
+    // qDebug() << responseInfo.GetByteArray();
 }
 
 
@@ -995,10 +1100,14 @@ void Server::DeleteOrderDataResponse(const CommuInfo& commuInfo, ClientData* cli
     ProductInfo::Filter filter;
     ProductInfo::ProductType type = commuInfo.GetRequestProducts(filter);
     QString uuid = filter.keyword;
-
+    qDebug() << "deleteOrderDataResponse : client->ID : " << client->ID;
     // 유저 정보 찾기
     UserInfo* user = this->userManager->userSearchById(client->ID);
     if (!user) {
+        QString msg;
+        msg = QString("client %1(%2) %3 request 처리 에러 : user 없음").arg(client->ID, client->name, "주문 삭제");
+        logManager->getTimeStamp_and_write(LogManager::LogType::ERRO, msg);
+
         qDebug() << "서버: 유저를 찾을 수 없습니다.";
         return;
     }
@@ -1013,6 +1122,10 @@ void Server::DeleteOrderDataResponse(const CommuInfo& commuInfo, ClientData* cli
         product = this->bluerayManager->blueraySearchByUuid(uuid);
     }
     if (!product) {
+        QString msg;
+        msg = QString("client %1(%2) %3 request 처리 에러 : 조회된 uuid 상품 없음").arg(client->ID, client->name, "주문 삭제");
+        logManager->getTimeStamp_and_write(LogManager::LogType::ERRO, msg);
+
         qDebug() << "서버: 해당 uuid 상품 없음";
         return;
     }
@@ -1029,9 +1142,35 @@ void Server::DeleteOrderDataResponse(const CommuInfo& commuInfo, ClientData* cli
         responseObj["status"] = "fail";
         responseObj["message"] = "user 또는 product 없음";
     } else if(resultDelete == 0){
+        QString msg;
+        msg = QString("client %1(%2) %3 request 처리 완료").arg(client->ID, client->name, "주문 삭제");
+        logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
+
         qDebug() << "서버: 주문 삭제가 성공적으로 완료되었습니다. UUID:" << uuid << "유저:" << user->getID();
         responseObj["status"] = "success";
         responseObj["message"] = "주문 삭제가 완료되었습니다.";
+
+        // 수량 증가 처리
+        ProductInfo* is_product = this->musicManager->musicSearchByUuid(uuid);
+        if(!is_product){
+            // blueray or book
+            is_product = this->bookManager->bookSearchByUuid(uuid);
+            if(!is_product){
+                // blueray
+                is_product = this->bluerayManager->blueraySearchByUuid(uuid);
+                int amount = is_product->getAmount();
+                is_product->setAmount(amount + 1);
+            } else {
+                // book
+                int amount = is_product->getAmount();
+                is_product->setAmount(amount + 1);
+            }
+        } else {
+            // music
+            int amount = is_product->getAmount();
+            is_product->setAmount(amount + 1);
+        }
+
         this->orderManager->orderListJsonSave();
         this->orderManager->orderListJsonLoad();
     }
@@ -1058,5 +1197,122 @@ void Server::DeleteOrderDataResponse(const CommuInfo& commuInfo, ClientData* cli
     // socket->write(packet); // 길이  + 나머지 모든 데이터(response 데이터 포함)
     // socket->flush(); // 추가적으로 송신 버퍼를 즉시 밀어줌
     qDebug() << "서버: SearchDeleteRespond 응답 전송 완료";
-    qDebug() << responseInfo.GetByteArray();
+    // qDebug() << responseInfo.GetByteArray();
 }
+
+void Server::on_server_product_insert_image_pushButton_2_clicked()
+{
+    file_path = QFileDialog::getOpenFileName(this, "open image", "C:/", "File (*.PNG)");
+
+    ui->server_product_insert_image_file_name_label->setText(file_path);
+    ui->server_product_insert_image_file_name_label->setToolTip(file_path);
+}
+
+void Server::on_server_product_insert_pushbutton_clicked()
+{
+    QString uuid = QUuid::createUuid().toString();
+    QString name = ui->server_product_insert_title_lineEdit->text();
+    QString author = ui->server_product_insert_author_lineEdit->text();
+    QString company = ui->server_product_insert_company_lineEdit->text();
+    int price = ui->server_product_insert_price_lineEdit->text().toInt();
+    QString context = ui->server_product_insert_context_textEdit->toPlainText();
+    int amount = ui->server_product_insert_amount_lineEdit->text().toInt();
+
+    if(name.isEmpty() || author.isEmpty() || company.isEmpty() ||
+        price == 0 || context.isEmpty() || amount == 0 || ui->server_product_insert_image_file_name_label->text().isEmpty()
+        || ui->server_product_insert_image_file_name_label->text().compare("이미지를 첨부하세요.") == 0){
+        QMessageBox::critical(this, tr("상품 추가"), tr("상품 등록 정보를 모두 입력하세요."));
+        return;
+    }
+
+    QImage img(ui->server_product_insert_image_file_name_label->text());
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    img.save(&buffer, "PNG");
+    QString img_string = QString::fromLatin1(byteArray.toBase64());
+
+    if(ui->server_product_insert_book_radiobutton->isChecked()){
+        Book* book = new Book(uuid, name, author, company, price, context, amount, img_string);
+        QString result = this->bookManager->bookInsert(book);
+        if(result.compare("OK") == 0){
+            QMessageBox::information(this, tr("상품 추가"), tr("책 상품이 정상 추가되었습니다."));
+        } else {
+            QMessageBox::information(this, tr("상품 추가"), tr("중복 책으로 등록되지 않았습니다."));
+        }
+    } else if(ui->server_product_insert_blueray_radiobutton->isChecked()){
+        Blueray* blueray = new Blueray(uuid, name, author, company, price, context, amount, img_string);
+        QString result = this->bluerayManager->bluerayInsert(blueray);
+        if(result.compare("OK") == 0){
+            QMessageBox::information(this, tr("상품 추가"), tr("블루레이 상품이 정상 추가되었습니다."));
+        } else {
+            QMessageBox::information(this, tr("상품 추가"), tr("중복 블루레이로 등록되지 않았습니다."));
+        }
+    } else if(ui->server_product_insert_music_radiobutton->isChecked()){
+        Music* music = new Music(uuid, name, author, company, price, context, amount, img_string);
+        QString result = this->musicManager->musicInsert(music);
+        if(result.compare("OK") == 0){
+            QMessageBox::information(this, tr("상품 추가"), tr("음반 상품이 정상 추가되었습니다."));
+        } else {
+            QMessageBox::information(this, tr("상품 추가"), tr("중복 음반으로 등록되지 않았습니다."));
+        }
+    } else {
+        QMessageBox::critical(this, tr("상품 추가"), tr("라디오 버튼을 통해 제품 종류가 선택되지 않았습니다 !"));
+        return;
+    }
+}
+
+
+void Server::on_server_product_delete_pushbutton_clicked()
+{
+    if(ui->productsListWidget->selectedItems().isEmpty()){
+        QMessageBox::critical(this, tr("상품 제거"), tr("리스트에서 상품을 선택해주세요."));
+    } else {
+        QListWidgetItem* firstItem = ui->productsListWidget->selectedItems().first();
+        QWidget* widget = ui->productsListWidget->itemWidget(firstItem);
+
+        if(ui->server_product_insert_book_radiobutton->isChecked()){
+            BookItem* castedItem = qobject_cast<BookItem*>(widget);
+            QMap<QString, QString> selectedData = castedItem->getData();
+            QString uuid = selectedData["UUID"];
+            Book* book = this->bookManager->bookSearchByUuid(uuid);
+            // orderlist 에서도 삭제되어야 함
+            this->orderManager->delOrderListUuid(book->getUuid());
+            QString result = this->bookManager->bookEraseUuid(book->getUuid());
+            if(result.compare("OK") == 0){
+                QMessageBox::information(this, tr("상품 제거"), tr("상품이 정상적으로 제거되었습니다."));
+            } else {
+                QMessageBox::critical(this, tr("상품 제거"), tr("선택한 상품의 uuid 를 찾을 수 없었습니다."));
+            }
+        } else if(ui->server_product_insert_blueray_radiobutton->isChecked()){
+            BluerayItem* castedItem = qobject_cast<BluerayItem*>(widget);
+            QMap<QString, QString> selectedData = castedItem->getData();
+            QString uuid = selectedData["UUID"];
+            Blueray* blueray = this->bluerayManager->blueraySearchByUuid(uuid);
+            // orderlist 에서도 삭제되어야 함
+            this->orderManager->delOrderListUuid(blueray->getUuid());
+            QString result = this->bluerayManager->bluerayEraseUuid(blueray->getUuid());
+            if(result.compare("OK") == 0){
+                QMessageBox::information(this, tr("상품 제거"), tr("상품이 정상적으로 제거되었습니다."));
+            } else {
+                QMessageBox::critical(this, tr("상품 제거"), tr("선택한 상품의 uuid 를 찾을 수 없었습니다."));
+            }
+        } else if(ui->server_product_insert_music_radiobutton->isChecked()){
+            MusicItem* castedItem = qobject_cast<MusicItem*>(widget);
+            QMap<QString, QString> selectedData = castedItem->getData();
+            QString uuid = selectedData["UUID"];
+            Music* music = this->musicManager->musicSearchByUuid(uuid);
+            // orderlist 에서도 삭제되어야 함
+            this->orderManager->delOrderListUuid(music->getUuid());
+            QString result = this->musicManager->musicEraseUuid(music->getUuid());
+            if(result.compare("OK") == 0){
+                QMessageBox::information(this, tr("상품 제거"), tr("상품이 정상적으로 제거되었습니다."));
+            } else {
+                QMessageBox::critical(this, tr("상품 제거"), tr("선택한 상품의 uuid 를 찾을 수 없었습니다."));
+            }
+        } else {
+            QMessageBox::critical(this, tr("상품 제거"), tr("제품 종류 를 선택하고 조회를 먼저 해주세요 !"));
+            return;
+        }
+    }
+}
+

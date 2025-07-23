@@ -44,6 +44,7 @@ private:
     void OrderInfosFetchRespond(const CommuInfo &commuInfo, ClientData* client);
     void OrderAddRespond(const CommuInfo& commuInfo, ClientData* client);
     void OrderDeleteRespond(const CommuInfo& commuInfo, ClientData* client);
+    void UserDeleteRespond(const CommuInfo &commuInfo, ClientData* client);
 
     void SearchDataResponse(const CommuInfo& commuInfo, ClientData* client);
     void SearchOrderDataResponse(const CommuInfo& commuInfo, ClientData* client);
@@ -66,6 +67,12 @@ private slots:
     void transferLabels(bool checked);
 
     void enterRoom(int roomIndex);
+
+    void on_server_product_insert_image_pushButton_2_clicked();
+
+    void on_server_product_insert_pushbutton_clicked();
+
+    void on_server_product_delete_pushbutton_clicked();
 
 signals:
     void writeReady(const QThread* compareThread, const QByteArray& byte);
@@ -100,5 +107,6 @@ private:
     LogManager* logManager;
 
     //void echoData();
+    QString file_path;
 };
 #endif // SERVER_H

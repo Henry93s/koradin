@@ -159,6 +159,21 @@ QString MusicManager::musicErase(const QString& name, const QString& artist){
     return "NotFound";
 }
 
+// delete music uuid
+QString MusicManager::musicEraseUuid(const QString& uuid){
+    for (auto it = musicList.begin(); it != musicList.end();) {
+        if (!it.value()) continue;
+        if(uuid.compare(it.value()->getUuid()) == 0){
+            musicList.erase(it);
+            return "OK";
+        } else {
+            it++;
+        }
+    }
+
+    return "NotFound";
+}
+
 // read one music
 Music* MusicManager::musicSearchByNameAndArtist(const QString& name, const QString& artist){
     Music* returnMusic;

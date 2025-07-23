@@ -98,7 +98,9 @@ void Client::Initialize(QTcpSocket *sock, const QString& Name, const QString& ID
     clientData.name = Name;
     clientData.ID = ID;
 
-    // // 데이터 스트림 초기화
+    qDebug() << "testings : client::initialize - name:  " << clientData.name << ", ID :  " << clientData.ID;
+
+    // 데이터 스트림 초기화
     // in.setDevice(sock);
     // in.setVersion(QDataStream::Qt_6_0);
 
@@ -114,7 +116,7 @@ void Client::Initialize(QTcpSocket *sock, const QString& Name, const QString& ID
     }
 
     // 첫 실행 시 모든 product 검색 처리(단 tab index 는 넘어가지 않아야 함)
-    this->on_home_search_pushButton_clicked();
+    this->on_home_orderSearch_pushButton_clicked();
 }
 
 void Client::respond()
@@ -126,8 +128,8 @@ void Client::respond()
     QDataStream in(socket);
     // in.setVersion(QDataStream::Qt_6_0);
     qDebug() << "Response!!!";
-    qDebug() << "ExpectedSize :" << expectedSize;
-    qDebug() << "ClinetSocket - bytesAvailable :" << clientSocket->bytesAvailable();
+     qDebug() << "ExpectedSize :" << expectedSize;
+     qDebug() << "ClinetSocket - bytesAvailable :" << clientSocket->bytesAvailable();
     while(1){
         if(expectedSize == 0){
             if(clientSocket->bytesAvailable() < 4){
@@ -186,7 +188,7 @@ void Client::InfosFetchRespond(const CommuInfo &commuInfo)
     ProductInfo::Filter filter;
     ProductInfo::ProductType productType = commuInfo.GetRequestProducts(filter);
 
-    //qDebug() << "client : producttype : " << productType;
+    qDebug() << "client : producttype : " << productType;
 
     switch (productType) {
     case ProductInfo::Book:
@@ -590,6 +592,7 @@ void Client::on_home_orderSearch_pushButton_clicked()
 void Client::closeEvent(QCloseEvent *event)
 {
     CommuInfo com;
+    qDebug() << "client::closeevent = name : " << clientData.name << " id : " << clientData.ID;
     com.LoginOrOut(false, clientData.name, clientData.ID);
     // 김선권 추가
     com.AddSizePacket();
@@ -603,4 +606,5 @@ void Client::on_home_orderDelete_pushButton_clicked()
 {
     clientHomeService.orderDelete(this);
 }
+
 

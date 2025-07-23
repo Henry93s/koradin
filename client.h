@@ -57,10 +57,12 @@ private slots:
     // 홈 tab button event
     void on_home_search_pushButton_clicked();
     void on_home_orderSearch_pushButton_clicked();
+    void on_home_orderDelete_pushButton_clicked();
+
 protected:
     void closeEvent(QCloseEvent* event) override;
 
-    void on_home_orderDelete_pushButton_clicked();
+
 
 private:
     ClientData clientData;

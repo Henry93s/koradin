@@ -160,6 +160,21 @@ QString BookManager::bookErase(const QString& name, const QString& writer){
     return "NotFound";
 }
 
+// delete book uuid
+QString BookManager::bookEraseUuid(const QString& uuid){
+    for (auto it = bookList.begin(); it != bookList.end();) {
+        if (!it.value()) continue;
+        if(uuid.compare(it.value()->getUuid()) == 0){
+            bookList.erase(it);
+            return "OK";
+        } else {
+            it++;
+        }
+    }
+
+    return "NotFound";
+}
+
 // read one book
 Book* BookManager::bookSearchByNameAndWriter(const QString& name, const QString& writer){
     for (auto it = bookList.begin(); it != bookList.end(); ++it) {

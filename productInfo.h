@@ -53,6 +53,7 @@ public:
     // QImage -- base64 디코딩 --> QString return
     QString getQImageToQStringReturn(const QImage& image);
 
+
 private:
     QString Uuid;
     QString company;

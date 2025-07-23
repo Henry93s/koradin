@@ -159,6 +159,22 @@ QString BluerayManager::bluerayErase(const QString& name, const QString& artist)
     return "NotFound";
 }
 
+// delete blueray uuid
+QString BluerayManager::bluerayEraseUuid(const QString& uuid){
+    for (auto it = bluerayList.begin(); it != bluerayList.end();) {
+        if (!it.value()) continue;
+        if(uuid.compare(it.value()->getUuid()) == 0){
+            bluerayList.erase(it);
+            return "OK";
+        } else {
+            it++;
+        }
+    }
+
+    return "NotFound";
+}
+
+
 // read one blueray
 Blueray* BluerayManager::blueraySearchByNameAndArtist(const QString& name, const QString& artist){
     Blueray* returnBlueray;

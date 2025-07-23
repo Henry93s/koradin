@@ -6,6 +6,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
+#include <thread>
+#include <chrono>
 
 using namespace std;
 
@@ -41,6 +43,7 @@ void ClientHomeService::allSearch(Client* homeTab){
     if(it != searchType.end()){
         // homeBookSearchRequest 메소드로 서버에 book 검색 요청 처리
         QMessageBox::information(homeTab, "Book Search", "도서 정보를 불러오고 있습니다.");
+        this_thread::sleep_for(chrono::milliseconds(100));
         this->homeBookSearchRequest(homeTab, searchData);
     }
 
@@ -49,6 +52,7 @@ void ClientHomeService::allSearch(Client* homeTab){
     if(it != searchType.end()){
         // homeMusicSearchRequest 메소드로 서버에 music 검색 요청 처리
         QMessageBox::information(homeTab, "Music Search", "음반 정보를 불러오고 있습니다.");
+        this_thread::sleep_for(chrono::milliseconds(100));
         this->homeMusicSearchRequest(homeTab, searchData);
     }
 
@@ -57,6 +61,7 @@ void ClientHomeService::allSearch(Client* homeTab){
     if(it != searchType.end()){
         // homeBlueraySearchRequest 메소드로 서버에 blueray 검색 요청 처리
         QMessageBox::information(homeTab, "Blueray Search", "블루레이 정보를 불러오고 있습니다.");
+        this_thread::sleep_for(chrono::milliseconds(100));
         this->homeBlueraySearchRequest(homeTab, searchData);
     }
 }
@@ -109,6 +114,7 @@ void ClientHomeService::orderChecking(Client* homeTab){
 
     QString searchData = homeTab->getUi()->home_orderSearchlineEdit->text();
     commuinfo.RequestOrderProducts(productType, ProductInfo::Filter{ProductInfo::FilterType::Name, searchData, 0, 9999999}, QString("OrderInfos"));
+    commuinfo.AddSizePacket();
 
     homeTab->writeSocket(commuinfo.GetByteArray());
 }
