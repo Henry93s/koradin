@@ -30,6 +30,8 @@
 #include <QString>
 #include <QFileDialog>
 
+#include "sha512.h"
+
 #define PORT    5085
 #define PENDING_CONN    5
 #define MAX_CLIENTS 20
@@ -406,6 +408,15 @@ void Server::AUTHRespond(const CommuInfo &commuInfo, ClientData* client)
         ID = tr("No");
     } else{
         // password 검증
+
+        // 평문 password + salt + ==(SHA512 해싱)=> 단방향 암호화 스트링 Digest 값 반환됨
+        // 이를 db 에 저장된 값(userList.json 파일 password)과 비교
+        QString salt = temp->getSalt();
+        qDebug() << "login user salt : " << salt;
+        qDebug() << "user input password : " << Pwd;
+        Pwd = QString::fromStdString(sha512(QString(Pwd + salt).toStdString()));
+        qDebug() << "user input -> hashing digest password : " << Pwd;
+        qDebug() << "json(DB) digest password : " << temp->getPassword();
         if(Pwd.compare(temp->getPassword()) == 0){
             // client.ui 가 열렸을 때, server connect 를 통한 새 클라이언트 연결 추가.
             // commuInfo -> client session 관리 리스트에 세션 추가
@@ -425,6 +436,12 @@ void Server::AUTHRespond(const CommuInfo &commuInfo, ClientData* client)
     QJsonObject data;
     data["ID"] = ID;
     data["password"] = Pwd;
+    if(temp != nullptr && Pwd.compare(temp->getPassword()) == 0){
+        data["password"] = temp->getPassword();
+        data["salt"] = temp->getSalt();
+    } else {
+        data["salt"] = "temp_salt";
+    }
     whole["CommuType"] = tr("AUTH");
     whole["Data"] = data;
 
@@ -452,7 +469,18 @@ void Server::AddRespond(const CommuInfo &commuInfo, ClientData* client)
     qDebug("AddRespond");
 
     for(auto user : usersToAdd){
-        auto* perUser = new UserInfo(user.getID(), user.getName(), user.getPassword(), user.getEmail(), user.getIsAdmin());
+        // 회원가입 시 클라이언트로 부터 받은
+
+        // 임시 salt 값은 새 랜덤 salt 값으로 변경
+        // password 는 (평문 password + 새 salt 값) ==> SHA512 해싱 ==> 단방향 암호화 스트링 다이제스트 값
+        qDebug() << "회원가입 시 기존 salt : " << user.getSalt();
+        QString salt = QString::fromStdString(generateSalt());
+        qDebug() << "회원가입 시 새 salt : " << salt;
+        qDebug() << "회원가입 시 기존 평문 password : " << user.getPassword();
+        QString digest_password = QString::fromStdString(sha512(QString(salt + user.getPassword()).toStdString()));
+        qDebug() << "회원가입 시 다이제스트 패스워드 password : " << digest_password;
+        auto* perUser = new UserInfo(user.getID(), user.getName(), digest_password , user.getEmail(), user.getIsAdmin(), salt);
+
         // qDebug() << user.getID() << user.getName() << user.getPassword() << user.getEmail() << user.getIsAdmin();
         userManager->userInsert(perUser);
         QString msg;

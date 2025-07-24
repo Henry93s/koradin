@@ -43,7 +43,7 @@ QString Join::duplicateCheck(){
     obj["Data"] = data;
 
     QJsonDocument doc(obj);
-
+    qDebug() << data["password"];
     socket->write(doc.toJson(QJsonDocument::Compact));
 
     return QString();
@@ -120,8 +120,9 @@ void Join::respond()
         auto p = info.GetIDPwd();
         if(p.first == QString("No")){
             //중복된 아이디가 없다!
+            // 클라이언트이므로 salt 값을 일단 임의로 작성 후 서버에 전송
             UserInfo newUser(ui->id_lineEdit->text(), ui->name_lineEdit->text(),
-                             ui->pw_lineEdit->text(), ui->email_lineEdit->text(), "false");
+                             ui->pw_lineEdit->text(), ui->email_lineEdit->text(), "false", "temp_salt");
             //userManagerInstance->userInsert(newUser);   //이거 역시 서버 통신으로.
             // 서버로 유저 추가 데이터 날리기
             std::vector<UserInfo> userVec;

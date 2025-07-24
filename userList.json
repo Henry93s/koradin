@@ -4,76 +4,87 @@
         "email": "email",
         "isAdmin": "isAdmin",
         "name": "name",
-        "password": "password"
+        "password": "e134163a5bb7fd3409fc4ca58a5a517cc08fe2f9382593867859914ebf35b2cda3c62c8c6cd0b850b76b019d1edc6c4e30eae7e1895983d0802deddec6515583",
+        "salt": "nsR9rbqs9gByRnat"
     },
     {
         "ID": "geonwoo",
         "email": "geonwoo@naver.com",
         "isAdmin": "false",
         "name": "건우",
-        "password": "geonwoo"
+        "password": "ea48638486395fd957c63b7c2edffbeeec9ddd36e370f7350bd4032ce9b1f248c3f613103988dc301356f7de6b9fac6d272141c409f68c76badffcfa324b1c88",
+        "salt": "SRePwulLQUKGgzqG"
     },
     {
         "ID": "geonwoo2",
         "email": "asdfasdf",
         "isAdmin": "false",
         "name": "geonwoo",
-        "password": "asdf"
+        "password": "782f2362dfcf3da27e408016ec9b41b43fc8d2dd3af5bda9dfeb5cdf72aeafdb82e09bc7d25eb55665d0ef7e206fc3f3d3cd1fc17f435c13b5faaa9433bbb999",
+        "salt": "KpnEJtkJNmehIFzL"
     },
     {
         "ID": "manager",
         "email": "koradin@koradin.com",
         "isAdmin": "true",
         "name": "관리자",
-        "password": "manager"
+        "password": "74b8d9d3d4a9aae67d2281c039d624ba3a374ce19fdf6c29948efe8e4754677f3f1a0ad2a4a7021d735a1752063b5fd67178f9120ff588c25d9099527303a348",
+        "salt": "zJaXASUx3rfcT0zv"
     },
     {
         "ID": "sadfasdf",
         "email": "asdf",
         "isAdmin": "false",
         "name": "asdf",
-        "password": "asdfa"
+        "password": "89155b295b3e0fa1b8c5577acc06f9297d1d041913dcc2868745dd5fbd002b936c5b876e553d2cedf4da161d2478cd23b1e07e3c5f7cb23d8b6a14b4dc263acd",
+        "salt": "hzMlY9ncTx89L1wS"
     },
     {
         "ID": "testasdfasdf",
         "email": "sadfsadg",
         "isAdmin": "false",
         "name": "asdf",
-        "password": "asdfasdf"
+        "password": "71980e9f831b1aa16c260152662db48cb4da64c14824c8dabe4a6d1771530eec53a7c7afbb619cb761b3c32e77e69d754544bbb9c87a7e636043d21e1522fd1b",
+        "salt": "RXQ8nxommvhRsSgz"
     },
     {
         "ID": "testidt",
         "email": "email",
         "isAdmin": "true",
         "name": "이름",
-        "password": "password"
+        "password": "4edb8be78545013fc1d9bc5df30ba07d179fd2fa509f1286e00816b221658efe9ad848cc0a322a97753ae1d7b04a5ad94d99edee6cfda1c4edd088252b8856c1",
+        "salt": "d0JQxetOXBoc1JwL"
     },
     {
         "ID": "testidt2",
         "email": "asdfasdgasdg",
         "isAdmin": "false",
         "name": "asdfasdf",
-        "password": "asdfasdf"
+        "password": "01711b1694b1d71dc4949c4331e8299025c70fa0b6cec249adbebef60cccf1b47bc4da35f15d416683ed8c99134aa62faa22435431ae993e37c454960689d3f4",
+        "salt": "DdLnFFJ4SEGd7Y0n"
     },
     {
         "ID": "testidtt",
         "email": "asdfsdaf",
         "isAdmin": "false",
         "name": "asdf",
-        "password": "asdfasdf"
+        "password": "98a5da8094be1df25f7297ec346bd96a4df8a15360107dac1d7488c4b57079f1d671c92fbe0bc281d5d1270036c414525dbb914489f6804671e238eccb735356",
+        "salt": "QPO0SQcs7zuqcXBc"
     },
     {
         "ID": "testidttt",
         "email": "asdfsadgs",
         "isAdmin": "false",
         "name": "asdfasdf",
-        "password": "asdfasdf"
+        "password": "0dcfe3fa3ca96c863fc63d12885f84ae7f0546ee6ddeb06117a8ab6cb96bea38f01ca14923d03e4e97da6cc4a7986c7046bba30b55186f6f531e234ecec70a97",
+        "salt": "Sm8hVZFkRJD2WhXB"
     },
     {
         "ID": "testidtttt",
         "email": "asdfg",
         "isAdmin": "false",
         "name": "asdf",
-        "password": "asdf"
+        "password": "e85a6e8dff79fb3c9f7c84cc671ff08cd3cc6a052f20202bcc76bd40a2ac6593a250f045f16b44c6ba491671d92178ddb08fc2a17d667639116e5970e2726581",
+        "salt": "tNh8YwJgv4usgCVb"
     }
 ]

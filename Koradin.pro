@@ -101,6 +101,7 @@ HEADERS += \
     popup.h \
     productInfo.h \
     productwidget.h \
+    sha512.h \
     tcpcommudefines.h \
     userInfo.h \
     userManager.h \
@@ -134,6 +135,10 @@ TRANSLATIONS += \
     Koradin_en_US.ts
 CONFIG += lrelease
 CONFIG += embed_translations
+
+INCLUDEPATH += "C:\msys64\mingw64\include"
+LIBS += -LC:/msys64/mingw64/lib -lcrypto
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

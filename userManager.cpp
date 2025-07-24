@@ -60,8 +60,9 @@ void UserManager::userListJsonLoad(){
         QString password = QString::fromStdString(user["password"]);
         QString email = QString::fromStdString(user["email"]);
         QString isAdmin = QString::fromStdString(user["isAdmin"]);
+        QString salt = QString::fromStdString(user["salt"]);
 
-        UserInfo* newUser = new UserInfo(ID, name, password, email, isAdmin);
+        UserInfo* newUser = new UserInfo(ID, name, password, email, isAdmin, salt);
         // userList stl Map 컨테이너에 저장
         userList.insert(ID, newUser);
 
@@ -100,7 +101,8 @@ void UserManager::userListJsonSave(){
             { "name",      it.value()->getName().toStdString() },
             { "password",  it.value()->getPassword().toStdString() },
             { "email",     it.value()->getEmail().toStdString() },
-            { "isAdmin",   it.value()->getIsAdmin().toStdString() }
+            { "isAdmin",   it.value()->getIsAdmin().toStdString() },
+            { "salt",      it.value()->getSalt().toStdString() }
         };
         // json 각 요소들을 j_array 에 push
         j_array.push_back(userObj);
