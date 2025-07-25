@@ -64,3 +64,59 @@
 [2025-07-23 20:40:54] [INFO] : geonwoo2(geonwoo) client 유저 채팅방 셋팅 request
 [2025-07-23 20:40:54] [INFO] : geonwoo2(geonwoo) 가 채팅방에 접속을 해제하였습니다.
 [2025-07-23 20:40:55] [INFO] : client ��������(�������) 접속 종료
+[2025-07-23 20:44:22] [INFO] : ********** koradin Server Open **********
+[2025-07-23 20:44:23] [INFO] : IP: ::ffff:127.0.0.1, Port: 50230 - Client has connected to the server
+[2025-07-23 20:44:30] [INFO] : IP: ::ffff:127.0.0.1, Port: 50232 - Client has connected to the server
+[2025-07-23 20:44:43] [INFO] : (-) client 로그인 request
+[2025-07-23 20:44:43] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-23 20:44:43] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-23 20:44:43] [INFO] : geonwoo(건우) 가 채팅방에 접속하였습니다.
+[2025-07-23 20:44:43] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-23 20:44:43] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-23 20:44:46] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-23 20:44:46] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-23 20:44:47] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-23 20:44:47] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-23 20:44:47] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-23 20:44:47] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-23 20:48:30] [INFO] : geonwoo(건우) client 유저 채팅방 셋팅 request
+[2025-07-23 20:48:30] [INFO] : geonwoo(건우) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-23 20:48:30] [INFO] : client �������(��) 접속 종료
+[2025-07-23 20:48:35] [INFO] : IP: ::ffff:127.0.0.1, Port: 50269 - Client has connected to the server
+[2025-07-23 20:48:43] [INFO] : (-) client 로그인 request
+[2025-07-23 20:48:43] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-23 20:48:43] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-23 20:48:43] [INFO] : geonwoo(건우) 가 채팅방에 접속하였습니다.
+[2025-07-23 20:48:43] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-23 20:48:43] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-23 20:48:51] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-23 20:48:51] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-23 20:48:52] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-23 20:48:52] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-23 20:48:52] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-23 20:48:52] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-23 20:49:07] [INFO] : IP: ::ffff:127.0.0.1, Port: 50276 - Client has connected to the server
+[2025-07-23 20:49:16] [INFO] : (-) client 로그인 request
+[2025-07-23 20:49:16] [INFO] : [LOGIN] - ID : geonwoo passed login
+[2025-07-23 20:49:16] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-23 20:49:16] [INFO] : geonwoo2(geonwoo) 가 채팅방에 접속하였습니다.
+[2025-07-23 20:49:16] [INFO] : geonwoo2(geonwoo) client 주문 검색 request
+[2025-07-23 20:49:16] [INFO] : client geonwoo2(geonwoo) 주문 조회 request 처리 완료
+[2025-07-23 20:49:26] [INFO] : geonwoo2(geonwoo) client 검색 request
+[2025-07-23 20:49:26] [INFO] : client geonwoo2(geonwoo) 검색 request 처리 완료
+[2025-07-23 20:49:26] [INFO] : geonwoo2(geonwoo) client 검색 request
+[2025-07-23 20:49:26] [INFO] : client geonwoo2(geonwoo) 검색 request 처리 완료
+[2025-07-23 20:49:27] [INFO] : geonwoo2(geonwoo) client 검색 request
+[2025-07-23 20:49:27] [INFO] : client geonwoo2(geonwoo) 검색 request 처리 완료
+[2025-07-23 20:49:41] [INFO] : geonwoo2(geonwoo) client 검색 request
+[2025-07-23 20:49:41] [INFO] : client geonwoo2(geonwoo) 검색 request 처리 완료
+[2025-07-23 20:49:42] [INFO] : geonwoo2(geonwoo) client 검색 request
+[2025-07-23 20:49:42] [INFO] : client geonwoo2(geonwoo) 검색 request 처리 완료
+[2025-07-23 20:49:42] [INFO] : geonwoo2(geonwoo) client 검색 request
+[2025-07-23 20:49:42] [INFO] : client geonwoo2(geonwoo) 검색 request 처리 완료
+[2025-07-23 20:49:49] [INFO] : geonwoo2(geonwoo) client 유저 채팅방 셋팅 request
+[2025-07-23 20:49:49] [INFO] : geonwoo2(geonwoo) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-23 20:49:50] [INFO] : client ��������(�������) 접속 종료
+[2025-07-23 20:49:51] [INFO] : geonwoo(건우) client 유저 채팅방 셋팅 request
+[2025-07-23 20:49:51] [INFO] : geonwoo(건우) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-23 20:49:51] [INFO] : client �������(��) 접속 종료

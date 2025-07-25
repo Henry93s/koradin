@@ -42,7 +42,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -837,7 +837,7 @@
             <number>0</number>
            </property>
            <item>
-            <widget class="QListWidget" name="listWidget_2">
+            <widget class="QListWidget" name="orderList">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
                <horstretch>0</horstretch>
@@ -1516,7 +1516,7 @@
      <x>0</x>
      <y>0</y>
      <width>834</width>
-     <height>17</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

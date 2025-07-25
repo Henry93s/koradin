@@ -117,17 +117,17 @@ void MainWindow::on_login_button_clicked()
 
 void MainWindow::on_join_button_clicked()
 {
-    // Qt creator 에서는 기본적으로 파일을 열 때 프로젝트명~debug or 프로젝트명~release 디렉토리에서 실행되므로 현재 파일 위치로 변경
-    QFile file("./../../userList.json");
-    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
-        qDebug() << "userList 파일 오픈 실패";
-        return;
-    }
+    // // Qt creator 에서는 기본적으로 파일을 열 때 프로젝트명~debug or 프로젝트명~release 디렉토리에서 실행되므로 현재 파일 위치로 변경
+    // QFile file("./../../userList.json");
+    // if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+    //     qDebug() << "userList 파일 오픈 실패";
+    //     return;
+    // }
 
-    QTextStream in(&file);
-    // json 에 한글 포함일 때 encoding 셋팅 필요
-    in.setEncoding(QStringConverter::Utf8);
-    QString jsonText = in.readAll();
+    // QTextStream in(&file);
+    // // json 에 한글 포함일 때 encoding 셋팅 필요
+    // in.setEncoding(QStringConverter::Utf8);
+    // QString jsonText = in.readAll();
     // 회원 가입 버튼 클릭 시 열리는 회원 가입 화면
     Join* joinWindow = new Join(); // 다시 돌아오기 위해서 Join 생성자에 현재 window 를 인자로 넘김
     joinWindow->Initialize(socket); // 소켓을 넘김. 확인하기 위해서

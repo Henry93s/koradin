@@ -17,6 +17,9 @@
 
 #include "chattinglogwidget.h"
 
+#include "orderitem.h"
+#include "productInfo.h"
+
 #include <QtNetwork>
 
 #include <QTabWidget>
@@ -188,6 +191,7 @@ Server::Server(QWidget *parent)
     books = MapToVector(this->bookManager->bookListRead());
     bluerays = MapToVector(bluerayManager->bluerayListRead());
     musics = MapToVector(musicManager->musicListRead());
+    UpdateUI_Orders();
 
     // logger
     logManager->getTimeStamp_and_write(LogManager::LogType::INFO, "********** koradin Server Open **********");
@@ -459,6 +463,7 @@ void Server::AddRespond(const CommuInfo &commuInfo, ClientData* client)
         msg = QString("%1(%2) 유저를 추가합니다.").arg(user.getID(), user.getName());
         logManager->getTimeStamp_and_write(LogManager::LogType::INFO, msg);
     }
+    UpdateUI_Users();
 
     //인서트 한다음 세이브.
     userManager->userListJsonSave();
@@ -653,8 +658,17 @@ void Server::UpdateUI(Info::InfoType type, ProductInfo::ProductType ifProductTyp
     switch(type)
     {
         case Info::InfoType::Product:
-        UpdateUI_Product(ifProductType);
-        break;
+            UpdateUI_Product(ifProductType);
+            break;
+        case Info::InfoType::Order:
+            UpdateUI_Orders();
+            break;
+        case Info::InfoType::User:
+            UpdateUI_Users();
+            break;
+        default:
+
+            break;
     }
 }
 
@@ -791,6 +805,32 @@ void Server::UpdateUI_Product_Music()
     }
 
     emit signalForMusicUI(musicContain);
+}
+
+void Server::UpdateUI_Orders()
+{
+    auto orders = orderManager->getOrderList();
+    for(auto iter = orders.begin(); iter != orders.end(); iter++){
+        OrderItem* orderItem = new OrderItem(this);
+        for(auto productIter = iter.value().begin(); productIter != iter.value().end(); productIter++){
+            orderItem->setData(tr("whatever"), (*productIter)->getName(), (*productIter)->getPrice(), (*productIter)->getUuid());
+
+            QListWidgetItem* item = new QListWidgetItem(ui->orderList);
+            item->setSizeHint(orderItem->sizeHint());
+            ui->orderList->addItem(item);
+            ui->orderList->setItemWidget(item, orderItem);
+        }
+    }
+}
+
+void Server::UpdateUI_Users()
+{
+    auto users = userManager->getUserListAsVector();
+
+    auto* cusWidget = qobject_cast<CustomersWidget*>(ui->customerWidget);
+    if(cusWidget){
+        cusWidget->userNameSearch();
+    }
 }
 
 
@@ -1065,6 +1105,8 @@ void Server::AddOrderDataResponse(const CommuInfo& commuInfo, ClientData* client
             int amount = is_product->getAmount();
             is_product->setAmount(amount - 1);
         }
+        // ui update
+        UpdateUI_Orders();
 
         this->orderManager->orderListJsonSave();
         this->orderManager->orderListJsonLoad();

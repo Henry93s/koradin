@@ -34,17 +34,20 @@ QString Join::duplicateCheck(){
         popup->show();
         return "입력되지 않은 값이 있음";
     }
+    CommuInfo com;
+    com.SetIDPwd(ui->id_lineEdit->text(), ui->pw_lineEdit->text());
+    com.AddSizePacket();
 
-    QJsonObject obj;
-    QJsonObject data;
-    obj["CommuType"] = tr("AUTH");
-    data["ID"] = ui->id_lineEdit->text();
-    data["password"] = ui->pw_lineEdit->text();
-    obj["Data"] = data;
+    // QJsonObject obj;
+    // QJsonObject data;
+    // obj["CommuType"] = tr("AUTH");
+    // data["ID"] = ui->id_lineEdit->text();
+    // data["password"] = ui->pw_lineEdit->text();
+    // obj["Data"] = data;
 
-    QJsonDocument doc(obj);
+    // QJsonDocument doc(obj);
 
-    socket->write(doc.toJson(QJsonDocument::Compact));
+    socket->write(com.GetByteArray());
 
     return QString();
     //UserInfo* findUser = userManagerInstance->userSearchById(ui->id_lineEdit->text());
@@ -111,7 +114,7 @@ void Join::respond()
     QTcpSocket* clientSocket = dynamic_cast<QTcpSocket*>(sender());
     if(clientSocket->bytesAvailable() > BLOCK_SIZE) return;
     QByteArray bytearray = clientSocket->read(BLOCK_SIZE);
-
+    bytearray.remove(0, 4);
     auto info = CommuInfo{bytearray};
 
     auto type = info.GetType();
@@ -129,6 +132,7 @@ void Join::respond()
             CommuInfo comm;
             comm.AddUsers(userVec);
 
+            comm.AddSizePacket();
             clientSocket->write(comm.GetByteArray());
         }
         else{

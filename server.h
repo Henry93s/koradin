@@ -56,6 +56,8 @@ private:
     void UpdateUI_Product_Book();
     void UpdateUI_Product_Blueray();
     void UpdateUI_Product_Music();
+    void UpdateUI_Orders();
+    void UpdateUI_Users();
 
 public slots:
     void respond(const QThread* thread, QByteArray bytearray);

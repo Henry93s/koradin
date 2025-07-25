@@ -1,0 +1,132 @@
+[2025-07-24 18:48:11] [INFO] : ********** koradin Server Open **********
+[2025-07-24 18:51:17] [INFO] : IP: ::ffff:127.0.0.1, Port: 56085 - Client has connected to the server
+[2025-07-24 18:51:22] [INFO] : (-) client 로그인 request
+[2025-07-24 18:51:22] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-24 18:51:22] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-24 18:51:22] [INFO] : geonwoo(건우) 가 채팅방에 접속하였습니다.
+[2025-07-24 18:51:22] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-24 18:51:22] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-24 18:52:17] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-24 18:52:17] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-24 18:53:00] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-24 18:53:00] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-24 18:53:32] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-24 18:53:32] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-24 18:54:28] [INFO] : IP: ::ffff:127.0.0.1, Port: 56107 - Client has connected to the server
+[2025-07-24 18:54:34] [INFO] : (-) client 로그인 request
+[2025-07-24 18:54:34] [INFO] : [LOGIN] - ID : geonwoo passed login
+[2025-07-24 18:54:34] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-24 18:54:34] [INFO] : geonwoo2(geonwoo) 가 채팅방에 접속하였습니다.
+[2025-07-24 18:54:34] [INFO] : geonwoo2(geonwoo) client 주문 검색 request
+[2025-07-24 18:54:34] [INFO] : client geonwoo2(geonwoo) 주문 조회 request 처리 완료
+[2025-07-24 18:55:01] [INFO] : IP: ::ffff:127.0.0.1, Port: 56110 - Client has connected to the server
+[2025-07-24 18:55:27] [INFO] : (-) client 로그인 request
+[2025-07-24 18:55:27] [WARN] : [LOGIN] - 계정의 password 가 일치하지 않습니다.
+[2025-07-24 18:55:40] [INFO] : (-) client 로그인 request
+[2025-07-24 18:55:40] [INFO] : [LOGIN] - ID : asdf passed login
+[2025-07-24 18:55:40] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-24 18:55:40] [INFO] : sadfasdf(asdf) 가 채팅방에 접속하였습니다.
+[2025-07-24 18:55:40] [INFO] : sadfasdf(asdf) client 주문 검색 request
+[2025-07-24 18:55:40] [INFO] : client sadfasdf(asdf) 주문 조회 request 처리 완료
+[2025-07-24 18:56:21] [INFO] : sadfasdf(asdf) client 채팅 request
+[2025-07-24 18:56:21] [INFO] : 일반 채팅 - sadfasdf(asdf) 안녕하세요 MSG 전송
+[2025-07-24 18:56:35] [INFO] : geonwoo(건우) client 채팅 request
+[2025-07-24 18:56:35] [INFO] : 일반 채팅 - geonwoo(건우) 안녕하십니까 MSG 전송
+[2025-07-24 18:56:43] [INFO] : geonwoo2(geonwoo) client 채팅 request
+[2025-07-24 18:56:43] [INFO] : 일반 채팅 - geonwoo2(geonwoo) 환영해요! MSG 전송
+[2025-07-24 18:57:12] [INFO] : geonwoo(건우) client 채팅 request
+[2025-07-24 18:57:17] [INFO] : 일반 채팅 - geonwoo(건우) 어서오십쇼 MSG 전송
+[2025-07-24 19:12:02] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-24 19:12:02] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-24 19:12:07] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-24 19:12:07] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-24 19:12:17] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-24 19:12:17] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-24 19:13:25] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-24 19:13:25] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-24 19:13:33] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-24 19:13:33] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-24 19:13:44] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-24 19:13:44] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-24 19:14:08] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-24 19:14:08] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-24 19:14:09] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-24 19:14:09] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-24 19:14:10] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-24 19:14:10] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-24 20:03:09] [INFO] : ********** koradin Server Open **********
+[2025-07-24 20:03:18] [INFO] : IP: ::ffff:127.0.0.1, Port: 56652 - Client has connected to the server
+[2025-07-24 20:03:32] [INFO] : client (�) 접속 종료
+[2025-07-24 20:03:36] [INFO] : IP: ::ffff:127.0.0.1, Port: 56654 - Client has connected to the server
+[2025-07-24 20:03:41] [INFO] : (-) client 로그인 request
+[2025-07-24 20:03:41] [WARN] : [LOGIN] - 입력한 id 가 유저 리스트에 없습니다.
+[2025-07-24 20:03:57] [INFO] : ********** koradin Server Open **********
+[2025-07-24 20:03:58] [INFO] : IP: ::ffff:127.0.0.1, Port: 56657 - Client has connected to the server
+[2025-07-24 20:04:03] [INFO] : IP: ::ffff:127.0.0.1, Port: 56659 - Client has connected to the server
+[2025-07-24 20:04:53] [INFO] : client (�) 접속 종료
+[2025-07-24 20:05:08] [INFO] : ********** koradin Server Open **********
+[2025-07-24 20:05:08] [INFO] : IP: ::ffff:127.0.0.1, Port: 56674 - Client has connected to the server
+[2025-07-24 20:05:14] [INFO] : IP: ::ffff:127.0.0.1, Port: 56675 - Client has connected to the server
+[2025-07-24 20:05:43] [INFO] : client (�) 접속 종료
+[2025-07-24 20:17:10] [INFO] : ********** koradin Server Open **********
+[2025-07-24 20:17:10] [INFO] : IP: ::ffff:127.0.0.1, Port: 56781 - Client has connected to the server
+[2025-07-24 20:17:18] [INFO] : IP: ::ffff:127.0.0.1, Port: 56783 - Client has connected to the server
+[2025-07-24 20:17:34] [INFO] : (-) client 로그인 request
+[2025-07-24 20:17:34] [WARN] : [LOGIN] - 입력한 id 가 유저 리스트에 없습니다.
+[2025-07-24 20:17:34] [INFO] : IP: ::ffff:127.0.0.1, Port: 56788 - Client has connected to the server
+[2025-07-24 20:17:39] [INFO] : (-) client 로그인 request
+[2025-07-24 20:17:39] [WARN] : [LOGIN] - 입력한 id 가 유저 리스트에 없습니다.
+[2025-07-24 20:19:04] [INFO] : ********** koradin Server Open **********
+[2025-07-24 20:19:04] [INFO] : IP: ::ffff:127.0.0.1, Port: 56800 - Client has connected to the server
+[2025-07-24 20:19:10] [INFO] : IP: ::ffff:127.0.0.1, Port: 56802 - Client has connected to the server
+[2025-07-24 20:19:25] [INFO] : (-) client 로그인 request
+[2025-07-24 20:19:25] [WARN] : [LOGIN] - 입력한 id 가 유저 리스트에 없습니다.
+[2025-07-24 20:19:25] [INFO] : IP: ::ffff:127.0.0.1, Port: 56810 - Client has connected to the server
+[2025-07-24 20:19:37] [INFO] : (-) client 로그인 request
+[2025-07-24 20:19:37] [WARN] : [LOGIN] - 입력한 id 가 유저 리스트에 없습니다.
+[2025-07-24 20:20:35] [INFO] : (-) client 로그인 request
+[2025-07-24 20:20:35] [WARN] : [LOGIN] - 입력한 id 가 유저 리스트에 없습니다.
+[2025-07-24 20:20:35] [INFO] : IP: ::ffff:127.0.0.1, Port: 56820 - Client has connected to the server
+[2025-07-24 20:21:10] [INFO] : (-) client 로그인 request
+[2025-07-24 20:21:10] [WARN] : [LOGIN] - 입력한 id 가 유저 리스트에 없습니다.
+[2025-07-24 20:21:10] [INFO] : IP: ::ffff:127.0.0.1, Port: 56827 - Client has connected to the server
+[2025-07-24 20:21:36] [INFO] : (-) client 로그인 request
+[2025-07-24 20:21:36] [WARN] : [LOGIN] - 입력한 id 가 유저 리스트에 없습니다.
+[2025-07-24 20:21:36] [INFO] : IP: ::ffff:127.0.0.1, Port: 56835 - Client has connected to the server
+[2025-07-24 20:21:54] [INFO] : (-) client 로그인 request
+[2025-07-24 20:21:54] [WARN] : [LOGIN] - 입력한 id 가 유저 리스트에 없습니다.
+[2025-07-24 20:21:54] [INFO] : IP: ::ffff:127.0.0.1, Port: 56837 - Client has connected to the server
+[2025-07-24 20:22:04] [INFO] : client (-) 접속 종료
+[2025-07-24 20:22:04] [INFO] : client (-) 접속 종료
+[2025-07-24 20:22:04] [INFO] : client (-) 접속 종료
+[2025-07-24 20:22:04] [INFO] : client (-) 접속 종료
+[2025-07-24 20:22:04] [INFO] : client (-) 접속 종료
+[2025-07-24 20:22:04] [INFO] : client (�) 접속 종료
+[2025-07-24 20:22:17] [INFO] : ********** koradin Server Open **********
+[2025-07-24 20:22:17] [INFO] : IP: ::ffff:127.0.0.1, Port: 56843 - Client has connected to the server
+[2025-07-24 20:22:26] [INFO] : IP: ::ffff:127.0.0.1, Port: 56846 - Client has connected to the server
+[2025-07-24 20:23:04] [INFO] : (-) client 로그인 request
+[2025-07-24 20:23:04] [WARN] : [LOGIN] - 입력한 id 가 유저 리스트에 없습니다.
+[2025-07-24 20:24:36] [INFO] : IP: ::ffff:127.0.0.1, Port: 56861 - Client has connected to the server
+[2025-07-24 20:24:40] [INFO] : client (-) 접속 종료
+[2025-07-24 20:24:40] [INFO] : client (�) 접속 종료
+[2025-07-24 20:25:44] [INFO] : ********** koradin Server Open **********
+[2025-07-24 20:25:44] [INFO] : IP: ::ffff:127.0.0.1, Port: 56878 - Client has connected to the server
+[2025-07-24 20:25:50] [INFO] : IP: ::ffff:127.0.0.1, Port: 56880 - Client has connected to the server
+[2025-07-24 20:25:58] [INFO] : (-) client 로그인 request
+[2025-07-24 20:25:58] [WARN] : [LOGIN] - 입력한 id 가 유저 리스트에 없습니다.
+[2025-07-24 20:25:58] [INFO] : IP: ::ffff:127.0.0.1, Port: 56882 - Client has connected to the server
+[2025-07-24 20:25:58] [INFO] : (-) client 유저 추가 request
+[2025-07-24 20:25:58] [INFO] : aaa(aaa) 유저를 추가합니다.
+[2025-07-24 20:26:05] [INFO] : (-) client 로그인 request
+[2025-07-24 20:26:05] [INFO] : [LOGIN] - ID : aaa passed login
+[2025-07-24 20:26:05] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-24 20:26:05] [INFO] : aaa(aaa) 가 채팅방에 접속하였습니다.
+[2025-07-24 20:26:05] [INFO] : aaa(aaa) client 주문 검색 request
+[2025-07-24 20:26:05] [INFO] : client aaa(aaa) 주문 조회 request 처리 완료
+[2025-07-24 20:26:45] [INFO] : aaa(aaa) client 유저 채팅방 셋팅 request
+[2025-07-24 20:26:45] [INFO] : aaa(aaa) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-24 20:26:46] [INFO] : client aaa(aaa) 접속 종료
+[2025-07-24 20:26:46] [INFO] : client ���(���) 접속 종료
+[2025-07-24 20:28:29] [INFO] : ********** koradin Server Open **********
+[2025-07-24 20:28:29] [INFO] : IP: ::ffff:127.0.0.1, Port: 56904 - Client has connected to the server

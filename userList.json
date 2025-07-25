@@ -7,6 +7,13 @@
         "password": "password"
     },
     {
+        "ID": "aaa",
+        "email": "aaa",
+        "isAdmin": "false",
+        "name": "aaa",
+        "password": "aaa"
+    },
+    {
         "ID": "geonwoo",
         "email": "geonwoo@naver.com",
         "isAdmin": "false",
