@@ -139,7 +139,7 @@ CONFIG += embed_translations
 win32 {
     # MSVC (Microsoft Visual C++) 환경일 경우
     contains(QMAKE_CXX, "cl") {
-        INCLUDEPATH += "C:/OpenSSL-Win64/include"
+        INCLUDEPATH += "D:/programs/OpenSSL-Win64/include"
         LIBS += -LC:/OpenSSL-Win64/lib -lcrypto -lssl
     }
     # MinGW 환경일 경우
