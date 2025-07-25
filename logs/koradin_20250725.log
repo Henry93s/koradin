@@ -1,0 +1,13 @@
+[2025-07-25 14:16:12] [INFO] : ********** koradin Server Open **********
+[2025-07-25 14:16:19] [INFO] : IP: ::ffff:127.0.0.1, Port: 50022 - Client has connected to the server
+[2025-07-25 14:16:23] [INFO] : (-) client 로그인 request
+[2025-07-25 14:16:23] [WARN] : [LOGIN] - 계정의 password 가 일치하지 않습니다.
+[2025-07-25 14:16:28] [INFO] : (-) client 로그인 request
+[2025-07-25 14:16:28] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-25 14:16:28] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-25 14:16:28] [INFO] : geonwoo(건우) 가 채팅방에 접속하였습니다.
+[2025-07-25 14:16:28] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-25 14:16:28] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-25 14:16:32] [INFO] : geonwoo(건우) client 유저 채팅방 셋팅 request
+[2025-07-25 14:16:32] [INFO] : geonwoo(건우) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-25 14:16:32] [INFO] : client geonwoo(건우) 접속 종료

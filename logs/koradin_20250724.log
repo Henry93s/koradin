@@ -288,3 +288,19 @@
 [2025-07-24 23:15:19] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
 [2025-07-24 23:36:10] [INFO] : geonwoo(건우) client 유저 채팅방 셋팅 request
 [2025-07-24 23:36:10] [INFO] : geonwoo(건우) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-24 23:40:53] [INFO] : ********** koradin Server Open **********
+[2025-07-24 23:45:09] [INFO] : IP: ::ffff:127.0.0.1, Port: 63646 - Client has connected to the server
+[2025-07-24 23:45:13] [INFO] : (-) client 로그인 request
+[2025-07-24 23:45:13] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-24 23:45:13] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-24 23:45:13] [INFO] : geonwoo(건우) 가 채팅방에 접속하였습니다.
+[2025-07-24 23:45:13] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-24 23:45:13] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-24 23:45:16] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-24 23:45:16] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-25 09:33:44] [INFO] : geonwoo(건우) client 검색 request
+[2025-07-25 09:33:44] [INFO] : client geonwoo(건우) 검색 request 처리 완료
+[2025-07-25 09:33:58] [INFO] : geonwoo(건우) client 채팅 request
+[2025-07-25 09:33:58] [INFO] : 일반 채팅 - geonwoo(건우)  MSG 전송
+[2025-07-25 14:15:50] [INFO] : geonwoo(건우) client 유저 채팅방 셋팅 request
+[2025-07-25 14:15:50] [INFO] : geonwoo(건우) 가 채팅방에 접속을 해제하였습니다.

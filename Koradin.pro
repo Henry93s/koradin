@@ -136,8 +136,18 @@ TRANSLATIONS += \
 CONFIG += lrelease
 CONFIG += embed_translations
 
-INCLUDEPATH += "C:\msys64\mingw64\include"
-LIBS += -LC:/msys64/mingw64/lib -lcrypto
+win32 {
+    # MSVC (Microsoft Visual C++) 환경일 경우
+    contains(QMAKE_CXX, "cl") {
+        INCLUDEPATH += "C:/OpenSSL-Win64/include"
+        LIBS += -LC:/OpenSSL-Win64/lib -lcrypto -lssl
+    }
+    # MinGW 환경일 경우
+    contains(QMAKE_CXX, "g++") {
+        INCLUDEPATH += "C:/msys64/mingw64/include"
+        LIBS += -LC:/msys64/mingw64/lib -lcrypto
+    }
+}
 
 
 # Default rules for deployment.
