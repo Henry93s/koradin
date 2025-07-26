@@ -11,3 +11,56 @@
 [2025-07-26 18:58:03] [INFO] : ID(name) client 유저 채팅방 셋팅 request
 [2025-07-26 18:58:03] [INFO] : ID(name) 가 채팅방에 접속을 해제하였습니다.
 [2025-07-26 18:58:04] [INFO] : client ��(����) 접속 종료
+[2025-07-26 19:01:34] [INFO] : ********** koradin Server Open **********
+[2025-07-26 19:01:42] [INFO] : IP: ::ffff:127.0.0.1, Port: 55222 - Client has connected to the server
+[2025-07-26 19:01:47] [INFO] : (-) client 로그인 request
+[2025-07-26 19:01:47] [WARN] : [LOGIN] - 계정의 password 가 일치하지 않습니다.
+[2025-07-26 19:01:49] [INFO] : (-) client 로그인 request
+[2025-07-26 19:01:49] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-26 19:01:49] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-26 19:01:49] [INFO] : geonwoo(건우) 가 채팅방에 접속하였습니다.
+[2025-07-26 19:01:49] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-26 19:01:49] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-26 19:01:56] [INFO] : geonwoo(건우) client 유저 채팅방 셋팅 request
+[2025-07-26 19:01:56] [INFO] : geonwoo(건우) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-26 19:01:56] [INFO] : client geonwoo(건우) 접속 종료
+[2025-07-26 19:02:02] [INFO] : IP: ::ffff:127.0.0.1, Port: 55261 - Client has connected to the server
+[2025-07-26 19:02:16] [INFO] : (-) client 로그인 request
+[2025-07-26 19:02:16] [WARN] : [LOGIN] - 입력한 id 가 유저 리스트에 없습니다.
+[2025-07-26 19:02:16] [INFO] : IP: ::ffff:127.0.0.1, Port: 55272 - Client has connected to the server
+[2025-07-26 19:02:16] [INFO] : (-) client 유저 추가 request
+[2025-07-26 19:02:16] [INFO] : test222(test222) 유저를 추가합니다.
+[2025-07-26 19:02:38] [INFO] : (-) client 로그인 request
+[2025-07-26 19:02:38] [WARN] : [LOGIN] - 계정의 password 가 일치하지 않습니다.
+[2025-07-26 19:02:40] [INFO] : (-) client 로그인 request
+[2025-07-26 19:02:40] [WARN] : [LOGIN] - 계정의 password 가 일치하지 않습니다.
+[2025-07-26 19:02:48] [INFO] : (-) client 로그인 request
+[2025-07-26 19:02:48] [WARN] : [LOGIN] - 계정의 password 가 일치하지 않습니다.
+[2025-07-26 19:03:41] [INFO] : (-) client 로그인 request
+[2025-07-26 19:03:41] [WARN] : [LOGIN] - 계정의 password 가 일치하지 않습니다.
+[2025-07-26 19:03:47] [INFO] : (-) client 로그인 request
+[2025-07-26 19:03:47] [WARN] : [LOGIN] - 계정의 password 가 일치하지 않습니다.
+[2025-07-26 19:06:38] [INFO] : (-) client 로그인 request
+[2025-07-26 19:06:38] [WARN] : [LOGIN] - 계정의 password 가 일치하지 않습니다.
+[2025-07-26 19:06:41] [INFO] : IP: ::ffff:127.0.0.1, Port: 55538 - Client has connected to the server
+[2025-07-26 19:06:45] [INFO] : client (-) 접속 종료
+[2025-07-26 19:06:45] [INFO] : client (-) 접속 종료
+[2025-07-26 19:06:45] [INFO] : client (-) 접속 종료
+[2025-07-26 19:07:52] [INFO] : ********** koradin Server Open **********
+[2025-07-26 19:07:52] [INFO] : IP: ::ffff:127.0.0.1, Port: 55610 - Client has connected to the server
+[2025-07-26 19:07:56] [INFO] : IP: ::ffff:127.0.0.1, Port: 55631 - Client has connected to the server
+[2025-07-26 19:08:07] [INFO] : (-) client 로그인 request
+[2025-07-26 19:08:07] [WARN] : [LOGIN] - 입력한 id 가 유저 리스트에 없습니다.
+[2025-07-26 19:08:07] [INFO] : IP: ::ffff:127.0.0.1, Port: 55643 - Client has connected to the server
+[2025-07-26 19:08:07] [INFO] : (-) client 유저 추가 request
+[2025-07-26 19:08:07] [INFO] : test222(test222) 유저를 추가합니다.
+[2025-07-26 19:08:15] [INFO] : (-) client 로그인 request
+[2025-07-26 19:08:15] [INFO] : [LOGIN] - ID : test222 passed login
+[2025-07-26 19:08:15] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-26 19:08:15] [INFO] : test222(test222) 가 채팅방에 접속하였습니다.
+[2025-07-26 19:08:15] [INFO] : test222(test222) client 주문 검색 request
+[2025-07-26 19:08:15] [INFO] : client test222(test222) 주문 조회 request 처리 완료
+[2025-07-26 19:08:19] [INFO] : test222(test222) client 유저 채팅방 셋팅 request
+[2025-07-26 19:08:19] [INFO] : test222(test222) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-26 19:08:19] [INFO] : client test222(test222) 접속 종료
+[2025-07-26 19:08:19] [INFO] : client test222(test222) 접속 종료

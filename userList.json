@@ -40,6 +40,14 @@
         "salt": "hzMlY9ncTx89L1wS"
     },
     {
+        "ID": "test222",
+        "email": "test@test.com",
+        "isAdmin": "false",
+        "name": "test222",
+        "password": "8dbbb6f8cc4c43f0dd1e78f7dd6fb2f1818a307fb84a2039f3fc6211da5ad2c52cccfe27b934e9d12f6e63d58593ace549cd846f34d80cac2da46779dfda1ad1",
+        "salt": "DCkRJnro9jTrJgrM"
+    },
+    {
         "ID": "testasdfasdf",
         "email": "sadfsadg",
         "isAdmin": "false",

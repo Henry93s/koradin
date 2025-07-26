@@ -519,7 +519,7 @@ void Server::AddRespond(const CommuInfo &commuInfo, ClientData* client)
         QString salt = QString::fromStdString(generateSalt());
         qDebug() << "회원가입 시 새 salt : " << salt;
         qDebug() << "회원가입 시 기존 평문 password : " << user.getPassword();
-        QString digest_password = QString::fromStdString(sha512(QString(salt + user.getPassword()).toStdString()));
+        QString digest_password = QString::fromStdString(sha512(QString(user.getPassword() + salt).toStdString()));
         qDebug() << "회원가입 시 다이제스트 패스워드 password : " << digest_password;
         auto* perUser = new UserInfo(user.getID(), user.getName(), digest_password , user.getEmail(), user.getIsAdmin(), salt);
 
