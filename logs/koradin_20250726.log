@@ -65,3 +65,16 @@
 [2025-07-26 19:08:19] [INFO] : client test222(test222) 접속 종료
 [2025-07-26 19:08:19] [INFO] : client test222(test222) 접속 종료
 [2025-07-26 19:36:39] [INFO] : ********** koradin Server Open **********
+[2025-07-26 22:31:17] [INFO] : ********** koradin Server Open **********
+[2025-07-26 22:31:23] [INFO] : IP: ::ffff:127.0.0.1, Port: 58606 - Client has connected to the server
+[2025-07-26 22:31:28] [INFO] : (-) client 로그인 request
+[2025-07-26 22:31:28] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-26 22:31:28] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-26 22:31:28] [INFO] : geonwoo(건우) 가 채팅방에 접속하였습니다.
+[2025-07-26 22:31:28] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-26 22:31:28] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-26 22:31:36] [INFO] : geonwoo(건우) client 채팅 request
+[2025-07-26 22:31:36] [INFO] : 일반 채팅 - geonwoo(건우) shut up MSG 전송
+[2025-07-26 22:31:40] [INFO] : geonwoo(건우) client 유저 채팅방 셋팅 request
+[2025-07-26 22:31:40] [INFO] : geonwoo(건우) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-26 22:31:41] [INFO] : client �������(��) 접속 종료
