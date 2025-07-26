@@ -76,6 +76,8 @@ private slots:
 
     void on_server_product_delete_pushbutton_clicked();
 
+    void ChatForClients();
+    void ChatForClientsInRoom();
 signals:
     void writeReady(const QThread* compareThread, const QByteArray& byte);
     void InfosFixRespond(const CommuInfo& commuInfo, ClientData* client);
@@ -110,5 +112,8 @@ private:
 
     //void echoData();
     QString file_path;
+
+    QFile* generalFile = nullptr;
+    QFile* roomFile = nullptr;
 };
 #endif // SERVER_H

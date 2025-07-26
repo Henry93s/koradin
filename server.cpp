@@ -179,6 +179,44 @@ Server::Server(QWidget *parent)
             }
         }
     });
+    // 클릭 시 파일 로드하는 버튼 연결
+    connect(ui->generalFileSend, &QPushButton::clicked, [this](){
+        if(generalFile){
+            generalFile->close();
+            generalFile = nullptr;
+        }
+        QString filename = QFileDialog::getOpenFileName(this);
+        if(filename.isEmpty())
+            return;
+        QFile* file = new QFile(filename);
+        auto ret = file->open(QFile::ReadOnly);
+        if(ret){
+            generalFile = file;
+            QFileInfo fileInfo(filename);
+            ui->generalFileSend->setText(fileInfo.fileName());
+        }
+    });
+    // 클릭 시 파일 로드하는 버튼 연결
+    connect(ui->fileButtonInRoom, &QPushButton::clicked, [this](){
+        if(roomFile){
+            roomFile->close();
+            roomFile = nullptr;
+        }
+        QString filename = QFileDialog::getOpenFileName(this);
+        if(filename.isEmpty())
+            return;
+        QFile* file = new QFile(filename);
+        auto ret = file->open(QFile::ReadOnly);
+        if(ret){
+            roomFile = file;
+            QFileInfo fileInfo(filename);
+            ui->fileButtonInRoom->setText(fileInfo.fileName());
+        }
+    });
+    // 제너럴 채팅 전송 버튼
+    connect(ui->generalChatSend, &QPushButton::clicked, this, &Server::ChatForClients);
+    // 방에서 채팅 전송 버튼
+    connect(ui->chatButtonInRoom, &QPushButton::clicked, this, &Server::ChatForClientsInRoom);
 
     this->userManager = userManager->getInstance();
     this->bluerayManager = bluerayManager->getInstance();
@@ -630,7 +668,7 @@ void Server::ChattingRespond(const CommuInfo &commuInfo, ClientData* client)
     if(chatType == ChattingType::General_ForAdmin)
     {
         for(auto& cla : clients){
-            if(cla.thread){
+            if(cla.thread && (client->room_idx == -1 || cla.room_idx == client->room_idx)){
                 emit writeReady(cla.thread, forClients.GetByteArray());
             }
         }
@@ -1354,6 +1392,44 @@ void Server::on_server_product_delete_pushbutton_clicked()
         } else {
             QMessageBox::critical(this, tr("상품 제거"), tr("제품 종류 를 선택하고 조회를 먼저 해주세요 !"));
             return;
+        }
+    }
+}
+
+void Server::ChatForClients()
+{
+    if(ui->generalChat->text().isEmpty()){
+        return;
+    }
+
+    AddAtChattingList(ui->generalChattingLog, ui->generalChattingLog, tr("관리자"), ui->generalChat->text());
+
+    CommuInfo com;
+    com.SetChat(tr("관리자"), ui->generalChat->text(), generalFile, ChattingType::General_ForAdmin);
+    com.AddSizePacket();
+
+    for(auto& cla : clients){
+        if(cla.room_idx == -1){
+            emit writeReady(cla.thread, com.GetByteArray());
+        }
+    }
+}
+
+void Server::ChatForClientsInRoom()
+{
+    if(ui->chatInRoom->text().isEmpty()){
+        return;
+    }
+
+    AddAtChattingList(ui->chattingListInRoom, ui->chattingListInRoom, tr("관리자"), ui->chatInRoom->text());
+
+    CommuInfo com;
+    com.SetChat(tr("관리자"), ui->chatInRoom->text(), roomFile, ChattingType::General_ForAdmin);
+    com.AddSizePacket();
+
+    for(auto& cla : clients){
+        if(cla.room_idx == currentRoomIndex){
+            emit writeReady(cla.thread, com.GetByteArray());
         }
     }
 }

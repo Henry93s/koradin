@@ -1,0 +1,115 @@
+[2025-07-25 10:35:20] [INFO] : ********** koradin Server Open **********
+[2025-07-25 10:35:20] [INFO] : IP: ::ffff:127.0.0.1, Port: 58624 - Client has connected to the server
+[2025-07-25 10:35:27] [INFO] : 새 채팅방(joker) 이 생성됩니다.
+[2025-07-25 10:35:33] [INFO] : IP: ::ffff:127.0.0.1, Port: 58626 - Client has connected to the server
+[2025-07-25 10:35:37] [INFO] : (-) client 로그인 request
+[2025-07-25 10:35:37] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-25 10:35:37] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-25 10:35:37] [INFO] : geonwoo(건우) 가 채팅방에 접속하였습니다.
+[2025-07-25 10:35:37] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-25 10:35:37] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-25 10:35:46] [INFO] : IP: ::ffff:127.0.0.1, Port: 58627 - Client has connected to the server
+[2025-07-25 10:35:53] [INFO] : (-) client 로그인 request
+[2025-07-25 10:35:53] [INFO] : [LOGIN] - ID : geonwoo passed login
+[2025-07-25 10:35:53] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-25 10:35:53] [INFO] : geonwoo2(geonwoo) 가 채팅방에 접속하였습니다.
+[2025-07-25 10:35:53] [INFO] : geonwoo2(geonwoo) client 주문 검색 request
+[2025-07-25 10:35:53] [INFO] : client geonwoo2(geonwoo) 주문 조회 request 처리 완료
+[2025-07-25 10:36:00] [INFO] : IP: ::ffff:127.0.0.1, Port: 58628 - Client has connected to the server
+[2025-07-25 10:36:26] [INFO] : (-) client 로그인 request
+[2025-07-25 10:36:26] [INFO] : [LOGIN] - ID : asdf passed login
+[2025-07-25 10:36:26] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-25 10:36:26] [INFO] : sadfasdf(asdf) 가 채팅방에 접속하였습니다.
+[2025-07-25 10:36:26] [INFO] : sadfasdf(asdf) client 주문 검색 request
+[2025-07-25 10:36:26] [INFO] : client sadfasdf(asdf) 주문 조회 request 처리 완료
+[2025-07-25 10:36:43] [INFO] : geonwoo2(geonwoo) client 채팅 request
+[2025-07-25 10:36:43] [INFO] : 일반 채팅 - geonwoo2(geonwoo) joke joke MSG 전송
+[2025-07-25 10:37:18] [INFO] : sadfasdf(asdf) client 유저 채팅방 셋팅 request
+[2025-07-25 10:37:18] [INFO] : sadfasdf(asdf) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-25 10:37:18] [INFO] : client ��������(����) 접속 종료
+[2025-07-25 10:37:20] [INFO] : geonwoo2(geonwoo) client 유저 채팅방 셋팅 request
+[2025-07-25 10:37:20] [INFO] : geonwoo2(geonwoo) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-25 10:37:20] [INFO] : client ��������(geonwoo) 접속 종료
+[2025-07-25 10:37:21] [INFO] : geonwoo(건우) client 유저 채팅방 셋팅 request
+[2025-07-25 10:37:21] [INFO] : geonwoo(건우) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-25 10:37:22] [INFO] : client �������(건우) 접속 종료
+[2025-07-25 10:40:08] [INFO] : ********** koradin Server Open **********
+[2025-07-25 10:40:20] [INFO] : IP: ::ffff:127.0.0.1, Port: 58661 - Client has connected to the server
+[2025-07-25 10:40:25] [INFO] : (-) client 로그인 request
+[2025-07-25 10:40:25] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-25 10:40:25] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-25 10:40:25] [INFO] : geonwoo(건우) 가 채팅방에 접속하였습니다.
+[2025-07-25 10:40:26] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-25 10:40:26] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-25 10:40:33] [INFO] : IP: ::ffff:127.0.0.1, Port: 58662 - Client has connected to the server
+[2025-07-25 10:40:40] [INFO] : (-) client 로그인 request
+[2025-07-25 10:40:40] [INFO] : [LOGIN] - ID : geonwoo passed login
+[2025-07-25 10:40:40] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-25 10:40:40] [INFO] : geonwoo2(geonwoo) 가 채팅방에 접속하였습니다.
+[2025-07-25 10:40:40] [INFO] : geonwoo2(geonwoo) client 주문 검색 request
+[2025-07-25 10:40:40] [INFO] : client geonwoo2(geonwoo) 주문 조회 request 처리 완료
+[2025-07-25 10:40:49] [INFO] : IP: ::ffff:127.0.0.1, Port: 58666 - Client has connected to the server
+[2025-07-25 10:40:52] [INFO] : (-) client 로그인 request
+[2025-07-25 10:40:52] [INFO] : [LOGIN] - ID : aaa passed login
+[2025-07-25 10:40:52] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-25 10:40:52] [INFO] : aaa(aaa) 가 채팅방에 접속하였습니다.
+[2025-07-25 10:40:52] [INFO] : aaa(aaa) client 주문 검색 request
+[2025-07-25 10:40:52] [INFO] : client aaa(aaa) 주문 조회 request 처리 완료
+[2025-07-25 10:41:02] [INFO] : 새 채팅방(joker) 이 생성됩니다.
+[2025-07-25 10:41:11] [INFO] : geonwoo(건우) client 채팅 request
+[2025-07-25 10:41:11] [INFO] : 일반 채팅 - geonwoo(건우) hello MSG 전송
+[2025-07-25 10:42:23] [INFO] : aaa(aaa) client 채팅 request
+[2025-07-25 10:42:23] [INFO] : 일반 채팅 - aaa(aaa) asdsd MSG 전송
+[2025-07-25 10:42:36] [INFO] : geonwoo(건우) client 유저 채팅방 셋팅 request
+[2025-07-25 10:42:36] [INFO] : geonwoo(건우) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-25 10:42:37] [INFO] : client �������(건우) 접속 종료
+[2025-07-25 10:42:37] [INFO] : geonwoo2(geonwoo) client 유저 채팅방 셋팅 request
+[2025-07-25 10:42:37] [INFO] : geonwoo2(geonwoo) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-25 10:42:38] [INFO] : aaa(aaa) client 유저 채팅방 셋팅 request
+[2025-07-25 10:42:38] [INFO] : aaa(aaa) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-25 10:42:38] [INFO] : client ��������(geonwoo) 접속 종료
+[2025-07-25 10:42:39] [INFO] : client ���(���) 접속 종료
+[2025-07-25 10:50:22] [INFO] : ********** koradin Server Open **********
+[2025-07-25 10:50:23] [INFO] : IP: ::ffff:127.0.0.1, Port: 58754 - Client has connected to the server
+[2025-07-25 10:50:28] [INFO] : IP: ::ffff:127.0.0.1, Port: 58755 - Client has connected to the server
+[2025-07-25 10:50:32] [INFO] : (-) client 로그인 request
+[2025-07-25 10:50:32] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-25 10:50:32] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-25 10:50:32] [INFO] : geonwoo(건우) 가 채팅방에 접속하였습니다.
+[2025-07-25 10:50:32] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-25 10:50:32] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-25 10:50:36] [INFO] : geonwoo(건우) client 채팅 request
+[2025-07-25 10:50:36] [INFO] : 일반 채팅 - geonwoo(건우) asdf MSG 전송
+[2025-07-25 10:50:42] [INFO] : geonwoo(건우) client 유저 채팅방 셋팅 request
+[2025-07-25 10:50:42] [INFO] : geonwoo(건우) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-25 10:50:42] [INFO] : client �������(��) 접속 종료
+[2025-07-25 10:51:00] [INFO] : ********** koradin Server Open **********
+[2025-07-25 10:51:01] [INFO] : IP: ::ffff:127.0.0.1, Port: 58760 - Client has connected to the server
+[2025-07-25 10:51:06] [INFO] : IP: ::ffff:127.0.0.1, Port: 58766 - Client has connected to the server
+[2025-07-25 10:51:10] [INFO] : (-) client 로그인 request
+[2025-07-25 10:51:10] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-25 10:51:10] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-25 10:51:10] [INFO] : geonwoo(건우) 가 채팅방에 접속하였습니다.
+[2025-07-25 10:51:10] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-25 10:51:10] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-25 10:51:15] [INFO] : geonwoo(건우) client 유저 채팅방 셋팅 request
+[2025-07-25 10:51:15] [INFO] : geonwoo(건우) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-25 10:51:16] [INFO] : client �������(��) 접속 종료
+[2025-07-25 11:32:29] [INFO] : ********** koradin Server Open **********
+[2025-07-25 11:32:30] [INFO] : IP: ::ffff:127.0.0.1, Port: 59108 - Client has connected to the server
+[2025-07-25 11:32:36] [INFO] : IP: ::ffff:127.0.0.1, Port: 59109 - Client has connected to the server
+[2025-07-25 11:32:42] [INFO] : (-) client 로그인 request
+[2025-07-25 11:32:42] [INFO] : [LOGIN] - ID : 건우 passed login
+[2025-07-25 11:32:42] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-25 11:32:42] [INFO] : geonwoo(건우) 가 채팅방에 접속하였습니다.
+[2025-07-25 11:32:43] [INFO] : geonwoo(건우) client 주문 검색 request
+[2025-07-25 11:32:43] [INFO] : client geonwoo(건우) 주문 조회 request 처리 완료
+[2025-07-25 11:32:49] [INFO] : IP: ::ffff:127.0.0.1, Port: 59110 - Client has connected to the server
+[2025-07-25 11:32:53] [INFO] : (-) client 로그인 request
+[2025-07-25 11:32:53] [INFO] : [LOGIN] - ID : geonwoo passed login
+[2025-07-25 11:32:53] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-25 11:32:53] [INFO] : geonwoo2(geonwoo) 가 채팅방에 접속하였습니다.
+[2025-07-25 11:32:54] [INFO] : geonwoo2(geonwoo) client 주문 검색 request
+[2025-07-25 11:32:54] [INFO] : client geonwoo2(geonwoo) 주문 조회 request 처리 완료
+[2025-07-25 11:33:28] [INFO] : 새 채팅방(h) 이 생성됩니다.
+[2025-07-25 14:36:21] [INFO] : client ��������(geonwoo) 접속 종료

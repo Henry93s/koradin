@@ -8,20 +8,15 @@
 ChattingLogWidget::ChattingLogWidget(const QString& userName, const QString& Message, const QString& fileName, QWidget *parent)
     : QWidget{parent}, fileDownloadButton (nullptr)
 {
-    // QLabel* label = new QLabel(userName + tr(" : ") + Message, this);
-    // if(!fileName.isEmpty()){
-    //     fileDownloadButton = new QPushButton(fileName, this);
-    //     fileDownloadButton->setMaximumWidth(70);
-    // }
     QHBoxLayout* layout = new QHBoxLayout(this);
 
     // 메시지 라벨
     QLabel* label = new QLabel(userName + tr(" : ") + Message, this);
-    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred); // 확장 가능
+    // label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred); // 확장 가능
 
-    setMinimumHeight(40);  // 필요시
-    setMaximumHeight(60);  // 너무 커지지 않게 제한
-
+    // setMinimumHeight(40);  // 필요시
+    // setMaximumHeight(60);  // 너무 커지지 않게 제한
+    label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     layout->addWidget(label);
 
     if (!fileName.isEmpty()) {
@@ -39,8 +34,8 @@ ChattingLogWidget::ChattingLogWidget(const QString& userName, const QString& Mes
         layout->addWidget(fileDownloadButton);
     }
 
-    layout->setContentsMargins(5, 2, 5, 2); // 여백 설정 (선택사항)
-    layout->setSpacing(8); // 위젯 사이 간격
+    layout->setContentsMargins(0, 0, 0, 0); // 여백 설정 (선택사항)
+    layout->setSpacing(5); // 위젯 사이 간격
 
     setLayout(layout);
 }
