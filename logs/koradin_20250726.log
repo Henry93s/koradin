@@ -1,0 +1,13 @@
+[2025-07-26 18:57:24] [INFO] : ********** koradin Server Open **********
+[2025-07-26 18:57:42] [INFO] : IP: ::ffff:127.0.0.1, Port: 55853 - Client has connected to the server
+[2025-07-26 18:57:51] [INFO] : (-) client 로그인 request
+[2025-07-26 18:57:51] [INFO] : [LOGIN] - ID : name passed login
+[2025-07-26 18:57:51] [INFO] : (-) client 유저 채팅방 셋팅 request
+[2025-07-26 18:57:51] [INFO] : ID(name) 가 채팅방에 접속하였습니다.
+[2025-07-26 18:57:51] [INFO] : ID(name) client 주문 검색 request
+[2025-07-26 18:57:51] [INFO] : client ID(name) 주문 조회 request 처리 완료
+[2025-07-26 18:58:00] [INFO] : ID(name) client 채팅 request
+[2025-07-26 18:58:00] [INFO] : 일반 채팅 - ID(name) fuckyou MSG 전송
+[2025-07-26 18:58:03] [INFO] : ID(name) client 유저 채팅방 셋팅 request
+[2025-07-26 18:58:03] [INFO] : ID(name) 가 채팅방에 접속을 해제하였습니다.
+[2025-07-26 18:58:04] [INFO] : client ��(����) 접속 종료

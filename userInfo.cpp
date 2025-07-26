@@ -2,12 +2,13 @@
 
 UserInfo::UserInfo(){}
 UserInfo::UserInfo(const QString& ID, const QString& name, const QString& password
-                   , const QString& email, const QString& isAdmin){
+                   , const QString& email, const QString& isAdmin, const QString& salt){
     this->setID(ID);
     this->setName(name);
     this->setPassword(password);
     this->setEmail(email);
     this->setIsAdmin(isAdmin);
+    this->setSalt(salt);
 }
 UserInfo::~UserInfo(){}
 const QString& UserInfo::getID() const{
@@ -15,6 +16,12 @@ const QString& UserInfo::getID() const{
 }
 void UserInfo::setID(const QString& ID){
     this->ID = ID;
+}
+QString UserInfo::getSalt(){
+    return this->salt;
+}
+void UserInfo::setSalt(const QString& salt){
+    this->salt = salt;
 }
 QString UserInfo::getPassword(){
     return this->password;

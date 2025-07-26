@@ -385,6 +385,7 @@ void CommuInfo::AddUsers(std::vector<UserInfo> users)
         perObj["password"] = user.getPassword();
         perObj["email"] = user.getEmail();
         perObj["isAdmin"] = user.getIsAdmin();
+        perObj["salt"] = user.getSalt();
         userArray.push_back(perObj);
     }
 
@@ -417,7 +418,8 @@ std::vector<UserInfo> CommuInfo::GetAddingUsers() const
         auto pwd = perObj["password"].toString();
         auto email = perObj["email"].toString();
         auto isAdmin = perObj["isAdmin"] .toString();
-        UserInfo info{id, name, pwd, email, isAdmin};
+        auto salt = perObj["salt"].toString();
+        UserInfo info{id, name, pwd, email, isAdmin, salt};
         ret.push_back(info);
     }
 

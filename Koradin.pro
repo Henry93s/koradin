@@ -101,6 +101,7 @@ HEADERS += \
     popup.h \
     productInfo.h \
     productwidget.h \
+    sha512.h \
     tcpcommudefines.h \
     userInfo.h \
     userManager.h \
@@ -135,6 +136,40 @@ TRANSLATIONS += \
 CONFIG += lrelease
 CONFIG += embed_translations
 
+# win32 {
+#     # MSVC (Microsoft Visual C++) 환경일 경우
+#     contains(QMAKE_CXX, "cl") {
+#         INCLUDEPATH += "D:/programs/OpenSSL-Win64/include"
+#         LIBS += -LC:/OpenSSL-Win64/lib -lcrypto -lssl
+#     }
+#     # MinGW 환경일 경우
+#     contains(QMAKE_CXX, "g++") {
+#         INCLUDEPATH += "C:/msys64/mingw64/include"
+#         LIBS += -LC:/msys64/mingw64/lib -lcrypto
+#     }
+# }
+
+win32 {
+    # MSVC (Microsoft Visual C++) 환경일 경우
+    contains(QMAKE_CXX, "cl") {
+            INCLUDEPATH += "D:/programs/OpenSSL-Win64/include"
+
+            CONFIG(debug, debug|release) {
+                LIBS += -LD:/programs/OpenSSL-Win64/lib/VC/x64/MDd \
+                        -llibcrypto -llibssl
+            } else {
+                LIBS += -LD:/programs/OpenSSL-Win64/lib/VC/x64/MD \
+                        -llibcrypto -llibssl
+            }
+        }
+    # MinGW 환경일 경우
+    contains(QMAKE_CXX, "g++") {
+        INCLUDEPATH += "C:/msys64/mingw64/include"
+        LIBS += -LC:/msys64/mingw64/lib -lcrypto
+    }
+}
+
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
@@ -144,3 +179,4 @@ DISTFILES += \
     .gitmessage.txt
 
 #     userManager.h
+
